@@ -98,6 +98,34 @@
         display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; align-items: start;
       }
     }
+    /* --- MOBILE/TABLET FIXES --- */
+
+/* Make form fields stack on narrow phones */
+@media (max-width: 640px) {
+  .row2 { grid-template-columns: 1fr; }
+  .hero-wrap { margin-top: -56px; } /* reduce negative pull to prevent overlap */
+}
+
+/* Allow form content to breathe (avoid clipping of inputs/selects on iOS) */
+.form-card { overflow: visible; }
+
+/* Prevent any horizontal clipping and respect iOS safe areas */
+html, body { overflow-x: hidden; }
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+}
+
+/* Keep anchor links from hiding under the sticky header */
+#appraisal-form { scroll-margin-top: 80px; }
+
+/* Slightly bigger touch target on small screens */
+@media (max-width: 640px) {
+  .btn { min-height: 48px; }
+}
   </style>
 </head>
 <body>
