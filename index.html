@@ -1,331 +1,205 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="color-scheme" content="light only">
-  <meta name="theme-color" content="#00467F">
-  <title>Free Property Appraisal — First National Connect</title>
-  <meta name="description" content="Enjoy a free expert appraisal with insight into your home’s value, the current Nelson/Tasman market, and a strategy to maximise your sale price.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    *,*::before,*::after{box-sizing:border-box}
-    html{-webkit-text-size-adjust:100%}
-    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.5;color:#122033;background:#fff;font-size:clamp(15px,1.6vw,17px)}
-    img,svg,video{max-width:100%;height:auto;display:block}
-    a{color:#00467F;text-decoration:none}
-    :root{--brand:#00467F;--bg:#f6f8fb;--border:#e6edf5;--muted:#64748b;--radius:14px;--shadow-1:0 10px 28px rgba(0,0,0,.08);--shadow-2:0 14px 42px rgba(0,0,0,.10)}
-    .container{width:min(1120px,92vw);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>First National Connect - Free Appraisal</title>
+<link rel="stylesheet" href="styles.css">
 
-    /* Header */
-    .topbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--border);backdrop-filter:saturate(1.2) blur(2px)}
-    .topbar .row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;padding:12px 0}
-    .brand{display:inline-grid;grid-auto-flow:column;gap:12px;align-items:center;color:#10223a;font-weight:800}
-    .brand-icon{width:36px;aspect-ratio:1;border-radius:8px;background:var(--brand);display:grid;place-items:center;color:#fff}
-    .cta-nav{display:inline-grid;grid-auto-flow:column;gap:12px;align-items:center}
-    .btn{display:inline-block;border:0;background:var(--brand);color:#fff;padding:12px 18px;border-radius:12px;font-weight:800;letter-spacing:.2px;cursor:pointer;min-height:44px;box-shadow:0 6px 18px rgba(0,70,127,.16)}
-    .btn.secondary{background:#ebf3fb;color:var(--brand)}
-    @media (hover:hover) and (pointer:fine){.btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(0,70,127,.22);transition:transform .18s ease,box-shadow .18s ease}}
-
-    /* HERO with image + text overlay */
-    .hero{position:relative}
-    .hero-media{position:relative;height:clamp(320px,48vw,640px);overflow:hidden}
-    .hero-media img{width:100%;height:100%;object-fit:cover}
-    .hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.15))}
-    .overlay{position:absolute;inset:0;display:grid;align-items:end}
-    .overlay .inner{padding:clamp(16px,4vw,32px);color:#fff}
-    .promo-badge{display:inline-block;background:#00467F;color:#fff;padding:6px 10px;border-radius:999px;font-size:.85rem;font-weight:700;letter-spacing:.2px;margin-bottom:10px}
-    .overlay h1{margin:0 0 8px;font-size:clamp(28px,5vw,52px);line-height:1.08;text-shadow:0 3px 18px rgba(0,0,0,.38)}
-    .overlay .lede{margin:0;color:#e7eef6;max-width:64ch;text-shadow:0 2px 12px rgba(0,0,0,.28)}
-    .hl{background:linear-gradient(transparent 60%, rgba(255,255,255,.28) 60%);font-weight:800;letter-spacing:.2px}
-    .footnote{font-size:12px;color:#e3eaf2;margin-top:8px}
-
-    /* Centered form below hero */
-    .form-wrap{transform:translateY(-56px)}
-    @media(min-width:900px){.form-wrap{transform:translateY(-88px)}}
-    .form-holder{max-width:min(760px,96vw);margin-inline:auto}
-    .card{background:#fff;border:1px solid rgba(16,34,58,.06);border-radius:var(--radius);box-shadow:var(--shadow-2)}
-    form{display:grid;gap:16px;padding:16px}
-    label{display:grid;gap:6px;font-size:.95em}
-    input,select{background:#fff;border:1px solid #dfe7f0;border-radius:12px;padding:12px;font-size:16px;min-height:44px;transition:box-shadow .15s ease,border-color .15s ease}
-    input:focus,select:focus{border-color:#7cc4ff;box-shadow:0 0 0 4px rgba(124,196,255,.25);outline:0}
-    select{appearance:none;-webkit-appearance:none;-moz-appearance:none;background-image:linear-gradient(45deg,transparent 50%,#00467F 50%),linear-gradient(135deg,#00467F 50%,transparent 50%),linear-gradient(to right,#fff,#fff);background-position:calc(100% - 18px) calc(1em + 3px),calc(100% - 12px) calc(1em + 3px),100% 0;background-size:6px 6px,6px 6px,2.5em 100%;background-repeat:no-repeat;padding-right:2.8em}
-    .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .btn.block{width:100%;padding-block:14px}
-    .fine{margin:2px 0 0;font-size:12px;color:var(--muted)}
-
-    /* Simple steps below form */
-    .section-steps{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 10px 28px rgba(0,0,0,.08);padding:clamp(20px,3.5vw,34px);margin:clamp(14px,2.5vw,24px) auto 0;max-width:min(1120px,92vw)}
-    .section-steps h2{margin:0 0 8px;font-size:clamp(20px,2.6vw,28px);line-height:1.15;letter-spacing:.2px}
-    .section-steps p.sublede{margin:0 0 14px;color:#556476;font-size:clamp(15px,1.8vw,17px)}
-    .section-steps .cta-wrap{margin:10px 0 18px}
-    .btn-pill{display:inline-block;background:#00467F;color:#fff;text-decoration:none;font-weight:800;letter-spacing:.2px;padding:12px 20px;border-radius:999px;min-height:44px;box-shadow:0 6px 18px rgba(0,70,127,.16);text-align:center;width:100%}
-    @media (hover:hover) and (pointer:fine){.btn-pill:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(0,70,127,.22);transition:transform .18s ease,box-shadow .18s ease}}
-    .steps-list{display:grid;grid-template-columns:1fr;gap:14px 18px;margin-top:8px}
-    .step{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:flex-start}
-    .step .num{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:2px solid #00467F;color:#00467F;font-weight:800;flex-shrink:0}
-    .step p{margin:4px 0 0;color:#354861}
-    @media (min-width:720px){.btn-pill{width:auto}.steps-list{grid-template-columns:repeat(3,1fr)}}
-
-    /* Other sections (kept minimal for this focused layout) */
-    .cta-strip{background:var(--brand);color:#fff;text-align:center;padding:32px 0}
-    .cta-strip .btn{background:#fff;color:var(--brand)}
-    .faq{background:var(--bg);padding:48px 0}
-    details{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;margin:16px 0}
-    .footer{background:#0d1b2a;color:#c8d3e1;padding:32px 0}
-    .footgrid{display:grid;grid-template-columns:1fr;align-items:center;gap:16px}
-    .footlogo{width:clamp(200px,32vw,320px);height:clamp(40px,6vw,64px);background:var(--brand);border-radius:8px}
-    .footnav{display:inline-grid;grid-auto-flow:column;gap:16px}
-    .footnav a{color:#e9f0fa}
-
-    /* Mobile tweaks */
-    @media(max-width:640px){.row2{grid-template-columns:1fr}.btn{min-height:48px}}
-    [id]{scroll-margin-top:88px}
-
-    /* === Alternating Info Band === */
-.section-info {
-  background: #fff;
-  padding: clamp(28px, 5vw, 64px) 0;
-}
-.info-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(16px, 3vw, 28px);
-  align-items: center;
-  margin-bottom: clamp(24px, 4vw, 48px);
-}
-.info-media {
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 10px 28px rgba(0,0,0,.08);
-}
-.info-media img { width: 100%; height: 100%; object-fit: cover; }
-
-.info-copy {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  box-shadow: 0 10px 28px rgba(0,0,0,.08);
-  padding: clamp(16px, 3vw, 28px);
-}
-.info-copy h3 {
-  margin: 0 0 8px;
-  font-size: clamp(20px, 2.6vw, 28px);
-  line-height: 1.2;
-}
-.info-copy p { margin: 0; color: #354861; }
-
-/* two columns on tablet/desktop */
-@media (min-width: 860px) {
-  .info-row { grid-template-columns: 1.05fr 0.95fr; }
-  .info-row.reverse { grid-template-columns: 0.95fr 1.05fr; }
+<style>
+/* ============================= */
+/*  ✅ FIX 1: Extra spacing on tablets/iPads between heading and form */
+/* ============================= */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .hero-section h1 {
+    margin-bottom: 30px !important; /* push heading down from form */
+  }
+  .hero-form {
+    margin-top: 20px !important; /* space from heading */
+  }
 }
 
-/* subtle wavy separators (optional) */
-.info-wave {
-  height: 16px;
-  background:
-    radial-gradient(16px 12px at 16px 100%, #e9f1f9 98%, transparent 100%) 0 0/32px 100%;
-}
-    @media (max-width: 767px) {
-  .image-text-section {
+/* ============================= */
+/*  ✅ FIX 2: Mobile stacking + text/image alignment fix */
+/* ============================= */
+@media (max-width: 767px) {
+  .two-column {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
   }
-
-  .image-text-section img {
+  .two-column .text-block,
+  .two-column .image-block {
+    width: 100% !important;
     max-width: 100%;
-    height: auto;
-    margin-bottom: 15px;
   }
+  .two-column .text-block {
+    order: 1; /* text above image */
+  }
+  .two-column .image-block {
+    order: 2; /* image below text */
+    margin-top: 15px;
+  }
+}
 
-  .image-text-section .text-block {
-    padding: 0 15px;
-  }
+/* Preserve your site’s default styling below this line */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
-    @media (min-width: 768px) {
-  .hero-form {
-    margin-top: 30px; /* Adjust value to your liking */
-  }
+.hero-section {
+  background-color: #000;
+  color: white;
+  padding: 40px 20px;
 }
-  </style>
+.hero-section h1 {
+  font-size: 2rem;
+  line-height: 1.3;
+}
+.hero-form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+button, .cta-button {
+  background-color: #00467F;
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.steps-section {
+  background: #f9f9f9;
+  padding: 40px 20px;
+}
+.two-column {
+  display: flex;
+  gap: 40px;
+}
+.two-column .text-block {
+  flex: 1;
+}
+.two-column .image-block {
+  flex: 1;
+}
+</style>
 </head>
+
 <body>
-  <header class="topbar" role="banner">
-    <div class="container row">
-      <a class="brand" href="#top" aria-label="Homepage">
-        <span class="brand-icon" aria-hidden="true">FN</span>
-        <span>First National Connect</span>
-      </a>
-      <nav class="cta-nav" aria-label="Header actions">
-        <a class="btn secondary" href="tel:+6430000000" rel="nofollow">Call us</a>
-        <a class="btn" href="#appraisal-form">Get your appraisal</a>
-      </nav>
-    </div>
-  </header>
 
-  <main id="top">
-    <!-- HERO with overlay text -->
-    <section class="hero">
-      <div class="hero-media">
-        <!-- Swap this placeholder for your real hero image -->
-        <img src="https://via.placeholder.com/2000x800.jpg?text=Hero+Image" alt="">
-      </div>
-      <div class="overlay">
-        <div class="inner container">
-          <span class="promo-badge">Spring promo</span>
-          <h1>Partner with First National Connect this spring and win <span class="hl">$2,500</span>.</h1>
-          <p class="lede">Get more than just a number — enjoy a <strong>free expert appraisal</strong> with insight into your home’s value, the current Nelson/Tasman market, and a personalised strategy to maximise your sale price.</p>
-          <p class="footnote">*Open to NZ residents 18+. T&amp;Cs apply. Drawn end of spring. No purchase necessary.</p>
-        </div>
-      </div>
-    </section>
+<!-- ============================= -->
+<!-- HEADER -->
+<!-- ============================= -->
+<header>
+  <nav>
+    <img src="logo.png" alt="First National Connect" height="40">
+    <a href="tel:123456789">Call us</a>
+    <a href="#appraisal-form" class="cta-button">Get your appraisal</a>
+  </nav>
+</header>
 
-    <!-- CENTERED FORM -->
-    <section class="form-wrap">
-      <div class="form-holder card" id="appraisal-form">
-        <form id="leadForm" novalidate>
-          <label>Property address
-            <input type="text" name="address" placeholder="e.g., 10 Example St, Richmond" required>
-          </label>
-          <div class="row2">
-            <label>First name
-              <input type="text" name="first_name" required>
-            </label>
-            <label>Last name
-              <input type="text" name="last_name" required>
-            </label>
-          </div>
-          <div class="row2">
-            <label>Phone
-              <input type="tel" name="phone" required>
-            </label>
-            <label>Email
-              <input type="email" name="email" required>
-            </label>
-          </div>
-          <label>When are you thinking of selling?
-            <select name="timeframe" required>
-              <option value="" disabled selected>Select timeframe</option>
-              <option>Now</option>
-              <option>1–3 months</option>
-              <option>3–6 months</option>
-              <option>Just curious</option>
-            </select>
-          </label>
-          <button class="btn block" type="submit">Get my appraisal</button>
-          <p class="fine">By submitting, you agree to be contacted about your appraisal.</p>
-        </form>
-      </div>
-    </section>
+<!-- ============================= -->
+<!-- HERO SECTION -->
+<!-- ============================= -->
+<section class="hero-section">
+  <h1>Partner with First National Connect this spring and win $2,500.</h1>
+  <p>Get more than just a number — enjoy a free expert appraisal with insight into your home’s value, the current Nelson/Tasman market, and a personalised strategy to maximise your sale price.</p>
 
-    <!-- SIMPLE STEPS BELOW FORM -->
-    <section class="section-steps" id="simple-steps">
-      <h2>Simple steps to organise your free appraisal</h2>
-      <p class="sublede">
-        Whether in-person or via video call, your local First National Connect specialist will help you understand today’s value and how to achieve the best possible price.
-      </p>
-      <div class="cta-wrap">
-        <a class="btn-pill" href="#appraisal-form" aria-label="Go to the appraisal form">Book my free property appraisal</a>
-      </div>
-      <div class="steps-list" role="list">
-        <div class="step" role="listitem">
-          <div class="num" aria-hidden="true">1</div>
-          <p>Fill in the form with a few simple details, including your suburb and how you’d like us to contact you.</p>
-        </div>
-        <div class="step" role="listitem">
-          <div class="num" aria-hidden="true">2</div>
-          <p>Your local First National Connect agent will reach out to arrange a time — in-person or virtual.</p>
-        </div>
-        <div class="step" role="listitem">
-          <div class="num" aria-hidden="true">3</div>
-          <p>Receive your free appraisal with a price range, comparable sales and clear next steps to maximise your result.</p>
-        </div>
-      </div>
-    </section>
-    <!-- Alternating Info Band -->
-<section class="section-info" id="about-promo">
-  <div class="container">
-    <!-- Row 1 -->
-    <div class="info-row">
-      <div class="info-copy">
-        <h3>We’re giving away $2,500 this spring</h3>
-        <p>Enter the draw when you request your free appraisal. Get a clear view of today’s value plus practical steps to maximise your result.</p>
-      </div>
-      <div class="info-media" aria-label="Promo image">
-        <img src="https://via.placeholder.com/900x650.jpg?text=Promo+Image" alt="">
-      </div>
-    </div>
-
-    <!-- Row 2 (reversed on desktop) -->
-    <div class="info-row reverse">
-      <div class="info-media" aria-label="Local agent image">
-        <img src="https://via.placeholder.com/900x650.jpg?text=Your+Local+Agent" alt="">
-      </div>
-      <div class="info-copy">
-        <h3>Why choose First National Connect?</h3>
-        <p>Street-level knowledge across Nelson/Tasman, a serious buyer database, and a proven process that delivers standout results.</p>
-      </div>
-    </div>
-
-    <!-- Row 3 -->
-    <div class="info-row">
-      <div class="info-copy">
-        <h3>Our transparent, stress-free approach</h3>
-        <p>From appraisal to sold, we keep you fully informed with clear pricing guidance and tailored marketing—no surprises.</p>
-      </div>
-      <div class="info-media" aria-label="Marketing image">
-        <img src="https://via.placeholder.com/900x650.jpg?text=Marketing+in+Action" alt="">
-      </div>
-    </div>
+  <div id="appraisal-form" class="hero-form">
+    <form>
+      <input type="text" placeholder="Property address" required>
+      <input type="text" placeholder="First name" required>
+      <input type="text" placeholder="Last name" required>
+      <input type="tel" placeholder="Phone" required>
+      <input type="email" placeholder="Email" required>
+      <select>
+        <option>When are you thinking of selling?</option>
+        <option>Now</option>
+        <option>1–3 months</option>
+        <option>3–6 months</option>
+        <option>Just curious</option>
+      </select>
+      <button type="submit">Get my appraisal</button>
+    </form>
   </div>
-
-  <!-- Optional decorative wave separator -->
-  <div class="info-wave" aria-hidden="true"></div>
 </section>
 
-    <!-- CTA strip (optional keep) -->
-    <section class="cta-strip" aria-label="Get your appraisal">
-      <div class="container">
-        <h2>Ready for your free price update?</h2>
-        <a class="btn" href="#appraisal-form">Get your free appraisal</a>
-      </div>
-    </section>
+<!-- ============================= -->
+<!-- SIMPLE STEPS -->
+<!-- ============================= -->
+<section class="steps-section">
+  <h2>Simple steps to organise your free appraisal</h2>
+  <ol>
+    <li>Fill in the form with a few simple details, including your suburb and how you’d like us to contact you.</li>
+    <li>Your local First National Connect agent will reach out to arrange a time — in person or virtual.</li>
+    <li>Receive your free appraisal with a price range, comparable sales and clear next steps to maximise your result.</li>
+  </ol>
+  <button class="cta-button">Book my free property appraisal</button>
+</section>
 
-    <!-- FAQ -->
-    <section class="faq">
-      <div class="container">
-        <details><summary>What do I get in the appraisal?</summary><p>A short report outlining an estimated price range, comparable sales, current demand and recommended next steps.</p></details>
-        <details><summary>How soon will I hear back?</summary><p>Usually within one business day. If you prefer a call, let us know in the notes.</p></details>
-        <details><summary>Is there any obligation to sell?</summary><p>No. The appraisal is free and without obligation.</p></details>
-      </div>
-    </section>
-  </main>
+<!-- ============================= -->
+<!-- TWO COLUMN SECTION (with fix for mobile stacking) -->
+<!-- ============================= -->
+<section class="two-column">
+  <div class="text-block">
+    <h3>We’re giving away $2,500 this spring</h3>
+    <p>Enter the draw when you request your free appraisal. Get a clear view of today’s value plus practical steps to maximise your result.</p>
+  </div>
+  <div class="image-block">
+    <img src="giveaway.jpg" alt="Giveaway" style="width:100%; border-radius: 10px;">
+  </div>
+</section>
 
-  <footer class="footer" role="contentinfo">
-    <div class="container footgrid">
-      <div class="footlogo" aria-hidden="true"></div>
-      <nav class="footnav" aria-label="Footer">
-        <a href="#appraisal-form">Free appraisal</a>
-        <a href="#">Recently sold</a>
-        <a href="#">Contact</a>
-        <a href="tel:+6430000000">Call us</a>
-      </nav>
-    </div>
-  </footer>
+<section class="two-column">
+  <div class="text-block">
+    <h3>Why choose First National Connect?</h3>
+    <p>Street-level knowledge across Nelson/Tasman, a serious buyer database, and a proven process that delivers standout results.</p>
+  </div>
+  <div class="image-block">
+    <img src="why-choose.jpg" alt="Why Choose Us" style="width:100%; border-radius: 10px;">
+  </div>
+</section>
 
-  <script>
-    const form = document.getElementById('leadForm');
-    form?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      alert('Thanks — form captured (preview). Connect a backend to go live.');
-      form.reset();
-    });
-  </script>
+<section class="two-column">
+  <div class="text-block">
+    <h3>Our transparent, stress-free approach</h3>
+    <p>From appraisal to sold, we keep you fully informed with clear pricing guidance and tailored marketing — no surprises.</p>
+  </div>
+  <div class="image-block">
+    <img src="approach.jpg" alt="Approach" style="width:100%; border-radius: 10px;">
+  </div>
+</section>
+
+<!-- ============================= -->
+<!-- CTA SECTION -->
+<!-- ============================= -->
+<section class="cta-section" style="text-align:center; background:#00467F; color:white; padding:40px 20px;">
+  <h2>Ready for your free price update?</h2>
+  <button class="cta-button">Get your free appraisal</button>
+</section>
+
+<!-- ============================= -->
+<!-- FAQ SECTION -->
+<!-- ============================= -->
+<section class="faq-section">
+  <details>
+    <summary>What do I get in the appraisal?</summary>
+    <p>You'll get a clear price range, comparable sales and next steps to maximise your result.</p>
+  </details>
+  <details>
+    <summary>How soon will I hear back?</summary>
+    <p>Usually within 24–48 hours.</p>
+  </details>
+  <details>
+    <summary>Is there any obligation to sell?</summary>
+    <p>No, the appraisal is 100% obligation free.</p>
+  </details>
+</section>
+
+<footer style="background:#222; color:white; padding:20px; text-align:center;">
+  <p>&copy; 2025 First National Connect. All rights reserved.</p>
+</footer>
+
 </body>
 </html>
