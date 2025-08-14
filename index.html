@@ -107,35 +107,25 @@
     .footgrid{display:grid;grid-template-columns:1fr;gap:16px;align-items:center}
     .footlogo{width:clamp(200px,32vw,320px);height:clamp(40px,6vw,64px);background:#00467F;border-radius:8px}
 
-    /* ========= MOBILE ORDER FIX (your screenshot) ========= */
+    /* ========= MOBILE ORDER FIX (ensures text above image on phones) ========= */
     @media (max-width:860px){
-      /* keep single-column on phones */
       .info-row,.info-row.reverse{grid-template-columns:1fr !important}
-      /* force TEXT above IMAGE on every row (including .reverse rows) */
       .info-row .info-copy{order:-1}
       .info-row .info-media{order:0}
     }
-    /* ---- Fix "Simple steps" card overflow ---- */
-.section-steps .container {
-  /* neutralize the inner container so it fits the card */
-  width: 100%;
-  max-width: 100%;
-  padding-left: 0;
-  padding-right: 0;
-}
 
-/* make columns shrink safely and never push the card wider */
-.section-steps .steps-list {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: start;
-}
-
-/* allow long words/wraps to break instead of overflow */
-.section-steps,
-.section-steps * {
-  overflow-wrap: anywhere;
-  word-break: normal;
-}
+    /* ========= Simple Steps overflow fix (without breaking words) ========= */
+    .section-steps .container{width:100%;max-width:100%;padding-left:0;padding-right:0}
+    /* Keep natural wrapping everywhere */
+    .section-steps p,
+    .section-steps .step p,
+    .section-steps li { overflow-wrap: normal; word-break: normal; hyphens: auto; }
+    /* On small screens, keep steps full-width & readable */
+    @media (max-width:720px){
+      .section-steps .steps-list{grid-template-columns:1fr;gap:16px 18px}
+      .section-steps .step{grid-template-columns:auto 1fr}
+      .btn-pill{width:100%}
+    }
   </style>
 </head>
 <body>
