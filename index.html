@@ -115,6 +115,27 @@
       .info-row .info-copy{order:-1}
       .info-row .info-media{order:0}
     }
+    /* ---- Fix "Simple steps" card overflow ---- */
+.section-steps .container {
+  /* neutralize the inner container so it fits the card */
+  width: 100%;
+  max-width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* make columns shrink safely and never push the card wider */
+.section-steps .steps-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+}
+
+/* allow long words/wraps to break instead of overflow */
+.section-steps,
+.section-steps * {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
   </style>
 </head>
 <body>
