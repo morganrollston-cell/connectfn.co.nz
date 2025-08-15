@@ -93,7 +93,6 @@
     .info-copy p{margin:0;color:#354861}
     .info-media{border-radius:14px;overflow:hidden;box-shadow:var(--shadow-1)}
     .info-media .ph{width:100%;aspect-ratio:4/3;background:#dfe7f0;display:grid;place-items:center;color:#617587;font-weight:700}
-    /* two columns on tablet/desktop (alternate sides) */
     @media (min-width:860px){.info-row{grid-template-columns:1.05fr .95fr}.info-row.reverse{grid-template-columns:.95fr 1.05fr}}
 
     /* ========= CTA strip ========= */
@@ -116,66 +115,67 @@
 
     /* ========= Simple Steps overflow fix (without breaking words) ========= */
     .section-steps .container{width:100%;max-width:100%;padding-left:0;padding-right:0}
-    /* Keep natural wrapping everywhere */
     .section-steps p,
     .section-steps .step p,
     .section-steps li { overflow-wrap: normal; word-break: normal; hyphens: auto; }
-    /* On small screens, keep steps full-width & readable */
     @media (max-width:720px){
       .section-steps .steps-list{grid-template-columns:1fr;gap:16px 18px}
       .section-steps .step{grid-template-columns:auto 1fr}
       .btn-pill{width:100%}
     }
-/* --- Raise hero text so the form no longer overlaps --- */
-.overlay .inner {
-  /* push the text block UP by adding space under it */
-  padding-bottom: clamp(140px, 16vw, 220px) !important;
-}
 
-/* Make the subheading bigger & clearer */
-.overlay .lede {
-  font-size: clamp(18px, 2vw, 22px) !important; /* bigger on all screens */
-  line-height: 1.5;
-  color: #ffffff !important;                    /* brighter */
-  font-weight: 500;
-  text-shadow: 0 2px 10px rgba(0,0,0,.35);       /* contrast on busy photos */
-  max-width: 60ch;                               /* comfortable line length */
-}
+    /* --- Raise hero text so the form no longer overlaps --- */
+    .overlay .inner { padding-bottom: clamp(140px, 16vw, 220px) !important; }
+    .overlay .lede {
+      font-size: clamp(18px, 2vw, 22px) !important;
+      line-height: 1.5; color:#fff !important; font-weight:500;
+      text-shadow:0 2px 10px rgba(0,0,0,.35); max-width:60ch;
+    }
+    .overlay h1 { margin-bottom:12px; }
 
-/* Give the headline a touch more breathing room (optional) */
-.overlay h1 { margin-bottom: 12px; }
-/* ===== Final mobile tuning for hero ===== */
-@media (max-width: 640px) {
-  /* Shorter hero so the composition feels tighter */
-  .hero-media { height: 360px !important; }
+    /* ===== Final mobile tuning for hero ===== */
+    @media (max-width: 640px) {
+      .hero-media { height: 360px !important; }
+      .overlay .inner { padding:16px 16px 150px !important; }
+      .overlay .inner h1, .overlay h1 {
+        font-size:1.55rem !important; line-height:1.18 !important; margin-bottom:8px !important;
+      }
+      .overlay .inner .lede, .overlay .lede {
+        font-size:1rem !important; line-height:1.45 !important; color:#fff !important;
+        text-shadow:0 2px 10px rgba(0,0,0,.35) !important; max-width:60ch !important;
+      }
+      .form-wrap { transform: translateY(-56px) !important; }
+    }
 
-  /* Lift the hero text just enough to clear the form */
-  .overlay .inner {
-    padding: 16px 16px 150px !important;  /* top | sides | bottom */
-  }
+    /* ========== NEW: LJ-style FAQ accordion (goes after CTA strip) ========== */
+    .faq-pro{background:#fff;padding:clamp(36px,5vw,72px) 0;border-top:1px solid var(--border)}
+    .faq-pro .heading{font-size:clamp(22px,3vw,36px);text-align:center;margin:0 0 24px;color:#2b2f38}
+    .faq-list{border-top:1px solid var(--border)}
+    .faq-item{border-bottom:1px solid var(--border)}
+    .faq-q{width:100%;background:#fff;border:0;padding:18px 0;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;text-align:left;cursor:pointer}
+    .faq-num{font-weight:800;color:#00467F;opacity:.9;min-width:2.25ch}
+    .faq-text{font-weight:600;color:#2b2f38}
+    .faq-icon{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#f1f5f9;color:#0b1e37;font-weight:900}
+    .faq-a{padding:0 0 18px 36px;color:#3b4a62;display:none}
+    .faq-item.open .faq-a{display:block}
+    .faq-item.open .faq-icon{background:#00467F;color:#fff}
+    @media (max-width:640px){.faq-a{padding-left:0}}
 
-  /* Smaller headline on phones */
-  .overlay .inner h1,
-  .overlay h1 {
-    font-size: 1.55rem !important;  /* ≈ 25px */
-    line-height: 1.18 !important;
-    margin-bottom: 8px !important;
-    letter-spacing: 0 !important;
-  }
+    /* ========== NEW: Testimonials slider (below the new FAQ) ========== */
+    .testimonials{background:#f6f8fb;padding:clamp(32px,5vw,64px) 0}
+    .t-head{font-size:clamp(20px,2.6vw,28px);margin:0 0 16px;text-align:center}
+    .t-slider{position:relative;overflow:hidden;border-radius:14px;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow-1)}
+    .t-track{display:flex;transition:transform .45s ease;will-change:transform}
+    .t-slide{flex:0 0 100%;padding:clamp(22px,3vw,34px);display:grid;gap:10px;min-height:200px}
+    .t-quote{font-size:clamp(16px,2.1vw,20px);color:#2b3545}
+    .t-meta{color:#506075;font-weight:600}
+    .t-dots{display:flex;gap:8px;justify-content:center;padding:12px}
+    .t-dot{width:10px;height:10px;border-radius:50%;border:0;background:#d1d9e4;cursor:pointer}
+    .t-dot[aria-selected="true"]{background:#00467F}
+    .t-arrows{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+    .t-arrows button{pointer-events:auto;border:0;background:rgba(255,255,255,.9);width:38px;height:38px;border-radius:50%;font-size:20px;font-weight:700;box-shadow:0 6px 16px rgba(0,0,0,.12)}
+    @media (max-width:640px){.t-arrows{display:none}}
 
-  /* Subheading: clear, not bulky */
-  .overlay .inner .lede,
-  .overlay .lede {
-    font-size: 1rem !important;      /* ≈ 16px */
-    line-height: 1.45 !important;
-    color: #fff !important;
-    text-shadow: 0 2px 10px rgba(0,0,0,.35) !important;
-    max-width: 60ch !important;
-  }
-
-  /* Keep the form pull-up sensible on small phones */
-  .form-wrap { transform: translateY(-56px) !important; }
-}
   </style>
 </head>
 <body>
@@ -260,7 +260,6 @@
     <!-- ALTERNATING INFO BAND -->
     <section class="section-info" id="about-promo">
       <div class="container">
-        <!-- Row 1 -->
         <div class="info-row">
           <div class="info-copy">
             <h3>We’re giving away $2,500 this spring</h3>
@@ -269,7 +268,6 @@
           <div class="info-media" aria-label="Promo image"><div class="ph">900×650</div></div>
         </div>
 
-        <!-- Row 2 (reversed left/right on desktop) -->
         <div class="info-row reverse">
           <div class="info-media" aria-label="Local agent image"><div class="ph">900×650</div></div>
           <div class="info-copy">
@@ -278,7 +276,6 @@
           </div>
         </div>
 
-        <!-- Row 3 -->
         <div class="info-row">
           <div class="info-copy">
             <h3>Our transparent, stress-free approach</h3>
@@ -297,16 +294,92 @@
       </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="faq">
+    <!-- NEW: LJ-style FAQ accordion -->
+    <section class="faq-pro" id="faqs">
       <div class="container">
-        <details><summary>What do I get in the appraisal?</summary><p>A short report outlining an estimated price range, comparable sales, current demand and recommended next steps.</p></details>
-        <details><summary>How soon will I hear back?</summary><p>Usually within one business day. If you prefer a call, let us know in the notes.</p></details>
-        <details><summary>Is there any obligation to sell?</summary><p>No. The appraisal is free and without obligation.</p></details>
+        <h2 class="heading">FAQs</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              <span class="faq-num">01</span>
+              <span class="faq-text">Should I sell or buy first?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a" hidden>
+              If you can secure bridging finance, buying first gives certainty on your next home. Otherwise, selling first removes risk and clarifies your budget. We’ll help you weigh both options for your situation.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              <span class="faq-num">02</span>
+              <span class="faq-text">Are all sale methods still available to sell my property?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a" hidden>
+              Yes. Private treaty, auction and deadline/express sale are all available. We’ll recommend the best method based on demand, property type and your preferred timeline.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              <span class="faq-num">03</span>
+              <span class="faq-text">What are the best ways to promote my home for sale?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a" hidden>
+              High-impact photography, strong digital exposure, targeted buyer outreach and well-timed open homes. We’ll tailor a plan that fits your property and budget.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              <span class="faq-num">04</span>
+              <span class="faq-text">How can I know how much my property is worth?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-a" hidden>
+              Start with a free expert appraisal. You’ll get a price range, comparable sales and the key steps to maximise your sale price in today’s market.
+            </div>
+          </div>
+        </div>
       </div>
     </section>
-  </main>
 
+    <!-- NEW: Testimonials slider -->
+    <section class="testimonials" id="testimonials">
+      <div class="container">
+        <h2 class="t-head">Word-of-mouth, direct from our clients</h2>
+        <div class="t-slider" aria-roledescription="carousel">
+          <div class="t-track">
+            <article class="t-slide" aria-roledescription="slide">
+              <div class="t-quote">“We had an amazing agent — friendly, helpful and proactive throughout the sale process. Great advice and beyond what we expected.”</div>
+              <div class="t-meta">19 Rushton Road — Vendor</div>
+            </article>
+            <article class="t-slide" aria-roledescription="slide">
+              <div class="t-quote">“Excellent communication and street-level knowledge. The team kept us informed at every step and delivered a fantastic result.”</div>
+              <div class="t-meta">Appleby — Homeowner</div>
+            </article>
+            <article class="t-slide" aria-roledescription="slide">
+              <div class="t-quote">“Clear pricing guidance, tailored marketing, and a stress-free campaign. Highly recommend First National Connect.”</div>
+              <div class="t-meta">Richmond — Vendor</div>
+            </article>
+          </div>
+
+          <div class="t-arrows" aria-hidden="true">
+            <button class="t-prev" type="button" aria-label="Previous slide">‹</button>
+            <button class="t-next" type="button" aria-label="Next slide">›</button>
+          </div>
+
+          <div class="t-dots" role="tablist" aria-label="Testimonials navigation">
+            <button class="t-dot" role="tab" aria-selected="true" aria-controls="t-slide-1"></button>
+            <button class="t-dot" role="tab" aria-selected="false" aria-controls="t-slide-2"></button>
+            <button class="t-dot" role="tab" aria-selected="false" aria-controls="t-slide-3"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
   <!-- FOOTER -->
   <footer class="footer" role="contentinfo">
     <div class="container footgrid">
@@ -323,6 +396,50 @@
       alert('Thanks — form captured (preview). Connect a backend to go live.');
       form.reset();
     });
+
+    // ===== FAQ accordion (LJ-style) =====
+    document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const answer = item.querySelector('.faq-a');
+        const open = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        answer.hidden = !open;
+        btn.querySelector('.faq-icon').textContent = open ? '–' : '+';
+      });
+    });
+
+    // ===== Testimonials slider =====
+    (function(){
+      const track = document.querySelector('.t-track');
+      const slides = Array.from(document.querySelectorAll('.t-slide'));
+      const dots   = Array.from(document.querySelectorAll('.t-dot'));
+      const prev   = document.querySelector('.t-prev');
+      const next   = document.querySelector('.t-next');
+
+      let index = 0, timer;
+
+      function go(i){
+        index = (i + slides.length) % slides.length;
+        track.style.transform = `translateX(-${index * 100}%)`;
+        dots.forEach((d, n) => d.setAttribute('aria-selected', n === index ? 'true' : 'false'));
+        restart();
+      }
+      function restart(){
+        clearInterval(timer);
+        timer = setInterval(() => go(index + 1), 5500);
+      }
+
+      dots.forEach((d,n)=>d.addEventListener('click',()=>go(n)));
+      prev?.addEventListener('click',()=>go(index-1));
+      next?.addEventListener('click',()=>go(index+1));
+      // pause on hover (desktop)
+      const slider = document.querySelector('.t-slider');
+      slider?.addEventListener('mouseenter', ()=>clearInterval(timer));
+      slider?.addEventListener('mouseleave', restart);
+
+      restart();
+    })();
   </script>
 </body>
 </html>
