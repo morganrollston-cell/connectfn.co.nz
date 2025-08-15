@@ -23,8 +23,8 @@
     html{scroll-behavior:smooth}
 
     /* ========= Header ========= */
-    .topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.98);border-bottom:1px solid var(--border);backdrop-filter:saturate(1.1) blur(2px);padding-top:env(safe-area-inset-top);box-shadow:0 2px 12px rgba(0,0,0,.06)}
-    .topbar .row{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:12px 0}
+    .topbar{position:sticky;top:0;z-index:80;background:rgba(255,255,255,.98);border-bottom:1px solid var(--border);backdrop-filter:saturate(1.1) blur(2px);padding-top:env(safe-area-inset-top);box-shadow:0 2px 12px rgba(0,0,0,.06)}
+    .topbar .row{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:12px 0}
     .brand{display:inline-grid;grid-auto-flow:column;gap:12px;align-items:center;color:var(--ink);font-weight:800}
     .brand-badge{width:36px;aspect-ratio:1;border-radius:8px;background:var(--brand);display:grid;place-items:center;color:#fff}
     .cta-nav{display:inline-grid;grid-auto-flow:column;gap:12px}
@@ -32,15 +32,40 @@
     .btn.secondary{background:#ebf3fb;color:var(--brand)}
     @media (hover:hover) and (pointer:fine){.btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(0,70,127,.22);transition:transform .18s ease,box-shadow .18s ease}}
     @media (max-width:520px){
-      .topbar .row{grid-template-columns:1fr;gap:8px}
-      .cta-nav{grid-auto-flow:row;grid-template-columns:1fr 1fr}
-      .cta-nav .btn{width:100%}
+      .topbar .row{grid-template-columns:auto 1fr auto}
+      .cta-nav{gap:8px}
+      .btn{padding:10px 14px;min-height:40px;border-radius:10px}
     }
+
+    /* ========== CLEAN HAMBURGER ICON + DRAWER ========== */
+    .menu-btn{background:transparent;border:0;padding:8px;cursor:pointer}
+    .menu-icon{position:relative;display:block;width:26px;height:18px}
+    .menu-icon span{position:absolute;left:0;right:0;height:2px;background:var(--brand)}
+    .menu-icon span:nth-child(1){top:0}
+    .menu-icon span:nth-child(2){top:8px}
+    .menu-icon span:nth-child(3){bottom:0}
+    @media (min-width:900px){.menu-btn{padding:6px}}
+
+    .scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:.2s;z-index:85}
+    .scrim.show{opacity:1;pointer-events:auto}
+
+    .drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,86vw);background:#fff;box-shadow:-24px 0 48px rgba(0,0,0,.2);transform:translateX(100%);transition:transform .3s ease;z-index:90;padding:18px 20px;display:grid;grid-template-rows:auto 1fr}
+    .drawer.open{transform:translateX(0)}
+    @media (max-width:640px){.drawer{width:100vw}}
+
+    .drawer-head{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px;padding-top:env(safe-area-inset-top)}
+    .drawer-close{background:transparent;border:0;font-size:28px;line-height:1;color:#0b1e37;cursor:pointer}
+    .drawer-search{margin:12px 0}
+    .drawer-search input{width:100%;border:1px solid #dfe7f0;border-radius:999px;padding:12px 16px;font-size:16px}
+    .drawer-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .drawer-col a{display:block;padding:10px 0;color:#0b1e37;font-weight:600}
+    @media (max-width:520px){.drawer-grid{grid-template-columns:1fr}}
 
     /* ========= Hero ========= */
     .hero{position:relative}
     .hero-media{
-      position:relative;height:clamp(320px,48vw,640px);overflow:hidden;
+      position:relative;height:clamp(420px,60vw,820px); /* TALLER hero */
+      overflow:hidden;
       background:
         linear-gradient(180deg, rgba(0,0,0,.36), rgba(0,0,0,.18)),
         url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2400&auto=format&fit=crop') center/cover no-repeat;
@@ -56,18 +81,17 @@
     /* --- Desktop/Tablet: split hero (copy + form side-by-side) --- */
     .hero-grid{display:block}
     .hero-copy{max-width:60ch}
-    .hero-form{display:none} /* hidden on mobile by default */
-
+    .hero-form{display:none}
     @media (min-width:900px){
-      .hero-media{height:clamp(520px,56vw,720px)}
-      .overlay .inner{padding:clamp(48px,6vw,72px)}
+      .hero-media{height:clamp(620px,62vw,860px)} /* even taller on large screens */
+      .overlay .inner{padding:clamp(48px,6vw,72px) clamp(16px,4vw,32px) clamp(24px,3vw,40px)}
       .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(20px,3vw,32px);align-items:end}
       .hero-form{display:block}
     }
 
-    /* ========= Mobile: normal stacked layout (form below hero) ========= */
+    /* ========= Mobile: stacked form ========= */
     .form-wrap{transform:translateY(-72px)}
-    @media(min-width:900px){.form-wrap{display:none}}  /* hidden on desktop/tablet */
+    @media(min-width:900px){.form-wrap{display:none}}
     @media (max-width:640px){.form-wrap{transform:translateY(-48px)}}
 
     .form-holder{max-width:min(760px,96vw);margin-inline:auto}
@@ -125,22 +149,20 @@
 
     /* ========= Steps overflow fix ========= */
     .section-steps .container{width:100%;max-width:100%;padding-left:0;padding-right:0}
-    .section-steps p,
-    .section-steps .step p,
-    .section-steps li { overflow-wrap: normal; word-break: normal; hyphens: auto; }
+    .section-steps p,.section-steps .step p,.section-steps li{overflow-wrap:normal;word-break:normal;hyphens:auto}
 
     /* ========= Hero spacing so text never hides behind form ========= */
     .overlay .inner { padding-bottom: clamp(140px, 16vw, 220px) }
     .overlay .lede { font-size: clamp(18px, 2vw, 22px); line-height:1.5; color:#fff; font-weight:500; text-shadow:0 2px 10px rgba(0,0,0,.35) }
     .overlay h1 { margin-bottom:12px }
     @media (max-width: 640px) {
-      .hero-media{height:360px}
-      .overlay .inner{padding:16px 16px 150px}
+      .hero-media{height:420px}
+      .overlay .inner{padding:16px 16px 160px}
       .overlay h1{font-size:1.55rem;line-height:1.18;margin-bottom:8px}
       .overlay .lede{font-size:1rem;line-height:1.45}
     }
 
-    /* ========== FAQ (LJ style) ========== */
+    /* ========== FAQ (LJ style, larger headings) ========== */
     .faq-pro{background:#fff;padding:clamp(36px,5vw,72px) 0;border-top:1px solid var(--border)}
     .faq-pro .heading{font-size:clamp(28px,3.6vw,44px);text-align:center;margin:0 0 24px;color:#2b2f38}
     .faq-list{border-top:1px solid var(--border)}
@@ -169,7 +191,7 @@
     .t-arrows button{pointer-events:auto;border:0;background:rgba(255,255,255,.9);width:38px;height:38px;border-radius:50%;font-size:20px;font-weight:700;box-shadow:0 6px 16px rgba(0,0,0,.12)}
     @media (max-width:640px){.t-arrows{display:none}}
 
-    /* ========== NEW: Big image CTA panel (below testimonials) ========== */
+    /* ========== Big image CTA panel ========== */
     .cta-image{position:relative;background:
         linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.35)),
         url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
@@ -179,7 +201,7 @@
     .cta-panel p{margin:0 0 16px;color:#344861}
     .cta-panel .btn{color:#00467F;background:#ebf3fb}
 
-    /* ========== NEW: Terms & Conditions accordion ========== */
+    /* ========== Terms & Conditions ========== */
     .terms{background:#fff;padding:clamp(36px,5vw,72px) 0}
     .terms h2{margin:0 0 16px;text-align:center;font-size:clamp(22px,3vw,32px)}
     .t-acc details{max-width:920px;margin:12px auto;background:#fff}
@@ -187,6 +209,28 @@
   </style>
 </head>
 <body>
+  <!-- Overlay + Drawer (hidden by default) -->
+  <div class="scrim" id="scrim"></div>
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-head">
+      <div>Back to <a href="#">First National Connect</a></div>
+      <button class="drawer-close" id="drawerClose" aria-label="Close menu">×</button>
+    </div>
+    <div class="drawer-search"><input type="search" placeholder="Enter agent name, office or suburb"></div>
+    <!-- Drawer links (edit freely) -->
+    <div class="drawer-grid">
+      <div class="drawer-col">
+        <a href="#">Buy</a>
+        <a href="#">Sell</a>
+        <a href="#">Rent</a>
+      </div>
+      <div class="drawer-col">
+        <a href="#appraisal-form">Contact Us</a>
+        <a href="#">About Us</a>
+      </div>
+    </div>
+  </aside>
+
   <!-- Header -->
   <header class="topbar" role="banner">
     <div class="container row">
@@ -195,16 +239,18 @@
         <a class="btn secondary" href="tel:+6430000000">Call us</a>
         <a class="btn" href="#appraisal-form">Get your appraisal</a>
       </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+        <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
     </div>
   </header>
 
   <main id="top">
-    <!-- HERO (now supports split layout on ≥900px) -->
+    <!-- HERO (split on ≥900px) -->
     <section class="hero">
       <div class="hero-media"></div>
       <div class="overlay">
         <div class="inner container hero-grid">
-          <!-- LEFT: copy -->
           <div class="hero-copy">
             <span class="promo-badge">Spring promo</span>
             <h1>Partner with First National Connect this spring and win <span class="hl">$2,500</span>.</h1>
@@ -212,7 +258,7 @@
             <p class="footnote">*Open to NZ residents 18+. T&amp;Cs apply. Drawn end of spring. No purchase necessary.</p>
           </div>
 
-          <!-- RIGHT (shown on tablet/desktop): form in hero -->
+          <!-- RIGHT: form in hero (desktop/tablet) -->
           <div class="hero-form">
             <div class="form-holder card" id="hero-form-holder">
               <form id="leadFormDesktop" novalidate>
@@ -430,7 +476,7 @@
       </div>
     </section>
 
-    <!-- NEW big image CTA panel -->
+    <!-- Big image CTA panel -->
     <section class="cta-image">
       <div class="container">
         <div class="cta-panel">
@@ -441,7 +487,7 @@
       </div>
     </section>
 
-    <!-- NEW Terms & Conditions -->
+    <!-- Terms & Conditions -->
     <section class="terms" id="terms">
       <div class="container">
         <h2>Spring Campaign T&Cs</h2>
@@ -472,12 +518,34 @@
   </footer>
 
   <script>
+    // Drawer controls
+    const menuBtn   = document.getElementById('menuBtn');
+    const drawer    = document.getElementById('drawer');
+    const scrim     = document.getElementById('scrim');
+    const drawerCls = document.getElementById('drawerClose');
+
+    function openDrawer(){
+      drawer.classList.add('open');
+      scrim.classList.add('show');
+      drawer.setAttribute('aria-hidden','false');
+      menuBtn.setAttribute('aria-expanded','true');
+    }
+    function closeDrawer(){
+      drawer.classList.remove('open');
+      scrim.classList.remove('show');
+      drawer.setAttribute('aria-hidden','true');
+      menuBtn.setAttribute('aria-expanded','false');
+    }
+    menuBtn.addEventListener('click', openDrawer);
+    drawerCls.addEventListener('click', closeDrawer);
+    scrim.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
+
     // Make #appraisal-form always target the visible form
     function syncFormAnchor(){
       const desktopHolder = document.getElementById('hero-form-holder');
       const mobileHolder  = document.getElementById('mobile-form-holder');
-      const desktop = desktopHolder?.querySelector('form');
-      const mobile  = mobileHolder?.querySelector('form');
+      if (!desktopHolder || !mobileHolder) return;
       if (window.matchMedia('(min-width:900px)').matches){
         desktopHolder.id = 'appraisal-form';
         mobileHolder.id  = 'mobile-form-holder';
@@ -490,8 +558,8 @@
     addEventListener('resize', syncFormAnchor);
 
     // Demo-only submit handler
-    function hookForm(id){
-      const f = document.getElementById(id)?.querySelector('form');
+    function hookForm(holderId){
+      const f = document.getElementById(holderId)?.querySelector('form');
       f?.addEventListener('submit', e=>{
         e.preventDefault();
         alert('Thanks — form captured (preview). Connect a backend to go live.');
