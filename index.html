@@ -206,6 +206,12 @@
     .terms h2{margin:0 0 16px;text-align:center;font-size:clamp(22px,3vw,32px)}
     .t-acc details{max-width:920px;margin:12px auto;background:#fff}
     .t-acc summary{font-weight:700;cursor:pointer}
+
+    /* --- Form intro styles (LJ-style) --- */
+    .form-intro{padding:18px 16px 6px;border-bottom:1px solid rgba(16,34,58,.06)}
+    .form-intro .step{color:#f5a300;font-weight:800;letter-spacing:.2px;font-size:.95rem;margin:0 0 6px}
+    .form-intro h3{margin:0 0 8px;font-size:clamp(18px, 2.1vw, 24px);line-height:1.25;color:#0b1e37}
+    .form-intro p{margin:0 0 12px;color:#3b4a62;font-size:clamp(14px, 1.7vw, 16px)}
   </style>
 </head>
 <body>
@@ -262,6 +268,13 @@
           <div class="hero-form">
             <div class="form-holder card" id="hero-form-holder">
               <form id="leadFormDesktop" novalidate>
+                <div class="form-intro">
+                  <div class="step">Step 1</div>
+                  <h3>Ready to find out what your home is worth?</h3>
+                  <p>Your appraisal includes a full assessment of your property, comparable local sales,
+                    current market conditions and clear next steps. Fill in your details and a local
+                    First National Connect specialist will be in touch shortly.</p>
+                </div>
                 <h2 class="visually-hidden" aria-hidden="true">Request your free appraisal</h2>
                 <label>Property address
                   <input type="text" name="address" placeholder="e.g., 10 Example St, Richmond" required>
@@ -304,6 +317,13 @@
     <section class="form-wrap">
       <div class="form-holder card" id="mobile-form-holder" aria-labelledby="form-heading">
         <form id="leadFormMobile" novalidate>
+          <div class="form-intro">
+            <div class="step">Step 1</div>
+            <h3>Ready to find out what your home is worth?</h3>
+            <p>Your appraisal includes a full assessment of your property, comparable local sales,
+              current market conditions and clear next steps. Fill in your details and a local
+              First National Connect specialist will be in touch shortly.</p>
+          </div>
           <h2 id="form-heading" class="visually-hidden" aria-hidden="true">Request your free appraisal</h2>
           <label>Property address
             <input type="text" name="address" placeholder="e.g., 10 Example St, Richmond" required>
