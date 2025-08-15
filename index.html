@@ -37,11 +37,19 @@
       .cta-nav .btn{width:100%}
     }
 
+    /* ===== Header: tiny round menu icon ===== */
+    .menu-trigger{
+      display:inline-grid; place-items:center; gap:4px;
+      width:44px; height:44px; border:0; border-radius:999px;
+      background:#0b3f6d; box-shadow:0 6px 18px rgba(0,70,127,.16); cursor:pointer;
+    }
+    .menu-trigger span{display:block;width:18px;height:2px;background:#fff;border-radius:2px}
+    @media (hover:hover){.menu-trigger:hover{transform:translateY(-1px)}}
+
     /* ========= Hero (CSS background + overlay text) ========= */
     .hero{position:relative}
     .hero-media{
       position:relative;height:clamp(320px,48vw,640px);overflow:hidden;
-      /* Replace the URL below with your real hero image when ready */
       background:
         linear-gradient(180deg, rgba(0,0,0,.36), rgba(0,0,0,.18)),
         url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2400&auto=format&fit=crop') center/cover no-repeat;
@@ -55,7 +63,7 @@
     .footnote{font-size:12px;color:#e3eaf2;margin-top:8px}
 
     /* ========= Centered Form below hero ========= */
-    .form-wrap{transform:translateY(-72px)}                 /* pull the form up */
+    .form-wrap{transform:translateY(-72px)}
     @media(min-width:900px){.form-wrap{transform:translateY(-92px)}}
     .form-holder{max-width:min(760px,96vw);margin-inline:auto}
     .card{background:#fff;border:1px solid rgba(16,34,58,.06);border-radius:var(--radius);box-shadow:var(--shadow-2)}
@@ -67,9 +75,7 @@
     .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     .btn.block{width:100%;padding-block:14px}
     .fine{margin:2px 0 0;font-size:12px;color:var(--muted)}
-    /* iPad heading/form spacing */
     @media (min-width:768px) and (max-width:1060px){.overlay h1{margin-bottom:8px}.form-wrap{transform:translateY(-72px)}}
-    /* Small phones: collapse rows + reduce pull-up */
     @media (max-width:640px){.row2{grid-template-columns:1fr}.form-wrap{transform:translateY(-48px)}.btn{min-height:48px}}
 
     /* ========= Simple Steps under form ========= */
@@ -106,18 +112,16 @@
     .footgrid{display:grid;grid-template-columns:1fr;gap:16px;align-items:center}
     .footlogo{width:clamp(200px,32vw,320px);height:clamp(40px,6vw,64px);background:#00467F;border-radius:8px}
 
-    /* ========= MOBILE ORDER FIX (ensures text above image on phones) ========= */
+    /* ========= MOBILE ORDER FIX ========= */
     @media (max-width:860px){
       .info-row,.info-row.reverse{grid-template-columns:1fr !important}
       .info-row .info-copy{order:-1}
       .info-row .info-media{order:0}
     }
 
-    /* ========= Simple Steps overflow fix (without breaking words) ========= */
+    /* ========= Simple Steps overflow fix ========= */
     .section-steps .container{width:100%;max-width:100%;padding-left:0;padding-right:0}
-    .section-steps p,
-    .section-steps .step p,
-    .section-steps li { overflow-wrap: normal; word-break: normal; hyphens: auto; }
+    .section-steps p,.section-steps .step p,.section-steps li{overflow-wrap:normal;word-break:normal;hyphens:auto}
     @media (max-width:720px){
       .section-steps .steps-list{grid-template-columns:1fr;gap:16px 18px}
       .section-steps .step{grid-template-columns:auto 1fr}
@@ -149,12 +153,16 @@
 
     /* ========== NEW: LJ-style FAQ accordion (goes after CTA strip) ========== */
     .faq-pro{background:#fff;padding:clamp(36px,5vw,72px) 0;border-top:1px solid var(--border)}
-    .faq-pro .heading{font-size:clamp(22px,3vw,36px);text-align:center;margin:0 0 24px;color:#2b2f38}
+    /* Bigger FAQ heading as requested */
+    .faq-pro .heading{
+      font-size:clamp(28px,4.6vw,44px);
+      text-align:center;margin:0 0 24px;color:#2b2f38;font-weight:900;letter-spacing:.2px
+    }
     .faq-list{border-top:1px solid var(--border)}
     .faq-item{border-bottom:1px solid var(--border)}
     .faq-q{width:100%;background:#fff;border:0;padding:18px 0;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;text-align:left;cursor:pointer}
     .faq-num{font-weight:800;color:#00467F;opacity:.9;min-width:2.25ch}
-    .faq-text{font-weight:600;color:#2b2f38}
+    .faq-text{font-weight:700;color:#2b2f38;font-size:clamp(18px,2.3vw,22px)}
     .faq-icon{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#f1f5f9;color:#0b1e37;font-weight:900}
     .faq-a{padding:0 0 18px 36px;color:#3b4a62;display:none}
     .faq-item.open .faq-a{display:block}
@@ -176,6 +184,30 @@
     .t-arrows button{pointer-events:auto;border:0;background:rgba(255,255,255,.9);width:38px;height:38px;border-radius:50%;font-size:20px;font-weight:700;box-shadow:0 6px 16px rgba(0,0,0,.12)}
     @media (max-width:640px){.t-arrows{display:none}}
 
+    /* ===== Full-screen menu ===== */
+    .mega-menu{
+      position:fixed; inset:0; z-index:1200;
+      background:#fff; color:#0f172a;
+      transform:translateY(-100%); transition:transform .35s ease;
+      display:grid; grid-template-rows:auto 1fr; overscroll-behavior:contain;
+    }
+    .mega-menu.open{ transform:translateY(0); }
+    .mega-inner{padding-block:clamp(16px,3vw,28px);}
+    .mega-top{
+      display:grid; grid-template-columns:1fr auto; align-items:center; margin-bottom:clamp(16px,2vw,20px);
+      border-bottom:1px solid #e6edf5; padding-bottom:12px;
+    }
+    .mega-back{font:600 14px/1.2 inherit; background:none; border:0; color:#0f172a; opacity:.7; cursor:pointer;}
+    .mega-close{width:40px; height:40px; border:0; border-radius:999px; background:#f1f5f9; cursor:pointer; font-size:18px; line-height:1;}
+    .mega-search{position:relative; margin:clamp(12px,2.5vw,18px) 0 clamp(18px,3vw,28px);}
+    .mega-search input{width:100%; padding:18px 56px 18px 20px; border-radius:999px; border:1px solid #dfe7f0; font-size:1rem;}
+    .mega-search-btn{position:absolute; right:8px; top:50%; transform:translateY(-50%); width:40px; height:40px; border:0; border-radius:999px; background:#0b3f6d; color:#fff; cursor:pointer;}
+    .mega-links{display:grid; grid-template-columns:1fr; gap:28px;}
+    .mega-links ul{list-style:none; padding:0; margin:0; display:grid; gap:12px}
+    .mega-links a{display:inline-block; font-size:clamp(20px,2.6vw,28px); color:#0b1e37; text-decoration:none; border-bottom:2px solid transparent; padding-bottom:2px;}
+    .mega-links a:hover{border-color:#0b1e37}
+    @media (min-width:800px){ .mega-links{grid-template-columns:1fr 1fr;} }
+    body.menu-open{height:100vh; overflow:hidden;}
   </style>
 </head>
 <body>
@@ -186,9 +218,47 @@
       <nav class="cta-nav">
         <a class="btn secondary" href="tel:+6430000000">Call us</a>
         <a class="btn" href="#appraisal-form">Get your appraisal</a>
+        <!-- Menu trigger -->
+        <button class="menu-trigger" aria-label="Open menu" aria-controls="megaMenu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </nav>
     </div>
   </header>
+
+  <!-- Full-screen menu (drawer) -->
+  <aside id="megaMenu" class="mega-menu" aria-hidden="true">
+    <div class="mega-inner container">
+      <div class="mega-top">
+        <button class="mega-back" type="button" aria-label="Back to site">Back to site</button>
+        <button class="mega-close" type="button" aria-label="Close menu">✕</button>
+      </div>
+
+      <div class="mega-search">
+        <input type="search" placeholder="Enter agent name, office or suburb" aria-label="Search site" />
+        <button class="mega-search-btn" aria-label="Search">🔎</button>
+      </div>
+
+      <!-- EASY-TO-EDIT LINKS -->
+      <nav class="mega-links" aria-label="Site links">
+        <ul>
+          <li><a href="#buy">Buy</a></li>
+          <li><a href="#sell">Sell</a></li>
+          <li><a href="#rent">Rent</a></li>
+          <li><a href="#invest">Invest</a></li>
+        </ul>
+
+        <ul>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#careers">Careers</a></li>
+          <li><a href="#newsroom">Newsroom</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#ebooks">eBooks</a></li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
 
   <main id="top">
     <!-- HERO -->
@@ -379,7 +449,8 @@
         </div>
       </div>
     </section>
-    
+  </main>
+
   <!-- FOOTER -->
   <footer class="footer" role="contentinfo">
     <div class="container footgrid">
@@ -433,12 +504,48 @@
       dots.forEach((d,n)=>d.addEventListener('click',()=>go(n)));
       prev?.addEventListener('click',()=>go(index-1));
       next?.addEventListener('click',()=>go(index+1));
-      // pause on hover (desktop)
       const slider = document.querySelector('.t-slider');
       slider?.addEventListener('mouseenter', ()=>clearInterval(timer));
       slider?.addEventListener('mouseleave', restart);
 
       restart();
+    })();
+
+    // ===== Full-screen menu logic =====
+    (function(){
+      const trigger = document.querySelector('.menu-trigger');
+      const menu = document.getElementById('megaMenu');
+      const closeBtn = menu.querySelector('.mega-close');
+      const backBtn  = menu.querySelector('.mega-back');
+
+      function openMenu(){
+        menu.classList.add('open');
+        menu.setAttribute('aria-hidden','false');
+        trigger.setAttribute('aria-expanded','true');
+        document.body.classList.add('menu-open');
+        const first = menu.querySelector('input, a, button');
+        first && first.focus();
+      }
+      function closeMenu(){
+        menu.classList.remove('open');
+        menu.setAttribute('aria-hidden','true');
+        trigger.setAttribute('aria-expanded','false');
+        document.body.classList.remove('menu-open');
+        trigger.focus();
+      }
+
+      trigger.addEventListener('click', openMenu);
+      closeBtn.addEventListener('click', closeMenu);
+      backBtn.addEventListener('click', closeMenu);
+
+      document.addEventListener('keydown', (e)=>{
+        if(e.key === 'Escape' && menu.classList.contains('open')) closeMenu();
+      });
+
+      // backdrop click to close
+      menu.addEventListener('click', (e)=>{
+        if(e.target === menu) closeMenu();
+      });
     })();
   </script>
 </body>
