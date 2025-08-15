@@ -1,198 +1,192 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="theme-color" content="#00467F" />
-<title>Free Property Appraisal — First National Connect</title>
-<meta name="description" content="Free expert appraisal with insight into your home’s value, the current Nelson/Tasman market, and a strategy to maximise your sale price." />
-<style>
-  /* ========= Base / tokens ========= */
-  *,*::before,*::after{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%}
-  body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.5;color:#122033;background:#ffffff;font-size:clamp(15px,1.6vw,17px)}
-  a{color:#00467F;text-decoration:none}
-  img{max-width:100%;height:auto;display:block}
-  :root{
-    --brand:#00467F;--ink:#10223a;--muted:#64748b;--bg:#f6f8fb;--border:#e6edf5;
-    --radius:14px;--shadow-1:0 10px 28px rgba(0,0,0,.08);--shadow-2:0 14px 42px rgba(0,0,0,.10)
-  }
-  .container{width:min(1120px,92vw);margin-inline:auto;padding-inline:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
-  html,body{overflow-x:hidden}
-  [id]{scroll-margin-top:92px}
-  html{scroll-behavior:smooth}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#00467F" />
+  <title>Free Property Appraisal — First National Connect</title>
+  <meta name="description" content="Free expert appraisal with insight into your home’s value, the current Nelson/Tasman market, and a strategy to maximise your sale price." />
+  <style>
+    /* ========= Base / tokens ========= */
+    *,*::before,*::after{box-sizing:border-box}
+    html{-webkit-text-size-adjust:100%}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.5;color:#122033;background:#ffffff;font-size:clamp(15px,1.6vw,17px)}
+    a{color:#00467F;text-decoration:none}
+    img{max-width:100%;height:auto;display:block}
+    :root{
+      --brand:#00467F;--ink:#10223a;--muted:#64748b;--bg:#f6f8fb;--border:#e6edf5;
+      --radius:14px;--shadow-1:0 10px 28px rgba(0,0,0,.08);--shadow-2:0 14px 42px rgba(0,0,0,.10)
+    }
+    .container{width:min(1120px,92vw);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+    html,body{overflow-x:hidden}
+    [id]{scroll-margin-top:92px}
+    html{scroll-behavior:smooth}
 
-  /* ========= Header ========= */
-  .topbar{position:sticky;top:0;z-index:90;background:rgba(255,255,255,.98);border-bottom:1px solid var(--border);backdrop-filter:saturate(1.1) blur(2px);padding-top:env(safe-area-inset-top);box-shadow:0 2px 12px rgba(0,0,0,.06)}
-  .topbar .row{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:10px 0}
-  .brand{display:inline-grid;grid-auto-flow:column;gap:12px;align-items:center;color:var(--ink);font-weight:800}
-  .brand-badge{width:32px;aspect-ratio:1;border-radius:8px;background:var(--brand);display:grid;place-items:center;color:#fff;font-weight:800}
+    /* ========= Header ========= */
+    .topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.98);border-bottom:1px solid var(--border);backdrop-filter:saturate(1.1) blur(2px);padding-top:env(safe-area-inset-top);box-shadow:0 2px 12px rgba(0,0,0,.06)}
+    .topbar .row{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:12px 0}
+    .brand{display:inline-grid;grid-auto-flow:column;gap:12px;align-items:center;color:var(--ink);font-weight:800}
+    .brand-badge{width:36px;aspect-ratio:1;border-radius:8px;background:var(--brand);display:grid;place-items:center;color:#fff}
+    .cta-nav{display:inline-grid;grid-auto-flow:column;gap:12px}
+    .btn{display:inline-block;background:var(--brand);color:#fff;border:0;border-radius:12px;padding:12px 18px;font-weight:800;letter-spacing:.2px;min-height:44px;box-shadow:0 6px 18px rgba(0,70,127,.16);cursor:pointer}
+    .btn.secondary{background:#ebf3fb;color:var(--brand)}
+    @media (hover:hover) and (pointer:fine){.btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(0,70,127,.22);transition:transform .18s ease,box-shadow .18s ease}}
+    @media (max-width:520px){
+      .topbar .row{grid-template-columns:1fr;gap:8px}
+      .cta-nav{grid-auto-flow:row;grid-template-columns:1fr 1fr}
+      .cta-nav .btn{width:100%}
+    }
 
-  /* header buttons – slimmer on mobile */
-  .cta-nav{display:inline-grid;grid-auto-flow:column;gap:10px}
-  .btn{display:inline-block;background:var(--brand);color:#fff;border:0;border-radius:12px;padding:10px 16px;font-weight:800;letter-spacing:.2px;min-height:40px;box-shadow:0 6px 18px rgba(0,70,127,.16);cursor:pointer;white-space:nowrap}
-  .btn.secondary{background:#ebf3fb;color:var(--brand)}
-  @media (hover:hover) and (pointer:fine){.btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(0,70,127,.22);transition:transform .18s ease,box-shadow .18s ease}}
-  @media (max-width:520px){
-    .topbar .row{grid-template-columns:auto 1fr auto;gap:8px}
-    .brand span:last-child{display:none}       /* hide long brand text on small phones */
-    .brand-badge{width:28px}
-    .btn{padding:8px 12px;min-height:36px;font-size:.95rem}
-  }
+    /* ========= Hero ========= */
+    .hero{position:relative}
+    .hero-media{
+      position:relative;height:clamp(320px,48vw,640px);overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.36), rgba(0,0,0,.18)),
+        url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2400&auto=format&fit=crop') center/cover no-repeat;
+    }
+    .overlay{position:absolute;inset:0;display:grid;align-items:end}
+    .overlay .inner{color:#fff;padding:clamp(16px,4vw,32px)}
+    .promo-badge{display:inline-block;background:#00467F;color:#fff;padding:6px 10px;border-radius:999px;font-size:.85rem;font-weight:700;letter-spacing:.2px;margin-bottom:10px}
+    .overlay h1{margin:0 0 8px;font-size:clamp(28px,5vw,52px);line-height:1.08;text-shadow:0 3px 18px rgba(0,0,0,.38)}
+    .overlay .lede{margin:0;color:#e7eef6;max-width:64ch;text-shadow:0 2px 12px rgba(0,0,0,.28)}
+    .hl{background:linear-gradient(transparent 60%, rgba(255,255,255,.28) 60%);font-weight:800;letter-spacing:.2px}
+    .footnote{font-size:12px;color:#e3eaf2;margin-top:8px}
 
-  /* ====== NEW: slim hamburger + right drawer ====== */
-  .menu-btn{--line:#00467F;display:inline-grid;place-items:center;width:34px;height:34px;border:0;background:transparent;padding:0;cursor:pointer}
-  .menu-btn .bars{position:relative;width:22px;height:14px}
-  .menu-btn .bars span{position:absolute;left:0;right:0;height:2px;background:var(--line);border-radius:2px;transform-origin:50% 50%}
-  .menu-btn .bars span:nth-child(1){top:0}
-  .menu-btn .bars span:nth-child(2){top:6px}
-  .menu-btn .bars span:nth-child(3){bottom:0}
+    /* --- Desktop/Tablet: split hero (copy + form side-by-side) --- */
+    .hero-grid{display:block}
+    .hero-copy{max-width:60ch}
+    .hero-form{display:none} /* hidden on mobile by default */
 
-  .scrim{position:fixed;inset:0;background:rgba(16,34,58,.34);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:95}
-  .drawer{position:fixed;top:0;right:0;height:100dvh;background:#fff;border-left:1px solid var(--border);box-shadow:-16px 0 36px rgba(0,0,0,.12);transform:translateX(100%);transition:transform .28s ease;z-index:96;display:grid;grid-template-rows:auto 1fr;gap:16px}
-  .drawer.open{transform:translateX(0)}
-  .scrim.show{opacity:1;pointer-events:auto}
+    @media (min-width:900px){
+      .hero-media{height:clamp(520px,56vw,720px)}
+      .overlay .inner{padding:clamp(48px,6vw,72px)}
+      .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(20px,3vw,32px);align-items:end}
+      .hero-form{display:block}
+    }
 
-  /* Drawer sizing: mobile = full width; tablet/desktop = panel */
-  .drawer{width:100vw;max-width:100vw;padding:18px}
-  @media(min-width:700px){
-    .drawer{width:min(420px,40vw);max-width:min(420px,40vw)}
-  }
+    /* ========= Mobile: normal stacked layout (form below hero) ========= */
+    .form-wrap{transform:translateY(-72px)}
+    @media(min-width:900px){.form-wrap{display:none}}  /* hidden on desktop/tablet */
+    @media (max-width:640px){.form-wrap{transform:translateY(-48px)}}
 
-  .drawer-head{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px}
-  .drawer-close{border:0;background:transparent;font-size:28px;line-height:1;color:#0b1e37;cursor:pointer}
-  .drawer-search{margin:6px 0 12px}
-  .drawer-search input{width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:999px;font-size:16px}
-  .drawer-links{display:grid;grid-template-columns:1fr 1fr;gap:16px 24px;padding-bottom:24px}
-  .drawer-group h4{margin:.5rem 0 .25rem;font-size:.9rem;color:#7a8799;text-transform:uppercase;letter-spacing:.08em}
-  .drawer-group a{display:block;padding:10px 0;border-bottom:1px solid #eef3f8;color:#0b1e37;font-weight:600}
-  @media(max-width:640px){.drawer-links{grid-template-columns:1fr}}
+    .form-holder{max-width:min(760px,96vw);margin-inline:auto}
+    .card{background:#fff;border:1px solid rgba(16,34,58,.06);border-radius:var(--radius);box-shadow:var(--shadow-2)}
+    form{display:grid;gap:16px;padding:16px}
+    label{display:grid;gap:6px;font-size:.95em}
+    input,select{background:#fff;border:1px solid #dfe7f0;border-radius:12px;padding:12px;font-size:16px;min-height:44px;transition:box-shadow .15s ease,border-color .15s ease}
+    input:focus,select:focus{border-color:#7cc4ff;box-shadow:0 0 0 4px rgba(124,196,255,.25);outline:0}
+    select{appearance:none;-webkit-appearance:none;-moz-appearance:none;background-image:linear-gradient(45deg,transparent 50%,#00467F 50%),linear-gradient(135deg,#00467F 50%,transparent 50%),linear-gradient(to right,#fff,#fff);background-position:calc(100% - 18px) calc(1em + 3px),calc(100% - 12px) calc(1em + 3px),100% 0;background-size:6px 6px,6px 6px,2.5em 100%;background-repeat:no-repeat;padding-right:2.8em}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .btn.block{width:100%;padding-block:14px}
+    .fine{margin:2px 0 0;font-size:12px;color:var(--muted)}
+    @media (max-width:640px){.row2{grid-template-columns:1fr}.btn{min-height:48px}}
 
-  /* ========= Hero (CSS background + overlay text) ========= */
-  .hero{position:relative}
-  .hero-media{
-    position:relative;height:clamp(320px,48vw,640px);overflow:hidden;
-    background:
-      linear-gradient(180deg, rgba(0,0,0,.36), rgba(0,0,0,.18)),
-      url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2400&auto=format&fit=crop') center/cover no-repeat;
-  }
-  .overlay{position:absolute;inset:0;display:grid;align-items:end}
-  .overlay .inner{color:#fff;padding:clamp(16px,4vw,32px)}
-  .promo-badge{display:inline-block;background:#00467F;color:#fff;padding:6px 10px;border-radius:999px;font-size:.85rem;font-weight:700;letter-spacing:.2px;margin-bottom:10px}
-  .overlay h1{margin:0 0 8px;font-size:clamp(28px,5vw,52px);line-height:1.08;text-shadow:0 3px 18px rgba(0,0,0,.38)}
-  .overlay .lede{margin:0;color:#e7eef6;max-width:64ch;text-shadow:0 2px 12px rgba(0,0,0,.28)}
-  .hl{background:linear-gradient(transparent 60%, rgba(255,255,255,.28) 60%);font-weight:800;letter-spacing:.2px}
-  .footnote{font-size:12px;color:#e3eaf2;margin-top:8px}
+    /* ========= Simple Steps ========= */
+    .section-steps{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 10px 28px rgba(0,0,0,.08);padding:clamp(20px,3.5vw,34px);margin:clamp(14px,3vw,28px) auto 0;max-width:min(1120px,92vw)}
+    .section-steps h2{margin:0 0 8px;font-size:clamp(20px,2.6vw,28px);line-height:1.15;letter-spacing:.2px}
+    .section-steps p.sublede{margin:0 0 14px;color:#556476}
+    .section-steps .cta-wrap{margin:10px 0 18px}
+    .btn-pill{display:inline-block;background:#00467F;color:#fff;text-decoration:none;font-weight:800;letter-spacing:.2px;padding:12px 20px;border-radius:999px;min-height:44px;box-shadow:0 6px 18px rgba(0,70,127,.16);text-align:center;width:100%}
+    @media (hover:hover) and (pointer:fine){.btn-pill:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(0,70,127,.22);transition:transform .18s ease,box-shadow .18s ease}}
+    .steps-list{display:grid;grid-template-columns:1fr;gap:14px 18px;margin-top:8px}
+    .step{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:flex-start;min-width:0}
+    .step .num{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:2px solid #00467F;color:#00467F;font-weight:800}
+    .step p{margin:4px 0 0;color:#354861;min-width:0}
+    @media (min-width:720px){.btn-pill{width:auto}.steps-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
-  /* Raise hero text so the form doesn’t overlap */
-  .overlay .inner{padding-bottom:clamp(140px,16vw,220px)}
-  .overlay .lede{font-size:clamp(18px,2vw,22px);line-height:1.5;color:#fff;font-weight:500;text-shadow:0 2px 10px rgba(0,0,0,.35);max-width:60ch}
-  .overlay h1{margin-bottom:12px}
-  @media (max-width:640px){
-    .hero-media{height:360px}
-    .overlay .inner{padding:16px 16px 150px}
-    .overlay h1{font-size:1.55rem;line-height:1.18;margin-bottom:8px}
-    .overlay .lede{font-size:1rem;line-height:1.45}
-  }
+    /* ========= Alternating Info band ========= */
+    .section-info{background:#fff;padding:clamp(28px,5vw,64px) 0}
+    .info-row{display:grid;grid-template-columns:1fr;gap:clamp(16px,3vw,28px);align-items:center;margin-bottom:clamp(24px,4vw,48px)}
+    .info-copy{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-1);padding:clamp(16px,3vw,28px);min-width:0}
+    .info-copy h3{margin:0 0 8px;font-size:clamp(20px,2.6vw,28px);line-height:1.2}
+    .info-copy p{margin:0;color:#354861}
+    .info-media{border-radius:14px;overflow:hidden;box-shadow:var(--shadow-1)}
+    .info-media .ph{width:100%;aspect-ratio:4/3;background:#dfe7f0;display:grid;place-items:center;color:#617587;font-weight:700}
+    @media (min-width:860px){.info-row{grid-template-columns:1.05fr .95fr}.info-row.reverse{grid-template-columns:.95fr 1.05fr}}
 
-  /* ========= Centered Form ========= */
-  .form-wrap{transform:translateY(-72px)}
-  @media(min-width:900px){.form-wrap{transform:translateY(-92px)}}
-  .form-holder{max-width:min(760px,96vw);margin-inline:auto}
-  .card{background:#fff;border:1px solid rgba(16,34,58,.06);border-radius:var(--radius);box-shadow:var(--shadow-2)}
-  form{display:grid;gap:16px;padding:16px}
-  label{display:grid;gap:6px;font-size:.95em}
-  input,select{background:#fff;border:1px solid #dfe7f0;border-radius:12px;padding:12px;font-size:16px;min-height:44px;transition:box-shadow .15s ease,border-color .15s ease}
-  input:focus,select:focus{border-color:#7cc4ff;box-shadow:0 0 0 4px rgba(124,196,255,.25);outline:0}
-  select{appearance:none;-webkit-appearance:none;-moz-appearance:none;background-image:linear-gradient(45deg,transparent 50%,#00467F 50%),linear-gradient(135deg,#00467F 50%,transparent 50%),linear-gradient(to right,#fff,#fff);background-position:calc(100% - 18px) calc(1em + 3px),calc(100% - 12px) calc(1em + 3px),100% 0;background-size:6px 6px,6px 6px,2.5em 100%;background-repeat:no-repeat;padding-right:2.8em}
-  .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  .btn.block{width:100%;padding-block:14px}
-  .fine{margin:2px 0 0;font-size:12px;color:var(--muted)}
-  @media (min-width:768px) and (max-width:1060px){.overlay h1{margin-bottom:8px}.form-wrap{transform:translateY(-72px)}}
-  @media (max-width:640px){.row2{grid-template-columns:1fr}.form-wrap{transform:translateY(-48px)}.btn{min-height:44px}}
+    /* ========= CTA strip ========= */
+    .cta-strip{background:var(--brand);color:#fff;text-align:center;padding:32px 0}
+    .cta-strip .btn{background:#fff;color:#00467F}
 
-  /* ========= Simple Steps ========= */
-  .section-steps{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 10px 28px rgba(0,0,0,.08);padding:clamp(20px,3.5vw,34px);margin:clamp(14px,3vw,28px) auto 0;max-width:min(1120px,92vw)}
-  .section-steps h2{margin:0 0 8px;font-size:clamp(22px,3vw,34px);line-height:1.15;letter-spacing:.2px} /* bigger */
-  .section-steps p.sublede{margin:0 0 14px;color:#556476}
-  .section-steps .cta-wrap{margin:10px 0 18px}
-  .btn-pill{display:inline-block;background:#00467F;color:#fff;text-decoration:none;font-weight:800;letter-spacing:.2px;padding:12px 20px;border-radius:999px;min-height:44px;box-shadow:0 6px 18px rgba(0,70,127,.16);text-align:center;width:100%}
-  @media (hover:hover) and (pointer:fine){.btn-pill:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(0,70,127,.22);transition:.18s}}
-  .steps-list{display:grid;grid-template-columns:1fr;gap:14px 18px;margin-top:8px}
-  .step{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:flex-start;min-width:0}
-  .step .num{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:2px solid #00467F;color:#00467F;font-weight:800}
-  .step p{margin:4px 0 0;color:#354861;min-width:0}
-  @media (min-width:720px){.btn-pill{width:auto}.steps-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    /* ========= FAQ + footer ========= */
+    .faq{background:#f6f8fb;padding:48px 0}
+    details{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;margin:16px 0}
+    .footer{background:#0d1b2a;color:#c8d3e1;padding:32px 0}
+    .footgrid{display:grid;grid-template-columns:1fr;gap:16px;align-items:center}
+    .footlogo{width:clamp(200px,32vw,320px);height:clamp(40px,6vw,64px);background:#00467F;border-radius:8px}
 
-  /* ========= Alternating Info ========= */
-  .section-info{background:#fff;padding:clamp(28px,5vw,64px) 0}
-  .info-row{display:grid;grid-template-columns:1fr;gap:clamp(16px,3vw,28px);align-items:center;margin-bottom:clamp(24px,4vw,48px)}
-  .info-copy{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-1);padding:clamp(16px,3vw,28px);min-width:0}
-  .info-copy h3{margin:0 0 8px;font-size:clamp(20px,2.6vw,28px);line-height:1.2}
-  .info-copy p{margin:0;color:#354861}
-  .info-media{border-radius:14px;overflow:hidden;box-shadow:var(--shadow-1)}
-  .info-media .ph{width:100%;aspect-ratio:4/3;background:#dfe7f0;display:grid;place-items:center;color:#617587;font-weight:700}
-  @media (min-width:860px){.info-row{grid-template-columns:1.05fr .95fr}.info-row.reverse{grid-template-columns:.95fr 1.05fr}}
+    /* ========= MOBILE ORDER FIX ========= */
+    @media (max-width:860px){
+      .info-row,.info-row.reverse{grid-template-columns:1fr !important}
+      .info-row .info-copy{order:-1}
+      .info-row .info-media{order:0}
+    }
 
-  /* ========= CTA strip ========= */
-  .cta-strip{background:var(--brand);color:#fff;text-align:center;padding:32px 0}
-  .cta-strip .btn{background:#fff;color:#00467F}
+    /* ========= Steps overflow fix ========= */
+    .section-steps .container{width:100%;max-width:100%;padding-left:0;padding-right:0}
+    .section-steps p,
+    .section-steps .step p,
+    .section-steps li { overflow-wrap: normal; word-break: normal; hyphens: auto; }
 
-  /* ========= FAQ + footer ========= */
-  .faq{background:#f6f8fb;padding:48px 0}
-  details{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;margin:16px 0}
-  .footer{background:#0d1b2a;color:#c8d3e1;padding:32px 0}
-  .footgrid{display:grid;grid-template-columns:1fr;gap:16px;align-items:center}
-  .footlogo{width:clamp(200px,32vw,320px);height:clamp(40px,6vw,64px);background:#00467F;border-radius:8px}
+    /* ========= Hero spacing so text never hides behind form ========= */
+    .overlay .inner { padding-bottom: clamp(140px, 16vw, 220px) }
+    .overlay .lede { font-size: clamp(18px, 2vw, 22px); line-height:1.5; color:#fff; font-weight:500; text-shadow:0 2px 10px rgba(0,0,0,.35) }
+    .overlay h1 { margin-bottom:12px }
+    @media (max-width: 640px) {
+      .hero-media{height:360px}
+      .overlay .inner{padding:16px 16px 150px}
+      .overlay h1{font-size:1.55rem;line-height:1.18;margin-bottom:8px}
+      .overlay .lede{font-size:1rem;line-height:1.45}
+    }
 
-  /* Mobile order fix */
-  @media (max-width:860px){
-    .info-row,.info-row.reverse{grid-template-columns:1fr !important}
-    .info-row .info-copy{order:-1}
-    .info-row .info-media{order:0}
-  }
+    /* ========== FAQ (LJ style) ========== */
+    .faq-pro{background:#fff;padding:clamp(36px,5vw,72px) 0;border-top:1px solid var(--border)}
+    .faq-pro .heading{font-size:clamp(28px,3.6vw,44px);text-align:center;margin:0 0 24px;color:#2b2f38}
+    .faq-list{border-top:1px solid var(--border)}
+    .faq-item{border-bottom:1px solid var(--border)}
+    .faq-q{width:100%;background:#fff;border:0;padding:20px 0;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;text-align:left;cursor:pointer}
+    .faq-num{font-weight:800;color:#00467F;opacity:.9;min-width:2.25ch}
+    .faq-text{font-weight:700;color:#2b2f38;font-size:clamp(18px,2.2vw,24px)}
+    .faq-icon{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#f1f5f9;color:#0b1e37;font-weight:900}
+    .faq-a{padding:0 0 18px 36px;color:#3b4a62;display:none}
+    .faq-item.open .faq-a{display:block}
+    .faq-item.open .faq-icon{background:#00467F;color:#fff}
+    @media (max-width:640px){.faq-a{padding-left:0}}
 
-  /* Steps overflow fix */
-  .section-steps .container{width:100%;max-width:100%;padding-left:0;padding-right:0}
-  .section-steps p,.section-steps .step p,.section-steps li{overflow-wrap:normal;word-break:normal;hyphens:auto}
-  @media (max-width:720px){
-    .section-steps .steps-list{grid-template-columns:1fr;gap:16px 18px}
-    .section-steps .step{grid-template-columns:auto 1fr}
-    .btn-pill{width:100%}
-  }
+    /* ========== Testimonials slider ========== */
+    .testimonials{background:#f6f8fb;padding:clamp(32px,5vw,64px) 0}
+    .t-head{font-size:clamp(20px,2.6vw,28px);margin:0 0 16px;text-align:center}
+    .t-slider{position:relative;overflow:hidden;border-radius:14px;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow-1)}
+    .t-track{display:flex;transition:transform .45s ease;will-change:transform}
+    .t-slide{flex:0 0 100%;padding:clamp(22px,3vw,34px);display:grid;gap:10px;min-height:200px}
+    .t-quote{font-size:clamp(16px,2.1vw,20px);color:#2b3545}
+    .t-meta{color:#506075;font-weight:600}
+    .t-dots{display:flex;gap:8px;justify-content:center;padding:12px}
+    .t-dot{width:10px;height:10px;border-radius:50%;border:0;background:#d1d9e4;cursor:pointer}
+    .t-dot[aria-selected="true"]{background:#00467F}
+    .t-arrows{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+    .t-arrows button{pointer-events:auto;border:0;background:rgba(255,255,255,.9);width:38px;height:38px;border-radius:50%;font-size:20px;font-weight:700;box-shadow:0 6px 16px rgba(0,0,0,.12)}
+    @media (max-width:640px){.t-arrows{display:none}}
 
-  /* ====== FAQ (LJ-style) ====== */
-  .faq-pro{background:#fff;padding:clamp(36px,5vw,72px) 0;border-top:1px solid var(--border)}
-  .faq-pro .heading{font-size:clamp(28px,4vw,42px);text-align:center;margin:0 0 24px;color:#2b2f38} /* bigger headings */
-  .faq-list{border-top:1px solid var(--border)}
-  .faq-item{border-bottom:1px solid var(--border)}
-  .faq-q{width:100%;background:#fff;border:0;padding:22px 0;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;text-align:left;cursor:pointer}
-  .faq-num{font-weight:800;color:#00467F;opacity:.9;min-width:2.25ch}
-  .faq-text{font-weight:700;color:#2b2f38;font-size:clamp(18px,2.2vw,22px)}
-  .faq-icon{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#f1f5f9;color:#0b1e37;font-weight:900}
-  .faq-a{padding:0 0 18px 36px;color:#3b4a62;display:none}
-  .faq-item.open .faq-a{display:block}
-  .faq-item.open .faq-icon{background:#00467F;color:#fff}
-  @media (max-width:640px){.faq-a{padding-left:0}}
+    /* ========== NEW: Big image CTA panel (below testimonials) ========== */
+    .cta-image{position:relative;background:
+        linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.35)),
+        url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+      padding:clamp(48px,8vw,96px) 0}
+    .cta-panel{background:#fff;border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow-2);padding:clamp(20px,3vw,28px);max-width:760px;margin-inline:auto;text-align:center}
+    .cta-panel h3{margin:0 0 10px;font-size:clamp(20px,2.4vw,28px)}
+    .cta-panel p{margin:0 0 16px;color:#344861}
+    .cta-panel .btn{color:#00467F;background:#ebf3fb}
 
-  /* ===== Testimonials slider ===== */
-  .testimonials{background:#f6f8fb;padding:clamp(32px,5vw,64px) 0}
-  .t-head{font-size:clamp(20px,2.6vw,28px);margin:0 0 16px;text-align:center}
-  .t-slider{position:relative;overflow:hidden;border-radius:14px;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow-1)}
-  .t-track{display:flex;transition:transform .45s ease;will-change:transform}
-  .t-slide{flex:0 0 100%;padding:clamp(22px,3vw,34px);display:grid;gap:10px;min-height:200px}
-  .t-quote{font-size:clamp(16px,2.1vw,20px);color:#2b3545}
-  .t-meta{color:#506075;font-weight:600}
-  .t-dots{display:flex;gap:8px;justify-content:center;padding:12px}
-  .t-dot{width:10px;height:10px;border-radius:50%;border:0;background:#d1d9e4;cursor:pointer}
-  .t-dot[aria-selected="true"]{background:#00467F}
-  .t-arrows{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
-  .t-arrows button{pointer-events:auto;border:0;background:rgba(255,255,255,.9);width:38px;height:38px;border-radius:50%;font-size:20px;font-weight:700;box-shadow:0 6px 16px rgba(0,0,0,.12)}
-  @media (max-width:640px){.t-arrows{display:none}}
-</style>
+    /* ========== NEW: Terms & Conditions accordion ========== */
+    .terms{background:#fff;padding:clamp(36px,5vw,72px) 0}
+    .terms h2{margin:0 0 16px;text-align:center;font-size:clamp(22px,3vw,32px)}
+    .t-acc details{max-width:920px;margin:12px auto;background:#fff}
+    .t-acc summary{font-weight:700;cursor:pointer}
+  </style>
 </head>
 <body>
-
   <!-- Header -->
   <header class="topbar" role="banner">
     <div class="container row">
@@ -201,60 +195,69 @@
         <a class="btn secondary" href="tel:+6430000000">Call us</a>
         <a class="btn" href="#appraisal-form">Get your appraisal</a>
       </nav>
-      <!-- NEW: slim menu button -->
-      <button class="menu-btn" aria-controls="drawer" aria-expanded="false" aria-label="Open menu">
-        <span class="bars"><span></span><span></span><span></span></span>
-      </button>
     </div>
   </header>
 
-  <!-- NEW: scrim + drawer -->
-  <div class="scrim" id="scrim" hidden></div>
-  <aside class="drawer" id="drawer" hidden aria-label="Site menu">
-    <div class="drawer-head">
-      <div style="font-weight:800;color:#0b1e37">Menu</div>
-      <button class="drawer-close" aria-label="Close menu">&times;</button>
-    </div>
-
-    <div class="drawer-search">
-      <input type="search" placeholder="Enter agent name, office or suburb" aria-label="Search" />
-    </div>
-
-    <nav class="drawer-links">
-      <div class="drawer-group">
-        <h4>Explore</h4>
-        <a href="#">Buy</a>
-        <a href="#">Sell</a>
-        <a href="#">Rent</a>
-      </div>
-      <div class="drawer-group">
-        <h4>Company</h4>
-        <a href="#">Contact Us</a>
-        <a href="#">About Us</a>
-        <a href="#">Newsroom</a>
-        <a href="#">Blog</a>
-      </div>
-    </nav>
-  </aside>
-
   <main id="top">
-    <!-- HERO -->
+    <!-- HERO (now supports split layout on ≥900px) -->
     <section class="hero">
       <div class="hero-media"></div>
       <div class="overlay">
-        <div class="inner container">
-          <span class="promo-badge">Spring promo</span>
-          <h1>Partner with First National Connect this spring and win <span class="hl">$2,500</span>.</h1>
-          <p class="lede">Get more than just a number — enjoy a <strong>free expert appraisal</strong> with insight into your home’s value, the current Nelson/Tasman market, and a personalised strategy to maximise your sale price.</p>
-          <p class="footnote">*Open to NZ residents 18+. T&amp;Cs apply. Drawn end of spring. No purchase necessary.</p>
+        <div class="inner container hero-grid">
+          <!-- LEFT: copy -->
+          <div class="hero-copy">
+            <span class="promo-badge">Spring promo</span>
+            <h1>Partner with First National Connect this spring and win <span class="hl">$2,500</span>.</h1>
+            <p class="lede">Get more than just a number — enjoy a <strong>free expert appraisal</strong> with insight into your home’s value, the current Nelson/Tasman market, and a personalised strategy to maximise your sale price.</p>
+            <p class="footnote">*Open to NZ residents 18+. T&amp;Cs apply. Drawn end of spring. No purchase necessary.</p>
+          </div>
+
+          <!-- RIGHT (shown on tablet/desktop): form in hero -->
+          <div class="hero-form">
+            <div class="form-holder card" id="hero-form-holder">
+              <form id="leadFormDesktop" novalidate>
+                <h2 class="visually-hidden" aria-hidden="true">Request your free appraisal</h2>
+                <label>Property address
+                  <input type="text" name="address" placeholder="e.g., 10 Example St, Richmond" required>
+                </label>
+                <div class="row2">
+                  <label>First name
+                    <input type="text" name="first_name" required>
+                  </label>
+                  <label>Last name
+                    <input type="text" name="last_name" required>
+                  </label>
+                </div>
+                <div class="row2">
+                  <label>Phone
+                    <input type="tel" name="phone" required>
+                  </label>
+                  <label>Email
+                    <input type="email" name="email" required>
+                  </label>
+                </div>
+                <label>When are you thinking of selling?
+                  <select name="timeframe" required>
+                    <option value="" disabled selected>Select timeframe</option>
+                    <option>Now</option>
+                    <option>1–3 months</option>
+                    <option>3–6 months</option>
+                    <option>Just curious</option>
+                  </select>
+                </label>
+                <button class="btn block" type="submit">Get my appraisal</button>
+                <p class="fine">By submitting, you agree to be contacted about your appraisal.</p>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- CENTERED FORM -->
+    <!-- MOBILE/TIGHT: original form below hero -->
     <section class="form-wrap">
-      <div class="form-holder card" id="appraisal-form" aria-labelledby="form-heading">
-        <form id="leadForm" novalidate>
+      <div class="form-holder card" id="mobile-form-holder" aria-labelledby="form-heading">
+        <form id="leadFormMobile" novalidate>
           <h2 id="form-heading" class="visually-hidden" aria-hidden="true">Request your free appraisal</h2>
           <label>Property address
             <input type="text" name="address" placeholder="e.g., 10 Example St, Richmond" required>
@@ -348,31 +351,42 @@
         <div class="faq-list">
           <div class="faq-item">
             <button class="faq-q" aria-expanded="false">
-              <span class="faq-num">01</span><span class="faq-text">Should I sell or buy first?</span><span class="faq-icon">+</span>
+              <span class="faq-num">01</span>
+              <span class="faq-text">Should I sell or buy first?</span>
+              <span class="faq-icon">+</span>
             </button>
             <div class="faq-a" hidden>
               If you can secure bridging finance, buying first gives certainty on your next home. Otherwise, selling first removes risk and clarifies your budget. We’ll help you weigh both options for your situation.
             </div>
           </div>
+
           <div class="faq-item">
             <button class="faq-q" aria-expanded="false">
-              <span class="faq-num">02</span><span class="faq-text">Are all sale methods still available to sell my property?</span><span class="faq-icon">+</span>
+              <span class="faq-num">02</span>
+              <span class="faq-text">Are all sale methods still available to sell my property?</span>
+              <span class="faq-icon">+</span>
             </button>
             <div class="faq-a" hidden>
               Yes. Private treaty, auction and deadline/express sale are all available. We’ll recommend the best method based on demand, property type and your preferred timeline.
             </div>
           </div>
+
           <div class="faq-item">
             <button class="faq-q" aria-expanded="false">
-              <span class="faq-num">03</span><span class="faq-text">What are the best ways to promote my home for sale?</span><span class="faq-icon">+</span>
+              <span class="faq-num">03</span>
+              <span class="faq-text">What are the best ways to promote my home for sale?</span>
+              <span class="faq-icon">+</span>
             </button>
             <div class="faq-a" hidden>
               High-impact photography, strong digital exposure, targeted buyer outreach and well-timed open homes. We’ll tailor a plan that fits your property and budget.
             </div>
           </div>
+
           <div class="faq-item">
             <button class="faq-q" aria-expanded="false">
-              <span class="faq-num">04</span><span class="faq-text">How can I know how much my property is worth?</span><span class="faq-icon">+</span>
+              <span class="faq-num">04</span>
+              <span class="faq-text">How can I know how much my property is worth?</span>
+              <span class="faq-icon">+</span>
             </button>
             <div class="faq-a" hidden>
               Start with a free expert appraisal. You’ll get a price range, comparable sales and the key steps to maximise your sale price in today’s market.
@@ -401,15 +415,49 @@
               <div class="t-meta">Richmond — Vendor</div>
             </article>
           </div>
+
           <div class="t-arrows" aria-hidden="true">
             <button class="t-prev" type="button" aria-label="Previous slide">‹</button>
             <button class="t-next" type="button" aria-label="Next slide">›</button>
           </div>
+
           <div class="t-dots" role="tablist" aria-label="Testimonials navigation">
-            <button class="t-dot" role="tab" aria-selected="true" aria-controls="t-slide-1"></button>
-            <button class="t-dot" role="tab" aria-selected="false" aria-controls="t-slide-2"></button>
-            <button class="t-dot" role="tab" aria-selected="false" aria-controls="t-slide-3"></button>
+            <button class="t-dot" role="tab" aria-selected="true"></button>
+            <button class="t-dot" role="tab" aria-selected="false"></button>
+            <button class="t-dot" role="tab" aria-selected="false"></button>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW big image CTA panel -->
+    <section class="cta-image">
+      <div class="container">
+        <div class="cta-panel">
+          <h3>Get started on selling your home with a free property appraisal</h3>
+          <p>Understand today’s value and the steps to maximise your result — no obligation.</p>
+          <a class="btn" href="#appraisal-form">Book my free appraisal</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW Terms & Conditions -->
+    <section class="terms" id="terms">
+      <div class="container">
+        <h2>Spring Campaign T&Cs</h2>
+        <div class="t-acc">
+          <details>
+            <summary>Terms and conditions</summary>
+            <p>Open to NZ residents 18+. Free appraisal required for entry. One entry per household. Prize drawn at the end of spring.</p>
+          </details>
+          <details>
+            <summary>How we use your details</summary>
+            <p>Your details are used only to provide the appraisal and related service updates. You may opt out at any time.</p>
+          </details>
+          <details>
+            <summary>Privacy policy</summary>
+            <p>We take your privacy seriously. Data is stored securely and never sold. See our full policy for more information.</p>
+          </details>
         </div>
       </div>
     </section>
@@ -423,77 +471,71 @@
     </div>
   </footer>
 
-<script>
-  // Form preview only
-  const form = document.getElementById('leadForm');
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    alert('Thanks — form captured (preview). Connect a backend to go live.');
-    form.reset();
-  });
-
-  // FAQ accordion
-  document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.faq-item');
-      const answer = item.querySelector('.faq-a');
-      const open = item.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      answer.hidden = !open;
-      btn.querySelector('.faq-icon').textContent = open ? '–' : '+';
-    });
-  });
-
-  // Testimonials slider
-  (function(){
-    const track = document.querySelector('.t-track');
-    const slides = Array.from(document.querySelectorAll('.t-slide'));
-    const dots   = Array.from(document.querySelectorAll('.t-dot'));
-    const prev   = document.querySelector('.t-prev');
-    const next   = document.querySelector('.t-next');
-    let index = 0, timer;
-    function go(i){
-      index = (i + slides.length) % slides.length;
-      track.style.transform = `translateX(-${index * 100}%)`;
-      dots.forEach((d, n) => d.setAttribute('aria-selected', n === index ? 'true' : 'false'));
-      restart();
+  <script>
+    // Make #appraisal-form always target the visible form
+    function syncFormAnchor(){
+      const desktopHolder = document.getElementById('hero-form-holder');
+      const mobileHolder  = document.getElementById('mobile-form-holder');
+      const desktop = desktopHolder?.querySelector('form');
+      const mobile  = mobileHolder?.querySelector('form');
+      if (window.matchMedia('(min-width:900px)').matches){
+        desktopHolder.id = 'appraisal-form';
+        mobileHolder.id  = 'mobile-form-holder';
+      } else {
+        desktopHolder.id = 'hero-form-holder';
+        mobileHolder.id  = 'appraisal-form';
+      }
     }
-    function restart(){ clearInterval(timer); timer = setInterval(() => go(index + 1), 5500); }
-    dots.forEach((d,n)=>d.addEventListener('click',()=>go(n)));
-    prev?.addEventListener('click',()=>go(index-1));
-    next?.addEventListener('click',()=>go(index+1));
-    const slider = document.querySelector('.t-slider');
-    slider?.addEventListener('mouseenter', ()=>clearInterval(timer));
-    slider?.addEventListener('mouseleave', restart);
-    restart();
-  })();
+    addEventListener('DOMContentLoaded', syncFormAnchor);
+    addEventListener('resize', syncFormAnchor);
 
-  // ===== Drawer logic =====
-  const menuBtn = document.querySelector('.menu-btn');
-  const drawer  = document.getElementById('drawer');
-  const scrim   = document.getElementById('scrim');
-  const closeBtn= drawer?.querySelector('.drawer-close');
+    // Demo-only submit handler
+    function hookForm(id){
+      const f = document.getElementById(id)?.querySelector('form');
+      f?.addEventListener('submit', e=>{
+        e.preventDefault();
+        alert('Thanks — form captured (preview). Connect a backend to go live.');
+        f.reset();
+      });
+    }
+    hookForm('hero-form-holder'); hookForm('mobile-form-holder');
 
-  function openDrawer(){
-    drawer.hidden = false; scrim.hidden = false;
-    requestAnimationFrame(()=>{
-      drawer.classList.add('open'); scrim.classList.add('show');
-      menuBtn?.setAttribute('aria-expanded','true');
+    // FAQ accordion
+    document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const answer = item.querySelector('.faq-a');
+        const open = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        answer.hidden = !open;
+        btn.querySelector('.faq-icon').textContent = open ? '–' : '+';
+      });
     });
-  }
-  function closeDrawer(){
-    drawer.classList.remove('open'); scrim.classList.remove('show');
-    menuBtn?.setAttribute('aria-expanded','false');
-    setTimeout(()=>{ drawer.hidden = true; scrim.hidden = true; }, 250);
-  }
 
-  menuBtn?.addEventListener('click', () => {
-    const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
-    expanded ? closeDrawer() : openDrawer();
-  });
-  closeBtn?.addEventListener('click', closeDrawer);
-  scrim?.addEventListener('click', closeDrawer);
-  window.addEventListener('keydown', e => { if(e.key === 'Escape') closeDrawer(); });
-</script>
+    // Testimonials slider
+    (function(){
+      const track = document.querySelector('.t-track');
+      const slides = Array.from(document.querySelectorAll('.t-slide'));
+      const dots   = Array.from(document.querySelectorAll('.t-dot'));
+      const prev   = document.querySelector('.t-prev');
+      const next   = document.querySelector('.t-next');
+      let index = 0, timer;
+
+      function go(i){
+        index = (i + slides.length) % slides.length;
+        track.style.transform = `translateX(-${index * 100}%)`;
+        dots.forEach((d, n) => d.setAttribute('aria-selected', n === index ? 'true' : 'false'));
+        restart();
+      }
+      function restart(){ clearInterval(timer); timer = setInterval(() => go(index + 1), 5500); }
+      dots.forEach((d,n)=>d.addEventListener('click',()=>go(n)));
+      prev?.addEventListener('click',()=>go(index-1));
+      next?.addEventListener('click',()=>go(index+1));
+      const slider = document.querySelector('.t-slider');
+      slider?.addEventListener('mouseenter', ()=>clearInterval(timer));
+      slider?.addEventListener('mouseleave', restart);
+      restart();
+    })();
+  </script>
 </body>
 </html>
