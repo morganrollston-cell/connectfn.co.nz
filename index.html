@@ -230,6 +230,50 @@
       .hero-form .form-intro p{ margin-bottom:6px }
       .hero-form .form-holder label:first-of-type{ margin-top:6px } /* tiny, not chunky */
     }
+    /* ===== Stretch spacing ~+33% on tablet/desktop (keep mobile as-is) ===== */
+@media (min-width: 900px){
+  /* Taller hero so the page gains length without cramming */
+  .hero-media{ height: clamp(720px, 70vw, 980px); }
+
+  /* More breathing room around hero content */
+  .overlay .inner{
+    padding-top: clamp(64px, 8vw, 96px);
+    padding-bottom: clamp(220px, 20vw, 300px);
+  }
+  .hero-grid{ gap: clamp(32px, 5vw, 48px); }
+
+  /* Form spacing: keep tight above first input, but add a touch in-between */
+  .hero-form .form-holder form{ gap: 18px; }
+  .hero-form .row2{ gap: 20px; }
+
+  /* “Simple steps” card */
+  .section-steps{
+    padding: clamp(30px, 5vw, 48px);
+    margin: clamp(28px, 5vw, 56px) auto 0;
+  }
+  .steps-list{ gap: 22px 28px; }
+
+  /* Alternating info band */
+  .section-info{ padding: clamp(48px, 8vw, 96px) 0; }
+  .info-row{ margin-bottom: clamp(36px, 6vw, 72px); }
+  .info-copy{ padding: clamp(22px, 3.6vw, 36px); }
+
+  /* CTA strip */
+  .cta-strip{ padding: clamp(48px, 7vw, 96px) 0; }
+
+  /* Testimonials */
+  .testimonials{ padding: clamp(48px, 7vw, 96px) 0; }
+  .t-slide{ padding: clamp(32px, 4vw, 48px); }
+
+  /* Big image CTA panel */
+  .cta-image{ padding: clamp(72px, 10vw, 128px) 0; }
+  .cta-panel{ padding: clamp(26px, 3.6vw, 36px); }
+
+  /* FAQ + Terms */
+  .faq-pro{ padding: clamp(48px, 7vw, 96px) 0; }
+  .terms{ padding: clamp(48px, 7vw, 96px) 0; }
+  .t-acc details{ margin: 20px auto; }
+}
   </style>
 </head>
 <body>
