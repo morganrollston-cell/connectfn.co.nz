@@ -241,6 +241,69 @@
       .overlay h1{font-size:1.55rem;line-height:1.18;margin-bottom:10px}
       .overlay .lede{font-size:1rem;line-height:1.5}
     }
+    /* --- MOBILE: hide the main CTA in the header (leave "Call us") --- */
+@media (max-width: 640px){
+  .topbar .cta-nav .btn:not(.secondary){ display:none; } /* hides "Get my Free Appraisal" */
+  .topbar .cta-nav{ gap:12px; }                          /* loosen spacing for the remaining button */
+  .topbar .row{ grid-template-columns:auto 1fr auto; }   /* keep layout tidy */
+}
+
+/* --- FIX: Simple steps card overflow on mobile/tablet --- */
+/* Stop smashing container padding to 0 (earlier rule) and give it sane padding */
+.section-steps .container{
+  width:min(1120px,92vw);
+  margin:0 auto;
+  padding:clamp(16px,4vw,28px);
+}
+.section-steps{ overflow:hidden; } /* ensure drop shadows never spill */
+
+/* --- MORE SPACE ACROSS THE WHITE AREAS (mobile + desktop) --- */
+/* Adds ~1/3–1/2 page extra overall by increasing paddings/margins and interior gaps. */
+/* Mobile first */
+.section-steps{
+  margin-top: clamp(28px,7vw,48px);
+  padding: clamp(26px,7vw,42px);
+}
+.steps-list{ gap: clamp(16px,5vw,22px)  clamp(18px,6vw,24px); }
+
+.section-info{
+  padding: clamp(48px,10vw,88px) 0;          /* more top/bottom air */
+}
+.info-row{ margin-bottom: clamp(32px,8vw,64px); }
+.info-copy{ padding: clamp(18px,6vw,28px); }
+
+.testimonials{
+  padding: clamp(48px,10vw,96px) 0;
+}
+.t-slide{ padding: clamp(26px,7vw,40px); }
+
+.faq-pro{
+  padding: clamp(48px,10vw,96px) 0;
+}
+.terms{
+  padding: clamp(48px,10vw,96px) 0;
+}
+
+/* Desktop / large tablet: add even more breathing room */
+@media (min-width: 900px){
+  .hero-grid{ gap: clamp(32px,4.5vw,56px); }
+
+  .section-steps{
+    margin-top: clamp(40px,6vw,80px);
+    padding: clamp(34px,5.5vw,56px);
+  }
+  .steps-list{ gap: clamp(20px,2.2vw,28px) clamp(22px,2.4vw,32px); }
+
+  .section-info{ padding: clamp(64px,8.5vw,128px) 0; }
+  .info-row{ margin-bottom: clamp(44px,6.5vw,96px); }
+  .info-copy{ padding: clamp(24px,3.2vw,40px); }
+
+  .testimonials{ padding: clamp(64px,8vw,128px) 0; }
+  .t-slide{ padding: clamp(30px,3.2vw,48px); }
+
+  .faq-pro{ padding: clamp(64px,8vw,128px) 0; }
+  .terms{  padding: clamp(64px,8vw,128px) 0; }
+}
   </style>
 </head>
 <body>
