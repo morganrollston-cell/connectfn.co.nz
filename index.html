@@ -304,6 +304,75 @@
   .faq-pro{ padding: clamp(64px,8vw,128px) 0; }
   .terms{  padding: clamp(64px,8vw,128px) 0; }
 }
+/* ---------- SIMPLE STEPS: stop overflow + give padding ---------- */
+.section-steps{
+  /* more air below the hero so nothing tucks under the form */
+  margin: clamp(48px, 8vw, 120px) auto 0 !important;
+  padding: clamp(22px, 3.5vw, 36px) !important;
+  overflow: hidden;             /* clip anything that would leak out */
+  position: relative;
+}
+
+.section-steps .container{
+  /* make the inner container match the card, not the site max width */
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-left: clamp(16px, 3vw, 32px) !important;
+  padding-right: clamp(16px, 3vw, 32px) !important;
+}
+
+/* safer wrapping in the card */
+.section-steps p,
+.section-steps .step p,
+.section-steps li{
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* steps grid spacing */
+.section-steps .steps-list{
+  gap: 18px 24px;
+}
+@media (min-width: 720px){
+  .section-steps .steps-list{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Hide the Simple-steps CTA button on mobile only */
+@media (max-width: 640px){
+  .section-steps .cta-wrap{ display: none !important; }
+}
+
+/* ---------- EXTRA PAGE BREATHING ROOM (white sections only) ---------- */
+main > section:not(.hero):not(.cta-image):not(.terms):not(.footer){
+  /* add ~1/3–1/2 page worth of extra air overall */
+  margin-top: clamp(28px, 6vw, 72px);
+}
+.section-info{ 
+  padding: clamp(40px, 8vw, 96px) 0 !important; 
+}
+.testimonials, .faq-pro, .terms{
+  padding: clamp(40px, 8vw, 96px) 0 !important;
+}
+
+/* ---------- MOBILE HEADER BUTTONS: un-squish ---------- */
+@media (max-width: 420px){
+  .cta-nav{
+    grid-auto-flow: row !important;
+    gap: 10px !important;
+  }
+  .cta-nav .btn{
+    width: 100%;
+    justify-self: start;
+  }
+}
+
+/* optional: tiny bump of hero bottom padding so the next section
+   never feels tucked under on tablets */
+@media (min-width: 900px){
+  .overlay .inner{ padding-bottom: clamp(220px, 20vw, 300px) !important; }
+}
   </style>
 </head>
 <body>
