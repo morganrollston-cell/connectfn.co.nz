@@ -72,7 +72,7 @@
         linear-gradient(180deg, rgba(0,0,0,.36), rgba(0,0,0,.18)),
         url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2400&auto=format&fit=crop') center/cover no-repeat;
     }
-    .overlay{position:absolute;inset:0;display:grid;align-items:end}
+    .overlay{position:absolute;inset:0;display:grid;align-items=end}
     .overlay .inner{color:#fff;padding:clamp(16px,4vw,32px)}
     .promo-badge{display:inline-block;background:#00467F;color:#fff;padding:6px 10px;border-radius:999px;font-size:.85rem;font-weight:700;letter-spacing:.2px;margin-bottom:10px}
     .overlay h1{margin:0 0 8px;font-size:clamp(28px,5vw,52px);line-height:1.08;text-shadow:0 3px 18px rgba(0,0,0,.38)}
@@ -85,12 +85,12 @@
     .hero-copy{max-width:60ch}
     .hero-form{display:none}
     @media (min-width:900px){
-      .hero-media{height:clamp(620px,62vw,860px)}
+      .hero-media{height:clamp(720px,70vw,980px)} /* taller & adds overall page length */
       .overlay .inner{
-        padding:clamp(48px,6vw,72px) clamp(16px,4vw,32px) clamp(24px,3vw,40px)
+        padding:clamp(64px,8vw,96px) clamp(16px,4vw,32px) clamp(220px,20vw,300px);
       }
       .overlay .lede{ line-height:1.7 }          /* more line spacing on desktop */
-      .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(20px,3vw,32px);align-items:start}
+      .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,5vw,48px);align-items:start}
       .hero-form{display:block}
     }
 
@@ -112,22 +112,22 @@
     @media (max-width:640px){.row2{grid-template-columns:1fr}.btn{min-height:48px}}
 
     /* ========= Simple Steps ========= */
-    .section-steps{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 10px 28px rgba(0,0,0,.08);padding:clamp(20px,3.5vw,34px);margin:clamp(14px,3vw,28px) auto 0;max-width:min(1120px,92vw)}
+    .section-steps{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 10px 28px rgba(0,0,0,.08);padding:clamp(30px,5vw,48px);margin:clamp(28px,5vw,56px) auto 0;max-width:min(1120px,92vw)}
     .section-steps h2{margin:0 0 8px;font-size:clamp(20px,2.6vw,28px);line-height:1.15;letter-spacing:.2px}
     .section-steps p.sublede{margin:0 0 14px;color:#556476}
     .section-steps .cta-wrap{margin:10px 0 18px}
     .btn-pill{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:800;letter-spacing:.2px;padding:12px 20px;border-radius:999px;min-height:44px;box-shadow:0 6px 18px rgba(10,132,255,.22);text-align:center;width:100%}
     @media (hover:hover) and (pointer:fine){.btn-pill:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(10,132,255,.28);transition:transform .18s ease,box-shadow .18s ease}}
-    .steps-list{display:grid;grid-template-columns:1fr;gap:14px 18px;margin-top:8px}
+    .steps-list{display:grid;grid-template-columns:1fr;gap:22px 28px;margin-top:8px}
     .step{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:flex-start;min-width:0}
     .step .num{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--brand);color:var(--brand);font-weight:800}
     .step p{margin:4px 0 0;color:#354861;min-width:0}
     @media (min-width:720px){.btn-pill{width:auto}.steps-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
     /* ========= Alternating Info band ========= */
-    .section-info{background:#fff;padding:clamp(28px,5vw,64px) 0}
-    .info-row{display:grid;grid-template-columns:1fr;gap:clamp(16px,3vw,28px);align-items:center;margin-bottom:clamp(24px,4vw,48px)}
-    .info-copy{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-1);padding:clamp(16px,3vw,28px);min-width:0}
+    .section-info{background:#fff;padding:clamp(48px,8vw,96px) 0}
+    .info-row{display:grid;grid-template-columns:1fr;gap:clamp(16px,3vw,28px);align-items:center;margin-bottom:clamp(36px,6vw,72px)}
+    .info-copy{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-1);padding:clamp(22px,3.6vw,36px);min-width:0}
     .info-copy h3{margin:0 0 8px;font-size:clamp(20px,2.6vw,28px);line-height:1.2}
     .info-copy p{margin:0;color:#354861}
     .info-media{border-radius:14px;overflow:hidden;box-shadow:var(--shadow-1)}
@@ -135,7 +135,7 @@
     @media (min-width:860px){.info-row{grid-template-columns:1.05fr .95fr}.info-row.reverse{grid-template-columns:.95fr 1.05fr}}
 
     /* ========= CTA strip ========= */
-    .cta-strip{background:var(--brand);color:#fff;text-align:center;padding:32px 0}
+    .cta-strip{background:var(--brand);color:#fff;text-align:center;padding:clamp(48px,7vw,96px) 0}
     .cta-strip .btn{background:#fff;color:var(--brand)}
 
     /* ========= FAQ + footer ========= */
@@ -168,7 +168,7 @@
     }
 
     /* ========== FAQ (LJ style, larger headings) ========== */
-    .faq-pro{background:#fff;padding:clamp(36px,5vw,72px) 0;border-top:1px solid var(--border)}
+    .faq-pro{background:#fff;padding:clamp(48px,7vw,96px) 0;border-top:1px solid var(--border)}
     .faq-pro .heading{font-size:clamp(28px,3.6vw,44px);text-align:center;margin:0 0 24px;color:#2b2f38}
     .faq-list{border-top:1px solid var(--border)}
     .faq-item{border-bottom:1px solid var(--border)}
@@ -182,11 +182,11 @@
     @media (max-width:640px){.faq-a{padding-left:0}}
 
     /* ========== Testimonials slider ========== */
-    .testimonials{background:#f6f8fb;padding:clamp(32px,5vw,64px) 0}
+    .testimonials{background:#f6f8fb;padding:clamp(48px,7vw,96px) 0}
     .t-head{font-size:clamp(20px,2.6vw,28px);margin:0 0 16px;text-align:center}
     .t-slider{position:relative;overflow:hidden;border-radius:14px;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow-1)}
     .t-track{display:flex;transition:transform .45s ease;will-change:transform}
-    .t-slide{flex:0 0 100%;padding:clamp(22px,3vw,34px);display:grid;gap:10px;min-height:200px}
+    .t-slide{flex:0 0 100%;padding:clamp(32px,4vw,48px);display:grid;gap:10px;min-height:200px}
     .t-quote{font-size:clamp(16px,2.1vw,20px);color:#2b3545}
     .t-meta{color:#506075;font-weight:600}
     .t-dots{display:flex;gap:8px;justify-content:center;padding:12px}
@@ -200,20 +200,20 @@
     .cta-image{position:relative;background:
         linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.35)),
         url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
-      padding:clamp(48px,8vw,96px) 0}
-    .cta-panel{background:#fff;border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow-2);padding:clamp(20px,3vw,28px);max-width:760px;margin-inline:auto;text-align:center}
+      padding:clamp(72px,10vw,128px) 0}
+    .cta-panel{background:#fff;border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow-2);padding:clamp(26px,3.6vw,36px);max-width:760px;margin-inline:auto;text-align:center}
     .cta-panel h3{margin:0 0 10px;font-size:clamp(20px,2.4vw,28px)}
     .cta-panel p{margin:0 0 16px;color:#344861}
     .cta-panel .btn{color:#fff;background:var(--accent)}
 
     /* ========== Terms & Conditions ========== */
-    .terms{background:#fff;padding:clamp(36px,5vw,72px) 0}
+    .terms{background:#fff;padding:clamp(48px,7vw,96px) 0}
     .terms h2{margin:0 0 16px;text-align:center;font-size:clamp(22px,3vw,32px)}
-    .t-acc details{max-width:920px;margin:12px auto;background:#fff}
+    .t-acc details{max-width:920px;margin:20px auto;background:#fff}
     .t-acc summary{font-weight:700;cursor:pointer}
 
     /* --- Form intro (LJ-style) --- */
-    .form-intro{padding:14px 16px 8px;border-bottom:1px solid rgba(16,34,58,.06)}
+    .form-intro{padding:10px 16px 6px;border-bottom:1px solid rgba(16,34,58,.06)}
     .form-intro .step{color:#f5a300;font-weight:800;letter-spacing:.2px;font-size:.95rem;margin:0 0 6px}
     .form-intro h3{margin:0 0 6px;font-size:clamp(18px, 2.1vw, 24px);line-height:1.25;color:#0b1e37}
     .form-intro p{margin:0 0 6px;color:#3b4a62;font-size:clamp(14px, 1.7vw, 16px)}
@@ -221,59 +221,36 @@
     /* ---------- Desktop/tablet tidy: remove top gap in form ---------- */
     @media (min-width:900px){
       .hero-grid{ align-items:start }
-      .overlay .inner{ padding-top:clamp(36px,5vw,56px) }
-
-      /* Kill the extra white above the first input */
-      .hero-form .form-holder form{ padding-top:0; gap:12px }
-      .hero-form .form-intro{ padding:10px 16px 6px }
-      .hero-form .form-intro h3,
-      .hero-form .form-intro p{ margin-bottom:6px }
-      .hero-form .form-holder label:first-of-type{ margin-top:6px } /* tiny, not chunky */
+      .overlay .inner{ padding-top:clamp(64px,8vw,96px) }
+      .hero-form .form-holder form{ padding-top:0; gap:18px }
+      .hero-form .form-holder label:first-of-type{ margin-top:6px }
     }
-    /* ===== Stretch spacing ~+33% on tablet/desktop (keep mobile as-is) ===== */
-@media (min-width: 900px){
-  /* Taller hero so the page gains length without cramming */
-  .hero-media{ height: clamp(720px, 70vw, 980px); }
 
-  /* More breathing room around hero content */
-  .overlay .inner{
-    padding-top: clamp(64px, 8vw, 96px);
-    padding-bottom: clamp(220px, 20vw, 300px);
-  }
-  .hero-grid{ gap: clamp(32px, 5vw, 48px); }
+    /* ===== Value strip + modern footer ===== */
+    .value-strip{background:#0f2540;color:#e6eef7;padding:clamp(28px,5vw,56px) 0}
+    .value-strip .vs-grid{display:grid;gap:16px;grid-template-columns:1fr;align-items:start}
+    .value-chip{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;background:#0b1e37;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 14px}
+    .value-chip .dot{width:12px;height:12px;border-radius:50%;background:#69c2ff;box-shadow:0 0 0 4px rgba(105,194,255,.18)}
+    .value-chip b{color:#fff}
+    @media(min-width:900px){.value-strip .vs-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
-  /* Form spacing: keep tight above first input, but add a touch in-between */
-  .hero-form .form-holder form{ gap: 18px; }
-  .hero-form .row2{ gap: 20px; }
-
-  /* “Simple steps” card */
-  .section-steps{
-    padding: clamp(30px, 5vw, 48px);
-    margin: clamp(28px, 5vw, 56px) auto 0;
-  }
-  .steps-list{ gap: 22px 28px; }
-
-  /* Alternating info band */
-  .section-info{ padding: clamp(48px, 8vw, 96px) 0; }
-  .info-row{ margin-bottom: clamp(36px, 6vw, 72px); }
-  .info-copy{ padding: clamp(22px, 3.6vw, 36px); }
-
-  /* CTA strip */
-  .cta-strip{ padding: clamp(48px, 7vw, 96px) 0; }
-
-  /* Testimonials */
-  .testimonials{ padding: clamp(48px, 7vw, 96px) 0; }
-  .t-slide{ padding: clamp(32px, 4vw, 48px); }
-
-  /* Big image CTA panel */
-  .cta-image{ padding: clamp(72px, 10vw, 128px) 0; }
-  .cta-panel{ padding: clamp(26px, 3.6vw, 36px); }
-
-  /* FAQ + Terms */
-  .faq-pro{ padding: clamp(48px, 7vw, 96px) 0; }
-  .terms{ padding: clamp(48px, 7vw, 96px) 0; }
-  .t-acc details{ margin: 20px auto; }
-}
+    .footer-pro{background:#0b1e37;color:#cfe0f3;padding:clamp(36px,6vw,72px) 0 0}
+    .footGrid{display:grid;gap:24px}
+    @media(min-width:960px){.footGrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+    .footCard{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:clamp(16px,2.2vw,22px)}
+    .footCard h4{margin:0 0 8px;color:#fff;font-size:clamp(18px,2vw,20px)}
+    .footCard p{margin:0 0 12px;color:#bcd0e4}
+    .footCard ul{margin:0 0 14px;padding-left:18px;line-height:1.5}
+    .footCard li{margin:6px 0}
+    .footCard .btn-cta{display:inline-block;background:#69c2ff;color:#0b1e37;font-weight:800;border:0;border-radius:999px;padding:12px 18px;box-shadow:0 6px 18px rgba(105,194,255,.25);text-align:center}
+    .footCard .btn-cta:hover{transform:translateY(-2px)}
+    .footCard .btn-outline{display:inline-block;border:2px solid #69c2ff;color:#69c2ff;background:transparent;border-radius:999px;padding:10px 16px;font-weight:800}
+    .footBrand{display:grid;gap:8px}
+    .footBrand .logo{width:180px;height:36px;background:#00467F;border-radius:8px}
+    .footBrand a{color:#69c2ff;text-decoration:none}
+    .legal{border-top:1px solid rgba(255,255,255,.10);margin-top:clamp(24px,4vw,36px);padding:16px 0;color:#9fb4cc;font-size:14px}
+    .legal .row{display:grid;gap:12px}
+    @media(min-width:720px){.legal .row{grid-template-columns:1fr auto;align-items:center}}
   </style>
 </head>
 <body>
@@ -317,8 +294,8 @@
         <div class="inner container hero-grid">
           <div class="hero-copy">
             <span class="promo-badge">Spring promo</span>
-            <h1>Book in a Free Appraisal with First National Connect this spring and go in the draw to win <span class="hl">$2,500</span>.</h1>
-            <p class="lede">Get more than just a number — enjoy a <strong>free expert appraisal</strong> with insight into your home’s value, the current Nelson/Tasman market, and a personalised strategy to maximise your sale price.</p>
+            <h1>Book a Free Appraisal with First National Connect this spring and go in the draw to win <span class="hl">$2,500</span>.</h1>
+            <p class="lede">Get more than just a number — book your <strong>free expert appraisal</strong> and receive a clear price range, recent comparable sales and a simple plan to lift your result. No obligation, no pushy sales pitch.</p>
             <p class="footnote">*Open to NZ residents 18+. T&amp;Cs apply. Drawn end of spring. No purchase necessary.</p>
           </div>
 
@@ -421,11 +398,11 @@
     <section class="section-steps" id="simple-steps">
       <h2 class="container" style="padding:0">Simple steps to organise your free appraisal</h2>
       <div class="container">
-        <p class="sublede">Whether in-person or via phone, your local First National Connect specialist will help you understand today’s value and how to achieve the best possible price.</p>
+        <p class="sublede">Whether in person or via phone, your local First National Connect specialist will help you understand today’s value and how to achieve the best possible price.</p>
         <div class="cta-wrap"><a class="btn-pill" href="#appraisal-form">Get my Free Appraisal</a></div>
         <div class="steps-list" role="list">
           <div class="step" role="listitem"><div class="num">1</div><p>Fill in the form with a few simple details, including your suburb and how you’d like us to contact you.</p></div>
-          <div class="step" role="listitem"><div class="num">2</div><p>Your local First National Connect agent will reach out to arrange a time thats perfect for you to see us in-person </p></div>
+          <div class="step" role="listitem"><div class="num">2</div><p>Your local First National Connect agent will reach out to arrange a time that suits you — in person or by phone.</p></div>
           <div class="step" role="listitem"><div class="num">3</div><p>Receive your free appraisal with a price range, comparable sales and clear next steps to maximise your result.</p></div>
         </div>
       </div>
@@ -473,7 +450,6 @@
       <div class="container">
         <h2 class="heading">FAQs</h2>
         <div class="faq-list">
-          <!-- items unchanged -->
           <div class="faq-item">
             <button class="faq-q" aria-expanded="false">
               <span class="faq-num">01</span>
@@ -586,13 +562,64 @@
         </div>
       </div>
     </section>
+
+    <!-- VALUE STRIP -->
+    <section class="value-strip">
+      <div class="container">
+        <div class="vs-grid">
+          <div class="value-chip"><span class="dot"></span><div><b>Accurate price range</b><br>Based on real, recent local sales — not guesswork.</div></div>
+          <div class="value-chip"><span class="dot"></span><div><b>Plan to add value</b><br>Simple changes that can lift your sale price.</div></div>
+          <div class="value-chip"><span class="dot"></span><div><b>No obligation</b><br>Zero pressure — just useful guidance.</div></div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <!-- FOOTER -->
-  <footer class="footer" role="contentinfo">
-    <div class="container footgrid">
-      <div class="footlogo" aria-hidden="true"></div>
-      <div>&copy; 2025 First National Connect</div>
+  <!-- MODERN FOOTER -->
+  <footer class="footer-pro" role="contentinfo">
+    <div class="container footGrid">
+      <!-- SELL -->
+      <section class="footCard">
+        <h4>Sell</h4>
+        <p>Thinking of moving? Get a clear, expert-backed price and a plan to maximise your result.</p>
+        <ul>
+          <li>Local buyer demand snapshot</li>
+          <li>Comparable sales you can trust</li>
+          <li>Strategy to lift your sale price</li>
+        </ul>
+        <a class="btn-cta" href="#appraisal-form">Get my Free Appraisal</a>
+      </section>
+
+      <!-- BUY -->
+      <section class="footCard">
+        <h4>Buy</h4>
+        <p>Looking for your next home? Browse the latest listings across Nelson &amp; Tasman.</p>
+        <a class="btn-outline" href="#">Browse properties</a>
+      </section>
+
+      <!-- RENT -->
+      <section class="footCard">
+        <h4>Rent</h4>
+        <p>Need your investment managed? We place quality tenants and keep everything on track.</p>
+        <a class="btn-outline" href="#">Talk to property management</a>
+      </section>
+
+      <!-- CONTACT / BRAND -->
+      <section class="footCard footBrand">
+        <div class="logo" aria-hidden="true"></div>
+        <div><strong>First National Connect</strong><br>Collingwood Street, Nelson, New Zealand</div>
+        <div>📞 <a href="tel:+64273594558">027 359 4558</a></div>
+        <div>✉️ <a href="mailto:hello@fnconnect.co.nz">hello@fnconnect.co.nz</a></div>
+        <div>Open hours: Please phone, text or email to make an appointment</div>
+        <div>Licensed REAA 2008 — t/a First National Connect</div>
+      </section>
+    </div>
+
+    <div class="legal">
+      <div class="container row">
+        <div>© 2025 First National Connect • <a href="#" style="color:#69c2ff">Privacy Policy</a> • <a href="#" style="color:#69c2ff">Disclaimer</a></div>
+        <div>Website by <a href="#" style="color:#69c2ff">webstudio.nz</a></div>
+      </div>
     </div>
   </footer>
 
