@@ -399,6 +399,108 @@ main > section:not(.hero):not(.cta-image):not(.terms):not(.footer){
 .ljt-arrows{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
 .ljt-arrows button{pointer-events:auto;border:0;background:#fff;width:36px;height:36px;border-radius:50%;font-size:18px;font-weight:700;box-shadow:0 6px 16px rgba(0,0,0,.12)}
 @media (max-width:640px){.ljt-arrows{display:none}}
+
+    /* ========= NEW: Color, tablet hero + modernised testimonials ========= */
+
+    /* 1) HERO / FORM also on tablet: show grid from 768px and make sure form sits on photo */
+    @media (min-width:768px){
+      .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4.5vw,54px);align-items:start}
+      .hero-form{display:block}
+      .overlay .inner{padding-bottom:clamp(200px,18vw,260px)}
+      .hero-media{height:clamp(540px,70vw,960px)}
+    }
+
+    /* 2) “Outrageous yet natural” color behind the Simple Steps card */
+    .section-steps{
+      background:#fff; /* keep the card white */
+      position:relative;
+      z-index:1;
+    }
+    .section-steps::before,
+    .section-steps::after{
+      content:"";
+      position:absolute;
+      inset:auto -8vw -14vw -8vw;   /* push out wider than the card */
+      height:56vw;                   /* responsive height */
+      z-index:-1;
+      filter:blur(50px);
+      opacity:.55;
+      pointer-events:none;
+      background:
+        radial-gradient(40% 50% at 20% 30%, #0A84FF 0%, transparent 65%),
+        radial-gradient(32% 40% at 85% 20%, #14b8a6 0%, transparent 70%),
+        radial-gradient(38% 46% at 70% 80%, #f97316 0%, transparent 65%),
+        radial-gradient(42% 52% at 10% 85%, #7c3aed 0%, transparent 70%);
+    }
+    .section-steps::after{
+      transform:rotate(8deg);
+      opacity:.35;
+    }
+
+    /* Slight color touch on headings inside the card so it ties into the splash */
+    .section-steps h2{
+      background:linear-gradient(90deg,#0A84FF,#7c3aed 55%, #14b8a6);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      font-weight:800;
+    }
+
+    /* 3) Modernise LJ Hooker–style testimonials */
+    .ljt{background:linear-gradient(180deg,#f6f8fb 0%, #eef3f8 100%)}
+    .ljt-card{position:relative;overflow:hidden}
+    .ljt-card::before{
+      content:"";
+      position:absolute;inset:-30% -10% auto -10%;
+      height:70%;
+      background:
+        radial-gradient(45% 55% at 15% 30%, rgba(10,132,255,.25), transparent 65%),
+        radial-gradient(40% 50% at 80% 15%, rgba(124,58,237,.22), transparent 70%),
+        radial-gradient(35% 45% at 75% 85%, rgba(20,184,166,.22), transparent 65%);
+      filter:blur(50px);
+      z-index:0;
+    }
+    .ljt-row{position:relative;z-index:1}
+    .ljt-eyebrow{font-size:28px;line-height:1}
+    .ljt-title{letter-spacing:.2px}
+    .ljt-sub{font-size:.98rem}
+
+    /* Bubble upgrades */
+    .ljt-bubble{
+      background:linear-gradient(180deg,#ffffff 0%, #f9fbff 100%);
+      border:1px solid #e9f1fb;
+      box-shadow:0 10px 26px rgba(16,34,58,.06);
+    }
+    .ljt-quote{
+      position:relative;
+      padding-left:34px;
+    }
+    .ljt-quote::before{
+      content:"“";
+      position:absolute;left:0;top:-6px;
+      font-size:32px;font-weight:900;line-height:1;color:#7aa8ff;
+      opacity:.8;
+    }
+    .ljt-author{opacity:.9}
+
+    /* Nicer dots */
+    .ljt-dots{gap:12px}
+    .ljt-dot{
+      width:12px;height:12px;background:#cfd9e6;border:0;border-radius:999px;
+      transition:transform .18s ease,background .18s ease;
+    }
+    .ljt-dot[aria-selected="true"]{background:#00467F;transform:scale(1.15)}
+
+    /* Arrows float above with subtle glass look */
+    .ljt-arrows button{
+      background:rgba(255,255,255,.92);
+      backdrop-filter:saturate(1.2) blur(4px);
+    }
+
+    /* 4) Tiny polish to CTA pill in Steps to stand out on the splash (desktop only) */
+    @media(min-width:900px){
+      .section-steps .btn-pill{
+        box-shadow:0 10px 30px rgba(10,132,255,.30);
+      }
+    }
   </style>
 </head>
 <body>
@@ -845,7 +947,7 @@ main > section:not(.hero):not(.cta-image):not(.terms):not(.footer){
       });
     });
 
-  // === LJT Testimonials slider (new) ===
+  // === LJT Testimonials slider (unchanged JS; upgraded styles above) ===
   (function(){
     const wrap  = document.querySelector('.ljt');
     if(!wrap) return;
