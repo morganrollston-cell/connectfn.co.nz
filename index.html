@@ -373,6 +373,32 @@ main > section:not(.hero):not(.cta-image):not(.terms):not(.footer){
 @media (min-width: 900px){
   .overlay .inner{ padding-bottom: clamp(220px, 20vw, 300px) !important; }
 }
+/* ===== LJ Hooker–style Testimonials ===== */
+.ljt{background:linear-gradient(180deg,#f6f8fb, #eef3f8); padding:clamp(48px,9vw,112px) 0}
+.ljt-card{max-width:min(1120px,92vw);margin:0 auto;background:#fff;border:1px solid #e6edf5;border-radius:14px;box-shadow:0 10px 28px rgba(0,0,0,.08);overflow:hidden}
+.ljt-row{display:grid;grid-template-columns:1.1fr 1.4fr;gap:clamp(18px,4vw,36px);align-items:start;padding:clamp(22px,4vw,36px)}
+@media (max-width:900px){.ljt-row{grid-template-columns:1fr}}
+
+.ljt-lead{display:grid;gap:10px}
+.ljt-eyebrow{font-weight:800;color:#0b1e37;letter-spacing:.2px}
+.ljt-title{margin:0;font-size:clamp(20px,2.6vw,28px);color:#0b1e37}
+.ljt-sub{margin:0;color:#5a6a7f}
+.ljt-meta{color:#506075;font-weight:600}
+
+.ljt-stage{position:relative;overflow:hidden}
+.ljt-track{display:flex;transition:transform .45s ease}
+.ljt-slide{flex:0 0 100%;padding:clamp(6px,1.5vw,10px)}
+.ljt-bubble{background:#f9fbfe;border:1px solid #e6edf5;border-radius:12px;padding:clamp(16px,3vw,22px);display:grid;gap:10px}
+.ljt-quote{color:#2b3545;font-size:clamp(16px,2.1vw,20px);line-height:1.5}
+.ljt-author{color:#506075;font-weight:600}
+
+.ljt-dots{display:flex;gap:10px;margin-top:10px}
+.ljt-dot{width:10px;height:10px;border-radius:50%;border:0;background:#d1d9e4;cursor:pointer}
+.ljt-dot[aria-selected="true"]{background:#00467F}
+
+.ljt-arrows{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.ljt-arrows button{pointer-events:auto;border:0;background:#fff;width:36px;height:36px;border-radius:50%;font-size:18px;font-weight:700;box-shadow:0 6px 16px rgba(0,0,0,.12)}
+@media (max-width:640px){.ljt-arrows{display:none}}
   </style>
 </head>
 <body>
@@ -618,6 +644,66 @@ main > section:not(.hero):not(.cta-image):not(.terms):not(.footer){
       </div>
     </section>
 
+<!-- LJ Hooker–style Testimonials -->
+<section class="ljt" id="reviews">
+  <div class="ljt-card">
+    <div class="ljt-row">
+      <div class="ljt-lead">
+        <div class="ljt-eyebrow">“</div>
+        <h3 class="ljt-title">Word-of-mouth, direct from our clients</h3>
+        <p class="ljt-sub">Real feedback from sellers and buyers we’ve helped across Nelson &amp; Tasman.</p>
+        <div class="ljt-dots" role="tablist" aria-label="Testimonials navigation">
+          <button class="ljt-dot" role="tab" aria-selected="true"></button>
+          <button class="ljt-dot" role="tab" aria-selected="false"></button>
+          <button class="ljt-dot" role="tab" aria-selected="false"></button>
+          <button class="ljt-dot" role="tab" aria-selected="false"></button>
+        </div>
+      </div>
+
+      <div class="ljt-stage">
+        <div class="ljt-track">
+          <!-- Slide 1 -->
+          <article class="ljt-slide" aria-roledescription="slide">
+            <div class="ljt-bubble">
+              <div class="ljt-quote">“We finally found our dream property and worked with Penelope Rollston. Professional, genuine and down-to-earth. Excellent advice and communication — always followed up. We’ll use Pen again and highly recommend her.”</div>
+              <div class="ljt-author">Nelson buyers</div>
+            </div>
+          </article>
+
+          <!-- Slide 2 -->
+          <article class="ljt-slide" aria-roledescription="slide">
+            <div class="ljt-bubble">
+              <div class="ljt-quote">“Kim is absolutely fantastic — an excellent communicator and highly professional. The whole process flowed with ease and integrity. Her positive, helpful energy was exactly what I needed. Thanks Kim, you’re gold!”</div>
+              <div class="ljt-author">Home seller</div>
+            </div>
+          </article>
+
+          <!-- Slide 3 -->
+          <article class="ljt-slide" aria-roledescription="slide">
+            <div class="ljt-bubble">
+              <div class="ljt-quote">“Penelope sold a second property for us after eight years. Same no-nonsense, positive approach in a different market. Skilled marketing and friendly, efficient communication — a pleasure to work with.”</div>
+              <div class="ljt-author">Repeat vendors</div>
+            </div>
+          </article>
+
+          <!-- Slide 4 -->
+          <article class="ljt-slide" aria-roledescription="slide">
+            <div class="ljt-bubble">
+              <div class="ljt-quote">“Penelope sold my Motueka home in 5–6 weeks for a favourable result. She kept me updated, negotiated superbly and was professional, honest and reliable. I’m most grateful — brighter future ahead.”</div>
+              <div class="ljt-author">Motueka vendor</div>
+            </div>
+          </article>
+        </div>
+
+        <div class="ljt-arrows" aria-hidden="true">
+          <button class="ljt-prev" type="button" aria-label="Previous">‹</button>
+          <button class="ljt-next" type="button" aria-label="Next">›</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
     <!-- Big image CTA -->
     <section class="cta-image">
       <div class="container">
@@ -759,30 +845,33 @@ main > section:not(.hero):not(.cta-image):not(.terms):not(.footer){
       });
     });
 
-    // Testimonials slider
-    (function(){
-      const track = document.querySelector('.t-track');
-      const slides = Array.from(document.querySelectorAll('.t-slide'));
-      const dots   = Array.from(document.querySelectorAll('.t-dot'));
-      const prev   = document.querySelector('.t-prev');
-      const next   = document.querySelector('.t-next');
-      let index = 0, timer;
+  // === LJT Testimonials slider (new) ===
+  (function(){
+    const wrap  = document.querySelector('.ljt');
+    if(!wrap) return;
+    const track = wrap.querySelector('.ljt-track');
+    const slides= Array.from(wrap.querySelectorAll('.ljt-slide'));
+    const dots  = Array.from(wrap.querySelectorAll('.ljt-dot'));
+    const prev  = wrap.querySelector('.ljt-prev');
+    const next  = wrap.querySelector('.ljt-next');
+    let index = 0, timer;
 
-      function go(i){
-        index = (i + slides.length) % slides.length;
-        track.style.transform = `translateX(-${index * 100}%)`;
-        dots.forEach((d, n) => d.setAttribute('aria-selected', n === index ? 'true' : 'false'));
-        restart();
-      }
-      function restart(){ clearInterval(timer); timer = setInterval(() => go(index + 1), 5500); }
-      dots.forEach((d,n)=>d.addEventListener('click',()=>go(n)));
-      prev?.addEventListener('click',()=>go(index-1));
-      next?.addEventListener('click',()=>go(index+1));
-      const slider = document.querySelector('.t-slider');
-      slider?.addEventListener('mouseenter', ()=>clearInterval(timer));
-      slider?.addEventListener('mouseleave', restart);
+    function go(i){
+      index = (i + slides.length) % slides.length;
+      track.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach((d,n)=>d.setAttribute('aria-selected', n===index ? 'true' : 'false'));
       restart();
-    })();
-  </script>
+    }
+    function restart(){ clearInterval(timer); timer = setInterval(()=>go(index+1), 6000); }
+    dots.forEach((d,n)=>d.addEventListener('click',()=>go(n)));
+    prev?.addEventListener('click',()=>go(index-1));
+    next?.addEventListener('click',()=>go(index+1));
+
+    const stage = wrap.querySelector('.ljt-stage');
+    stage?.addEventListener('mouseenter', ()=>clearInterval(timer));
+    stage?.addEventListener('mouseleave', restart);
+    restart();
+  })();
+	</script>
 </body>
 </html>
