@@ -181,7 +181,7 @@
   position: relative;
   background:
     linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.35)),
-    url('assets/images/Google Ads Wide Logo.png') center/cover no-repeat;
+    url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2400&auto=format&fit=crop') center/cover no-repeat;
   padding: clamp(80px,11vw,136px) 0;
 }
 
@@ -203,11 +203,11 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(40% 50% at 20% 30%, #0A84FF 0%, transparent 65%),
-    radial-gradient(32% 40% at 85% 20%, #14b8a6 0%, transparent 70%),
+    radial-gradient(80% 50% at 20% 30%, #0A84FF 0%, transparent 65%),
+    radial-gradient(62% 40% at 85% 20%, #14b8a6 0%, transparent 70%),
     radial-gradient(38% 46% at 70% 80%, #f97316 0%, transparent 65%),
     radial-gradient(42% 52% at 10% 85%, #7c3aed 0%, transparent 70%);
-  opacity: .35; /* adjust intensity */
+  opacity: .45; /* adjust intensity */
   z-index: 0;
 }
 
@@ -433,55 +433,22 @@
     .pac-matched{ color:#00467F !important; }
     .pac-logo:after{ display:none !important; }
     
-/* Default logo size (mobile) */
-header .brand-logo {
-  height: 36px; /* adjust if you want slightly bigger on mobile too */
-  width: auto;
-}
-
-/* Tablet & desktop logo size */
-@media (min-width: 768px) {
-  header .brand-logo {
-    height: 45px;  /* make the logo noticeably bigger */
-    width: auto;
-  }
-}
-
-@media (min-width: 1200px) {
-  header .brand-logo {
-    height: 50px; /* even larger for big screens */
-  }
-}
-
-.footer-logo {
-  max-height: 70px;   /* adjust size to suit */
-  margin-bottom: 10px;
-  display: block;
-}
-
-/* Make header full width with spaced logo & buttons */
-.topbar {
-  width: 100%;
-  background: #fff; /* keep background clean */
-}
-
-.topbar .container {
-  max-width: 100%;       /* remove centering */
-  padding: 0 24px;       /* give space left + right */
+/* ===== Header layout fix ===== */
+.site-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 24px; /* adds breathing room left & right */
 }
 
-.topbar .brand img {
-  max-height: 60px;      /* adjust logo size */
-  height: auto;
-  width: auto;
+.site-header .logo {
+  flex-shrink: 0; /* logo won’t squish */
 }
 
-.cta-nav {
+.site-header .header-buttons {
   display: flex;
-  gap: 12px;             /* spacing between "Call us" and CTA button */
+  align-items: center;
+  gap: 16px; /* space between buttons */
 }
   </style>
 </head>
@@ -505,18 +472,15 @@ header .brand-logo {
   </aside>
 
  <!-- Header -->
-<header class="topbar" role="banner">
-  <div class="container">
-    <a class="brand" href="#top">
-      <img src="assets/images/Google Ads Wide Logo.png" alt="First National Connect Logo">
-    </a>
-    <nav class="cta-nav">
-      <a class="btn secondary" href="tel:+64273594558">Call us</a>
-      <a class="btn" href="#appraisal-form">Get my Free Appraisal</a>
-    </nav>
-    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
-      <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
-    </button>
+<header class="site-header">
+  <div class="logo">
+    <img src="assets/images/Google Ads Wide Logo.png" alt="First National Connect">
+  </div>
+
+  <div class="header-buttons">
+    <a href="tel:0800000000" class="btn-secondary">Call us</a>
+    <a href="#form" class="btn-primary">Get my Free Appraisal</a>
+    <button class="menu-toggle" aria-expanded="false">☰</button>
   </div>
 </header>
 
