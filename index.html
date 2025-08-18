@@ -375,24 +375,25 @@
 .t-acc details:first-of-type{ border-top: 0; }     /* no double border at top */
 .t-acc summary{ font-weight: 800; }                /* stronger like FAQ titles */
 
+/* Form groups */
 .form-group {
   margin-bottom: 16px;
+  width: 100%;
 }
 
-.form-group label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: #222; /* adjust if you want */
-}
-
+/* Only allow side-by-side for the row that actually uses it */
 .form-row {
   display: flex;
   gap: 12px;
 }
 
 .form-row .form-group {
-  flex: 1;
+  flex: 1;   /* share row evenly */
+}
+
+/* Ensure non-row groups always stretch full width */
+form > .form-group {
+  display: block;
 }
   </style>
 </head>
