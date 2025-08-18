@@ -374,6 +374,26 @@
 }
 .t-acc details:first-of-type{ border-top: 0; }     /* no double border at top */
 .t-acc summary{ font-weight: 800; }                /* stronger like FAQ titles */
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #222; /* adjust if you want */
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
   </style>
 </head>
 <body>
@@ -425,7 +445,7 @@
           <div class="hero-form">
             <div class="form-holder card" id="hero-form-holder">
   <form id="leadFormDesktop" novalidate>
-  <!-- intro stays in DOM for mobile/tablet fallback, but is hidden on desktop via CSS above -->
+  <!-- Intro stays but hidden on desktop with CSS from before -->
   <div class="form-intro">
     <div class="step">Step 1</div>
     <h3>Ready to find out what your home is worth?</h3>
@@ -433,38 +453,45 @@
       current market conditions and clear next steps.</p>
   </div>
 
-  <!-- Labels + placeholders so it’s crystal clear -->
-  <label>Property address
-    <input type="text" name="address" placeholder="e.g., 10 Example St, Richmond"
+  <div class="form-group">
+    <label for="address">Property address</label>
+    <input id="address" type="text" name="address"
+           placeholder="e.g., 10 Example St, Richmond"
            autocomplete="street-address" required>
-  </label>
-
-  <div class="row2">
-    <label>Full name
-      <input type="text" name="full_name" placeholder="e.g., Jane Smith"
-             autocomplete="name" required>
-    </label>
-    <label>Phone
-      <input type="tel" name="phone" placeholder="e.g., 021 123 4567"
-             autocomplete="tel" required>
-    </label>
   </div>
 
-  <label>Email
-    <input type="email" name="email" placeholder="e.g., jane@example.com"
-           autocomplete="email" required>
-  </label>
+  <div class="form-row">
+    <div class="form-group">
+      <label for="full_name">Full name</label>
+      <input id="full_name" type="text" name="full_name"
+             placeholder="e.g., Jane Smith"
+             autocomplete="name" required>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input id="phone" type="tel" name="phone"
+             placeholder="e.g., 021 123 4567"
+             autocomplete="tel" required>
+    </div>
+  </div>
 
-  <!-- Added back -->
-  <label>When are you thinking of selling?
-    <select name="timeframe" required>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input id="email" type="email" name="email"
+           placeholder="e.g., jane@example.com"
+           autocomplete="email" required>
+  </div>
+
+  <div class="form-group">
+    <label for="timeframe">When are you thinking of selling?</label>
+    <select id="timeframe" name="timeframe" required>
       <option value="" disabled selected>Select timeframe</option>
       <option>Now</option>
       <option>1–3 months</option>
       <option>3–6 months</option>
       <option>Just curious</option>
     </select>
-  </label>
+  </div>
 
   <button class="btn block" type="submit">Get my Free Appraisal</button>
   <p class="fine">By submitting, you agree to be contacted about your appraisal.</p>
