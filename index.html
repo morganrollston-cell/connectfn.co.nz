@@ -332,6 +332,48 @@
       .overlay .inner{padding-bottom:clamp(200px,18vw,260px)}
       .hero-media{height:clamp(540px,70vw,960px)}
     }
+    /* === Mobile: alternating edge-bleed images in the info band === */
+@media (max-width: 860px){
+  /* default: keep card look, then selectively push wide */
+  .section-info .info-row .info-media{
+    margin: 0;
+    width: 100%;
+    border-radius: 14px;
+  }
+
+  /* 1st & 3rd rows: bleed LEFT */
+  .section-info .info-row:nth-of-type(1) .info-media,
+  .section-info .info-row:nth-of-type(3) .info-media{
+    margin-left: -7vw;
+    width: calc(100% + 7vw);
+    border-radius: 0 14px 14px 0;
+  }
+
+  /* 2nd row: keep the “accidental” right bleed */
+  .section-info .info-row:nth-of-type(2) .info-media{
+    margin-right: -7vw;
+    width: calc(100% + 7vw);
+    border-radius: 14px 0 0 14px;
+  }
+}
+
+/* === Make Spring Campaign T&Cs bigger like FAQs === */
+.terms{
+  padding: clamp(72px, 12vw, 140px) 0 !important; /* taller band */
+  border-top: 1px solid var(--border);            /* matches FAQ top rule */
+}
+.terms h2{
+  font-size: clamp(26px, 4vw, 44px);
+  margin-bottom: 28px;
+}
+.t-acc details{
+  max-width: 920px;
+  margin: 16px auto;               /* room between items */
+  padding: 12px 0;                 /* breath inside each */
+  border-top: 1px solid var(--border);
+}
+.t-acc details:first-of-type{ border-top: 0; }     /* no double border at top */
+.t-acc summary{ font-weight: 800; }                /* stronger like FAQ titles */
   </style>
 </head>
 <body>
