@@ -419,10 +419,24 @@
     .pac-matched{ color:#00467F !important; }
     .pac-logo:after{ display:none !important; }
     
-    .header-logo {
-  height: 50px;       /* adjust size */
-  display: block;
-  margin: 5px 0;
+/* Default logo size (mobile) */
+header .brand-logo {
+  height: 36px; /* adjust if you want slightly bigger on mobile too */
+  width: auto;
+}
+
+/* Tablet & desktop logo size */
+@media (min-width: 768px) {
+  header .brand-logo {
+    height: 60px;  /* make the logo noticeably bigger */
+    width: auto;
+  }
+}
+
+@media (min-width: 1200px) {
+  header .brand-logo {
+    height: 70px; /* even larger for big screens */
+  }
 }
 
 .footer-logo {
