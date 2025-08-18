@@ -181,12 +181,13 @@
   position: relative;
   background:
     linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.35)),
-    url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2000&auto=format&fit=crop') 
-    center/cover no-repeat;
+    url('assets/images/Google Ads Wide Logo.png') center/cover no-repeat;
   padding: clamp(80px,11vw,136px) 0;
 }
 
 .cta-panel {
+  position: relative;
+  background: #fff; /* solid white base */
   border-radius: 16px;
   border: 1px solid var(--border);
   box-shadow: var(--shadow-2);
@@ -194,34 +195,40 @@
   max-width: 760px;
   margin-inline: auto;
   text-align: center;
-  color: #fff;
+  overflow: hidden; /* so gradient doesn’t spill out */
+}
 
-  /* colourful gradient background like simple steps */
+.cta-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   background:
     radial-gradient(40% 50% at 20% 30%, #0A84FF 0%, transparent 65%),
     radial-gradient(32% 40% at 85% 20%, #14b8a6 0%, transparent 70%),
     radial-gradient(38% 46% at 70% 80%, #f97316 0%, transparent 65%),
     radial-gradient(42% 52% at 10% 85%, #7c3aed 0%, transparent 70%);
+  opacity: .35; /* adjust intensity */
+  z-index: 0;
+}
+
+.cta-panel * {
+  position: relative;
+  z-index: 1; /* keep content above gradient */
 }
 
 .cta-panel h3 {
   margin: 0 0 12px;
   font-size: clamp(20px,2.4vw,28px);
-  color: #fff;
 }
 
 .cta-panel p {
   margin: 0 0 18px;
-  color: #f0f4f8; /* softer white */
+  color: #344861;
 }
 
 .cta-panel .btn {
   color: #fff;
-  background: #0A84FF;
-}
-
-.cta-panel .btn:hover {
-  background: #0066cc;
+  background: var(--accent);
 }
 
     /* ========= Terms ========= */
