@@ -451,6 +451,31 @@ header .brand-logo {
   margin-bottom: 10px;
   display: block;
 }
+
+/* Make header full width with spaced logo & buttons */
+.topbar {
+  width: 100%;
+  background: #fff; /* keep background clean */
+}
+
+.topbar .container {
+  max-width: 100%;       /* remove centering */
+  padding: 0 24px;       /* give space left + right */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar .brand img {
+  max-height: 60px;      /* adjust logo size */
+  height: auto;
+  width: auto;
+}
+
+.cta-nav {
+  display: flex;
+  gap: 12px;             /* spacing between "Call us" and CTA button */
+}
   </style>
 </head>
 <body>
@@ -472,22 +497,18 @@ header .brand-logo {
     </div>
   </aside>
 
-  <!-- Header -->
+ <!-- Header -->
 <header class="topbar" role="banner">
-  <div class="container row">
+  <div class="container">
     <a class="brand" href="#top">
-      <img src="assets/images/Google Ads Wide Logo.png" 
-           alt="First National Connect Logo" 
-           class="header-logo">
+      <img src="assets/images/Google Ads Wide Logo.png" alt="First National Connect Logo">
     </a>
     <nav class="cta-nav">
-      <a class="btn secondary" href="tel:+6430000000">Call us</a>
+      <a class="btn secondary" href="tel:+64273594558">Call us</a>
       <a class="btn" href="#appraisal-form">Get my Free Appraisal</a>
     </nav>
     <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
-      <span class="menu-icon" aria-hidden="true">
-        <span></span><span></span><span></span>
-      </span>
+      <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
     </button>
   </div>
 </header>
