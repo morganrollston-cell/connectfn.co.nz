@@ -387,6 +387,18 @@
     .pac-item-query{ font-weight:700 !important; color:#0b1e37 !important; }
     .pac-matched{ color:#00467F !important; }
     .pac-logo:after{ display:none !important; }
+    
+    .header-logo {
+  height: 50px;       /* adjust size */
+  display: block;
+  margin: 5px 0;
+}
+
+.footer-logo {
+  max-height: 70px;   /* adjust size to suit */
+  margin-bottom: 10px;
+  display: block;
+}
   </style>
 </head>
 <body>
@@ -409,18 +421,24 @@
   </aside>
 
   <!-- Header -->
-  <header class="topbar" role="banner">
-    <div class="container row">
-      <a class="brand" href="#top"><span class="brand-badge">FN</span><span>First National Connect</span></a>
-      <nav class="cta-nav">
-        <a class="btn secondary" href="tel:+6430000000">Call us</a>
-        <a class="btn" href="#appraisal-form">Get my Free Appraisal</a>
-      </nav>
-      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
-        <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
-      </button>
-    </div>
-  </header>
+<header class="topbar" role="banner">
+  <div class="container row">
+    <a class="brand" href="#top">
+      <img src="assets/images/Google-Ads-Wide-Logo.png" 
+           alt="First National Connect Logo" 
+           class="header-logo">
+    </a>
+    <nav class="cta-nav">
+      <a class="btn secondary" href="tel:+6430000000">Call us</a>
+      <a class="btn" href="#appraisal-form">Get my Free Appraisal</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+      <span class="menu-icon" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+    </button>
+  </div>
+</header>
 
   <main id="top">
     <!-- HERO -->
@@ -694,48 +712,50 @@
   </main>
 
   <!-- MODERN FOOTER -->
-  <footer class="footer-pro" role="contentinfo">
-    <div class="container footGrid">
-      <section class="footCard">
-        <h4>Sell</h4>
-        <p>Thinking of moving? Get a clear, expert-backed price and a plan to maximise your result.</p>
-        <ul>
-          <li>Local buyer demand snapshot</li>
-          <li>Comparable sales you can trust</li>
-          <li>Strategy to lift your sale price</li>
-        </ul>
-        <a class="btn-cta" href="#appraisal-form">Get my Free Appraisal</a>
-      </section>
+<footer class="footer-pro" role="contentinfo">
+  <div class="container footGrid">
+    <section class="footCard">
+      <h4>Sell</h4>
+      <p>Thinking of moving? Get a clear, expert-backed price and a plan to maximise your result.</p>
+      <ul>
+        <li>Local buyer demand snapshot</li>
+        <li>Comparable sales you can trust</li>
+        <li>Strategy to lift your sale price</li>
+      </ul>
+      <a class="btn-cta" href="#appraisal-form">Get my Free Appraisal</a>
+    </section>
 
-      <section class="footCard">
-        <h4>Buy</h4>
-        <p>Looking for your next home? Browse the latest listings across Nelson &amp; Tasman.</p>
-        <a class="btn-outline" href="#">Browse properties</a>
-      </section>
+    <section class="footCard">
+      <h4>Buy</h4>
+      <p>Looking for your next home? Browse the latest listings across Nelson &amp; Tasman.</p>
+      <a class="btn-outline" href="#">Browse properties</a>
+    </section>
 
-      <section class="footCard">
-        <h4>Rent</h4>
-        <p>Need your investment managed? We place quality tenants and keep everything on track.</p>
-        <a class="btn-outline" href="#">Talk to property management</a>
-      </section>
+    <section class="footCard">
+      <h4>Rent</h4>
+      <p>Need your investment managed? We place quality tenants and keep everything on track.</p>
+      <a class="btn-outline" href="#">Talk to property management</a>
+    </section>
 
-      <section class="footCard footBrand">
-        <div class="logo" aria-hidden="true"></div>
-        <div><strong>First National Connect</strong><br>Collingwood Street, Nelson, New Zealand</div>
-        <div>📞 <a href="tel:+64273594558">027 359 4558</a></div>
-        <div>✉️ <a href="mailto:hello@fnconnect.co.nz">hello@fnconnect.co.nz</a></div>
-        <div>Open hours: Please phone, text or email to make an appointment</div>
-        <div>Licensed REAA 2008 — t/a First National Connect</div>
-      </section>
+    <section class="footCard footBrand">
+      <img src="assets/images/Nelson:Tasman Logo.png" 
+           alt="Nelson Tasman Logo" 
+           class="footer-logo">
+      <div>Collingwood Street, Nelson, New Zealand</div>
+      <div>📞 <a href="tel:+64273594558">027 359 4558</a></div>
+      <div>✉️ <a href="mailto:hello@fnconnect.co.nz">hello@fnconnect.co.nz</a></div>
+      <div>Open hours: Please phone, text or email to make an appointment</div>
+      <div>Licensed REAA 2008 — t/a First National Connect</div>
+    </section>
+  </div>
+
+  <div class="legal">
+    <div class="container row">
+      <div>© 2025 First National Connect • <a href="#" style="color:#69c2ff">Privacy Policy</a> • <a href="#" style="color:#69c2ff">Disclaimer</a></div>
+      <div>Website by <a href="#" style="color:#69c2ff">webstudio.nz</a></div>
     </div>
-
-    <div class="legal">
-      <div class="container row">
-        <div>© 2025 First National Connect • <a href="#" style="color:#69c2ff">Privacy Policy</a> • <a href="#" style="color:#69c2ff">Disclaimer</a></div>
-        <div>Website by <a href="#" style="color:#69c2ff">webstudio.nz</a></div>
-      </div>
-    </div>
-  </footer>
+  </div>
+</footer>
 
   <script>
     // Drawer controls
