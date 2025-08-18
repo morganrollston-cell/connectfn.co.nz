@@ -332,107 +332,61 @@
       .overlay .inner{padding-bottom:clamp(200px,18vw,260px)}
       .hero-media{height:clamp(540px,70vw,960px)}
     }
+
     /* === Mobile: alternating edge-bleed images in the info band === */
-@media (max-width: 860px){
-  /* default: keep card look, then selectively push wide */
-  .section-info .info-row .info-media{
-    margin: 0;
-    width: 100%;
-    border-radius: 14px;
-  }
+    @media (max-width: 860px){
+      .section-info .info-row .info-media{ margin:0; width:100%; border-radius:14px; }
+      .section-info .info-row:nth-of-type(1) .info-media,
+      .section-info .info-row:nth-of-type(3) .info-media{
+        margin-left:-7vw; width:calc(100% + 9vw); border-radius:0 14px 14px 0;
+      }
+      .section-info .info-row:nth-of-type(2) .info-media{
+        margin-right:-7vw; width:calc(100% + 9vw); border-radius:14px 0 0 14px;
+      }
+    }
 
-  /* 1st & 3rd rows: bleed LEFT */
-  .section-info .info-row:nth-of-type(1) .info-media,
-  .section-info .info-row:nth-of-type(3) .info-media{
-    margin-left: -7vw;
-    width: calc(100% + 9vw);
-    border-radius: 0 14px 14px 0;
-  }
+    /* === Make Spring Campaign T&Cs bigger like FAQs === */
+    .terms{ padding: clamp(72px, 12vw, 140px) 0 !important; border-top: 1px solid var(--border); }
+    .terms h2{ font-size: clamp(26px, 4vw, 44px); margin-bottom: 28px; }
+    .t-acc details{ max-width: 920px; margin: 16px auto; padding: 12px 0; border-top: 1px solid var(--border); }
+    .t-acc details:first-of-type{ border-top: 0; }
+    .t-acc summary{ font-weight: 800; }
 
-  /* 2nd row: keep the “accidental” right bleed */
-  .section-info .info-row:nth-of-type(2) .info-media{
-    margin-right: -7vw;
-    width: calc(100% + 9vw);
-    border-radius: 14px 0 0 14px;
-  }
-}
+    /* Form groups */
+    .form-group{ margin-bottom:16px; width:100%; }
+    .form-row{ display:flex; gap:12px; }
+    .form-row .form-group{ flex:1; }
+    form > .form-group{ display:block; }
 
-/* === Make Spring Campaign T&Cs bigger like FAQs === */
-.terms{
-  padding: clamp(72px, 12vw, 140px) 0 !important; /* taller band */
-  border-top: 1px solid var(--border);            /* matches FAQ top rule */
-}
-.terms h2{
-  font-size: clamp(26px, 4vw, 44px);
-  margin-bottom: 28px;
-}
-.t-acc details{
-  max-width: 920px;
-  margin: 16px auto;               /* room between items */
-  padding: 12px 0;                 /* breath inside each */
-  border-top: 1px solid var(--border);
-}
-.t-acc details:first-of-type{ border-top: 0; }     /* no double border at top */
-.t-acc summary{ font-weight: 800; }                /* stronger like FAQ titles */
+    /* ===== Desktop/Tablet form fixes ===== */
+    .hero-form .form-holder .form-intro{ margin:6px 0 8px; border-bottom:1px solid rgba(16,34,58,.06); }
+    .hero-form .form-holder .form-group label{ font-weight:700; color:#0b1e37; font-size:.95rem; }
+    .hero-form .form-holder input, .hero-form .form-holder select{ width:100%; }
+    .hero-form .form-holder form{ display:grid; gap:14px; }
+    .hero-form .form-holder .form-group{ width:100%; }
+    @media (min-width:720px){
+      .hero-form .form-holder .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    }
+    @media (max-width:719.98px){
+      .hero-form .form-holder .form-row{ display:grid; grid-template-columns:1fr; gap:12px; }
+    }
 
-/* Form groups */
-.form-group {
-  margin-bottom: 16px;
-  width: 100%;
-}
-
-/* Only allow side-by-side for the row that actually uses it */
-.form-row {
-  display: flex;
-  gap: 12px;
-}
-
-.form-row .form-group {
-  flex: 1;   /* share row evenly */
-}
-
-/* Ensure non-row groups always stretch full width */
-form > .form-group {
-  display: block;
-}
-/* ===== Desktop/Tablet form fixes ===== */
-.hero-form .form-holder .form-intro{
-  margin: 6px 0 8px;   /* trims the white space above fields */
-  border-bottom: 1px solid rgba(16,34,58,.06);
-}
-
-.hero-form .form-holder .form-group label{
-  font-weight: 700;
-  color: #0b1e37;
-  font-size: .95rem;
-}
-
-.hero-form .form-holder input,
-.hero-form .form-holder select{
-  width: 100%;
-}
-
-/* Keep most fields full-width; only the .form-row is side-by-side */
-.hero-form .form-holder form{ display: grid; gap: 14px; }
-.hero-form .form-holder .form-group{ width: 100%; }
-
-/* Two-up row for Name + Phone on tablet/desktop only */
-@media (min-width: 720px){
-  .hero-form .form-holder .form-row{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-}
-
-/* On small screens, even the desktop form stacks (safety) */
-@media (max-width: 719.98px){
-  .hero-form .form-holder .form-row{
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-}
+    /* ===== Address Autocomplete (Google Places) — match site look ===== */
+    .pac-container{
+      border:1px solid #dfe7f0 !important;
+      border-radius:12px !important;
+      box-shadow:0 14px 42px rgba(0,0,0,.10) !important;
+      overflow:hidden !important;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif !important;
+      z-index:10000 !important;
+    }
+    .pac-item{ padding:10px 12px !important; border-top:1px solid #f1f5f9 !important; line-height:1.35 !important; color:#10223a !important; }
+    .pac-item:first-child{ border-top:0 !important; }
+    .pac-item:hover{ background:#ebf3fb !important; }
+    .pac-item .pac-icon{ display:none !important; }
+    .pac-item-query{ font-weight:700 !important; color:#0b1e37 !important; }
+    .pac-matched{ color:#00467F !important; }
+    .pac-logo:after{ display:none !important; }
   </style>
 </head>
 <body>
@@ -555,8 +509,8 @@ form > .form-group {
       current market conditions and clear next steps.</p>
   </div>
 
-  <label>Property address
-    <input type="text" name="address" placeholder="e.g., 10 Example St, Richmond"
+  <label for="addressMobile">Property address
+    <input id="addressMobile" type="text" name="address" placeholder="e.g., 10 Example St, Richmond"
            autocomplete="street-address" required>
   </label>
 
@@ -614,12 +568,10 @@ form > .form-group {
             <h3>We’re giving away $2,500 this spring</h3>
             <p>Enter the draw when you request your free appraisal. Get a clear view of today’s value plus practical steps to maximise your result.</p>
           </div>
-          <!-- 👇 Image added (edit via --img-promo) -->
           <div class="info-media is-promo" aria-label="Promo image"></div>
         </div>
 
         <div class="info-row reverse">
-          <!-- 👇 Image added (edit via --img-agent) -->
           <div class="info-media is-agent" aria-label="Local agent image"></div>
           <div class="info-copy">
             <h3>Why choose First National Connect?</h3>
@@ -632,7 +584,6 @@ form > .form-group {
             <h3>Our transparent, stress-free approach</h3>
             <p>From appraisal to sold, we keep you fully informed with clear pricing guidance and tailored marketing — no surprises.</p>
           </div>
-          <!-- 👇 Image added (edit via --img-marketing) -->
           <div class="info-media is-marketing" aria-label="Marketing image"></div>
         </div>
       </div>
@@ -692,62 +643,6 @@ form > .form-group {
             </button>
             <div class="faq-a" hidden>
               Start with a free expert appraisal. You’ll get a price range, comparable sales and the key steps to maximise your sale price in today’s market.
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- LJ Hooker–style Testimonials (now boxless, same placement) -->
-    <section class="ljt" id="reviews">
-      <div class="ljt-card">
-        <div class="ljt-row">
-          <div class="ljt-lead">
-            <div class="ljt-eyebrow">“</div>
-            <h3 class="ljt-title">Word-of-mouth, direct from our clients</h3>
-            <p class="ljt-sub">Real feedback from sellers and buyers we’ve helped across Nelson &amp; Tasman.</p>
-            <div class="ljt-dots" role="tablist" aria-label="Testimonials navigation">
-              <button class="ljt-dot" role="tab" aria-selected="true"></button>
-              <button class="ljt-dot" role="tab" aria-selected="false"></button>
-              <button class="ljt-dot" role="tab" aria-selected="false"></button>
-              <button class="ljt-dot" role="tab" aria-selected="false"></button>
-            </div>
-          </div>
-
-          <div class="ljt-stage">
-            <div class="ljt-track">
-              <article class="ljt-slide" aria-roledescription="slide">
-                <div class="ljt-bubble">
-                  <div class="ljt-quote">“We finally found our dream property and worked with Penelope Rollston. Professional, genuine and down-to-earth. Excellent advice and communication — always followed up. We’ll use Pen again and highly recommend her.”</div>
-                  <div class="ljt-author">Nelson buyers</div>
-                </div>
-              </article>
-
-              <article class="ljt-slide" aria-roledescription="slide">
-                <div class="ljt-bubble">
-                  <div class="ljt-quote">“Kim is absolutely fantastic — an excellent communicator and highly professional. The whole process flowed with ease and integrity. Her positive, helpful energy was exactly what I needed. Thanks Kim, you’re gold!”</div>
-                  <div class="ljt-author">Home seller</div>
-                </div>
-              </article>
-
-              <article class="ljt-slide" aria-roledescription="slide">
-                <div class="ljt-bubble">
-                  <div class="ljt-quote">“Penelope sold a second property for us after eight years. Same no-nonsense, positive approach in a different market. Skilled marketing and friendly, efficient communication — a pleasure to work with.”</div>
-                  <div class="ljt-author">Repeat vendors</div>
-                </div>
-              </article>
-
-              <article class="ljt-slide" aria-roledescription="slide">
-                <div class="ljt-bubble">
-                  <div class="ljt-quote">“Penelope sold my Motueka home in 5–6 weeks for a favourable result. She kept me updated, negotiated superbly and was professional, honest and reliable. I’m most grateful — brighter future ahead.”</div>
-                  <div class="ljt-author">Motueka vendor</div>
-                </div>
-              </article>
-            </div>
-
-            <div class="ljt-arrows" aria-hidden="true">
-              <button class="ljt-prev" type="button" aria-label="Previous">‹</button>
-              <button class="ljt-next" type="button" aria-label="Next">›</button>
             </div>
           </div>
         </div>
@@ -922,6 +817,41 @@ form > .form-group {
       stage?.addEventListener('mouseleave', restart);
       restart();
     })();
-	</script>
+
+    /* ===== Google Places Autocomplete ===== */
+    function initAddressAutocomplete(){
+      const options = {
+        fields: ['formatted_address','address_components','geometry'],
+        types: ['address'],
+        componentRestrictions: { country: ['nz','au'] } // set to ['nz'] if NZ-only
+      };
+      const inputs = [
+        document.getElementById('address'),
+        document.getElementById('addressMobile')
+      ].filter(Boolean);
+
+      inputs.forEach(input => {
+        const ac = new google.maps.places.Autocomplete(input, options);
+
+        ac.addListener('place_changed', () => {
+          const place = ac.getPlace();
+          if (place && place.formatted_address){
+            input.value = place.formatted_address;
+          }
+        });
+
+        // Stop Enter from submitting when a suggestion is open
+        input.addEventListener('keydown', e => {
+          if (e.key === 'Enter') {
+            const dd = document.querySelector('.pac-container');
+            const open = dd && getComputedStyle(dd).display !== 'none';
+            if (open) e.preventDefault();
+          }
+        });
+      });
+    }
+  </script>
+  <!-- TODO: replace YOUR_GOOGLE_MAPS_API_KEY with your actual key (Maps JS + Places enabled) -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN9ItH4RG4IAaS6zPRpP6n19Qi8iBU_nE&libraries=places&callback=initAddressAutocomplete"></script>
 </body>
 </html>
