@@ -395,6 +395,44 @@
 form > .form-group {
   display: block;
 }
+/* ===== Desktop/Tablet form fixes ===== */
+.hero-form .form-holder .form-intro{
+  margin: 6px 0 8px;   /* trims the white space above fields */
+  border-bottom: 1px solid rgba(16,34,58,.06);
+}
+
+.hero-form .form-holder .form-group label{
+  font-weight: 700;
+  color: #0b1e37;
+  font-size: .95rem;
+}
+
+.hero-form .form-holder input,
+.hero-form .form-holder select{
+  width: 100%;
+}
+
+/* Keep most fields full-width; only the .form-row is side-by-side */
+.hero-form .form-holder form{ display: grid; gap: 14px; }
+.hero-form .form-holder .form-group{ width: 100%; }
+
+/* Two-up row for Name + Phone on tablet/desktop only */
+@media (min-width: 720px){
+  .hero-form .form-holder .form-row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+}
+
+/* On small screens, even the desktop form stacks (safety) */
+@media (max-width: 719.98px){
+  .hero-form .form-holder .form-row{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
   </style>
 </head>
 <body>
@@ -445,8 +483,7 @@ form > .form-group {
 
           <div class="hero-form">
             <div class="form-holder card" id="hero-form-holder">
-  <form id="leadFormDesktop" novalidate>
-  <!-- Intro stays but hidden on desktop with CSS from before -->
+<form id="leadFormDesktop" novalidate>
   <div class="form-intro">
     <div class="step">Step 1</div>
     <h3>Ready to find out what your home is worth?</h3>
@@ -454,6 +491,7 @@ form > .form-group {
       current market conditions and clear next steps.</p>
   </div>
 
+  <!-- Full-width: Address -->
   <div class="form-group">
     <label for="address">Property address</label>
     <input id="address" type="text" name="address"
@@ -461,6 +499,7 @@ form > .form-group {
            autocomplete="street-address" required>
   </div>
 
+  <!-- Two-up row: Name + Phone -->
   <div class="form-row">
     <div class="form-group">
       <label for="full_name">Full name</label>
@@ -476,6 +515,7 @@ form > .form-group {
     </div>
   </div>
 
+  <!-- Full-width: Email -->
   <div class="form-group">
     <label for="email">Email</label>
     <input id="email" type="email" name="email"
@@ -483,6 +523,7 @@ form > .form-group {
            autocomplete="email" required>
   </div>
 
+  <!-- Full-width: Timeframe -->
   <div class="form-group">
     <label for="timeframe">When are you thinking of selling?</label>
     <select id="timeframe" name="timeframe" required>
