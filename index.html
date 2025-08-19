@@ -272,6 +272,49 @@
     .faq-item.open .faq-icon{background:var(--brand);color:#fff}
     @media (max-width:640px){.faq-a{padding-left:0}}
 
+/* ===== LJT TESTIMONIALS – refined look (works with existing JS) ===== */
+.ljt{ background:none; padding: clamp(48px,9vw,112px) 0; }
+.ljt-card{ max-width:min(1120px,92vw); margin:0 auto; }
+.ljt-row{ display:grid; grid-template-columns:1.05fr 1.35fr; gap:clamp(18px,4vw,36px); align-items:start; }
+@media (max-width:900px){ .ljt-row{ grid-template-columns:1fr } }
+
+.ljt-eyebrow{ font-weight:800; color:#0b1e37; letter-spacing:.2px; font-size:clamp(18px,2.2vw,20px); }
+.ljt-title{ margin:.15em 0 .25em; font-size:clamp(22px,2.6vw,30px); color:#0b1e37 }
+.ljt-sub{ margin:0 0 12px; color:#5a6a7f }
+
+.ljt-stage{ position:relative; overflow:hidden; background:#fff; border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow-1); }
+.ljt-track{ display:flex; transition:transform .45s ease; }
+.ljt-slide{ flex:0 0 100%; padding: clamp(16px,2.6vw,26px); }
+
+.ljt-bubble{ display:grid; gap:14px; margin:0; }
+.ljt-meta{ display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:center; }
+.ljt-avatar{ width:48px; height:48px; border-radius:50%; object-fit:cover; }
+.ljt-name{ font-weight:800; color:#0b1e37; line-height:1.1; }
+.ljt-loc{ color:#64748b; font-size:.95rem; }
+.ljt-stars{ font-weight:800; letter-spacing:.08em; color:#f59e0b; }
+
+.ljt-quote{ color:#2b3545; font-size:clamp(18px,2.1vw,22px); line-height:1.6; position:relative; padding-left:34px; margin:0; }
+.ljt-quote::before{ content:"“"; position:absolute; left:0; top:-6px; font-size:36px; font-weight:900; line-height:1; color:#7aa8ff; opacity:.9 }
+.ljt-author{ color:#506075; font-weight:600; }
+
+.ljt-dots{ display:flex; gap:12px; margin-top:10px; }
+.ljt-dot{ width:12px; height:12px; background:#cfd9e6; border:0; border-radius:999px; cursor:pointer; transition:transform .18s ease,background .18s ease }
+.ljt-dot[aria-selected="true"]{ background:#00467F; transform:scale(1.15) }
+
+.ljt-arrows{ position:absolute; inset:0; display:flex; justify-content:space-between; align-items:center; pointer-events:none }
+.ljt-arrows button{ pointer-events:auto; border:0; background:transparent; width:38px; height:38px; border-radius:50%; font-size:22px; font-weight:800; color:#0b1e37 }
+@media (max-width:640px){ .ljt-arrows{ display:none } }
+
+/* optional: subtle splash behind the slider, matching your “Simple steps” vibe */
+.ljt-stage::after{
+  content:""; position:absolute; inset:auto -8vw -10vw -8vw; height:46vw; z-index:-1; filter:blur(50px); opacity:.38; pointer-events:none;
+  background:
+    radial-gradient(40% 50% at 20% 30%, #0A84FF 0%, transparent 65%),
+    radial-gradient(32% 40% at 85% 20%, #14b8a6 0%, transparent 70%),
+    radial-gradient(38% 46% at 70% 80%, #f97316 0%, transparent 65%),
+    radial-gradient(42% 52% at 10% 85%, #7c3aed 0%, transparent 70%);
+}
+
 /* ========= Big image CTA panel ========= */
 .cta-image {
   position: relative;
@@ -851,6 +894,91 @@
         </div>
       </div>
     </section>
+
+<!-- TESTIMONIALS -->
+<section class="ljt" aria-label="What sellers say about First National Connect">
+  <div class="ljt-card">
+    <div class="container ljt-row">
+      <!-- Lead copy / dots -->
+      <div class="ljt-lead">
+        <div class="ljt-eyebrow">Loved by local sellers</div>
+        <h3 class="ljt-title">“Genuinely helpful, zero pressure.”</h3>
+        <p class="ljt-sub">Real feedback from recent appraisals and sales across Nelson/Tasman.</p>
+
+        <div class="ljt-dots" role="tablist" aria-label="Testimonials pagination">
+          <button class="ljt-dot" aria-selected="true" aria-label="Slide 1"></button>
+          <button class="ljt-dot" aria-selected="false" aria-label="Slide 2"></button>
+          <button class="ljt-dot" aria-selected="false" aria-label="Slide 3"></button>
+        </div>
+      </div>
+
+      <!-- Slider -->
+      <div class="ljt-stage" aria-live="polite">
+        <div class="ljt-track">
+          <!-- Slide 1 -->
+          <article class="ljt-slide">
+            <figure class="ljt-bubble">
+              <div class="ljt-meta">
+                <img class="ljt-avatar" src="https://i.pravatar.cc/100?img=5" alt="" loading="lazy">
+                <div>
+                  <div class="ljt-name">Sophie R.</div>
+                  <div class="ljt-loc">Richmond</div>
+                </div>
+                <div class="ljt-stars" aria-hidden="true">★★★★★</div>
+              </div>
+              <blockquote class="ljt-quote">
+                They gave us a clear price range with comparable sales and a simple plan to lift our result. Friendly, fast and no pushy sales pitch.
+              </blockquote>
+              <figcaption class="ljt-author">Appraisal &amp; sale, 2024</figcaption>
+            </figure>
+          </article>
+
+          <!-- Slide 2 -->
+          <article class="ljt-slide">
+            <figure class="ljt-bubble">
+              <div class="ljt-meta">
+                <img class="ljt-avatar" src="https://i.pravatar.cc/100?img=12" alt="" loading="lazy">
+                <div>
+                  <div class="ljt-name">Hamish T.</div>
+                  <div class="ljt-loc">Stoke</div>
+                </div>
+                <div class="ljt-stars" aria-hidden="true">★★★★★</div>
+              </div>
+              <blockquote class="ljt-quote">
+                I liked the honest guidance on timing and marketing. We felt informed all the way and the final price was right where they predicted.
+              </blockquote>
+              <figcaption class="ljt-author">Vendor, 2024</figcaption>
+            </figure>
+          </article>
+
+          <!-- Slide 3 -->
+          <article class="ljt-slide">
+            <figure class="ljt-bubble">
+              <div class="ljt-meta">
+                <img class="ljt-avatar" src="https://i.pravatar.cc/100?img=32" alt="" loading="lazy">
+                <div>
+                  <div class="ljt-name">Meera &amp; Dan</div>
+                  <div class="ljt-loc">Tahunanui</div>
+                </div>
+                <div class="ljt-stars" aria-hidden="true">★★★★★</div>
+              </div>
+              <blockquote class="ljt-quote">
+                Super responsive and professional. The appraisal helped us decide our next move with confidence. Would recommend to anyone “just curious”.
+              </blockquote>
+              <figcaption class="ljt-author">Appraisal, 2025</figcaption>
+            </figure>
+          </article>
+        </div>
+
+        <!-- Arrows (your JS already wires these up) -->
+        <div class="ljt-arrows">
+          <button class="ljt-prev" aria-label="Previous testimonial">‹</button>
+          <button class="ljt-next" aria-label="Next testimonial">›</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
     <!-- Big image CTA -->
     <section class="cta-image">
