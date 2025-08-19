@@ -899,52 +899,64 @@
     scrim.addEventListener('click', closeDrawer);
     window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
     
-// Hide on down, reveal on up — from anywhere on the page
-(() => {
-  const header = document.querySelector('.site-header');
+<script>
+(function(){
+  var header = document.querySelector('.site-header');
   if (!header) return;
 
-  let lastY = window.scrollY;
-  const SLOP = 10;   // ignore tiny jitters
-  let ticking = false;
+  var lastY = 0;                 // last scroll position
+  var ticking = false;
+  var revealTimer = null;
+  var THRESHOLD = 8;             // px delta to trigger
+  var MIN_HIDE_Y = 60;           // don’t hide until we’ve scrolled past this
+
+  // ensure it starts visible
+  header.classList.remove('is-hidden');
 
   function onScroll(){
-    const y  = window.scrollY;
-    const dy = y - lastY;
+    // clamp to avoid iOS elastic negative values
+    var y = Math.max(0, window.pageYOffset || document.documentElement.scrollTop || 0);
+    var delta = y - lastY;
 
-    // at top: no shadow + no transition
-    if (y <= 2){
-      header.classList.add('at-top');
-      header.classList.remove('is-scrolled');
-    } else {
-      header.classList.remove('at-top');
-      header.classList.add('is-scrolled');
-    }
+    // Add/remove tiny shadow when scrolled
+    if (y > 2) header.classList.add('is-scrolled');
+    else header.classList.remove('is-scrolled');
 
-    // don't auto-hide if drawer is open
-    const drawerOpen = document.getElementById('drawer')?.classList.contains('open');
+    // Don’t auto-hide if the drawer is open (no optional chaining)
+    var drawer = document.getElementById('drawer');
+    var drawerOpen = drawer && drawer.classList.contains('open');
 
     if (!drawerOpen){
-      if (dy > SLOP){
-        // scrolling down
+      // Hide on scroll-down (after a little distance)
+      if (delta > THRESHOLD && y > MIN_HIDE_Y){
         header.classList.add('is-hidden');
-      } else if (dy < -SLOP){
-        // scrolling up — reveal immediately, regardless of position
+      }
+      // Show on scroll-up
+      else if (delta < -THRESHOLD){
         header.classList.remove('is-hidden');
       }
     }
+
+    // Also reveal if user pauses shortly after moving (feels snappier)
+    if (revealTimer) clearTimeout(revealTimer);
+    revealTimer = setTimeout(function(){
+      header.classList.remove('is-hidden');
+    }, 140);
 
     lastY = y;
     ticking = false;
   }
 
-  window.addEventListener('scroll', () => {
+  function onScrollHandler(){
     if (!ticking){
-      requestAnimationFrame(onScroll);
+      window.requestAnimationFrame(onScroll);
       ticking = true;
     }
-  }, { passive: true });
+  }
+
+  window.addEventListener('scroll', onScrollHandler, {passive:true});
 })();
+</script>
 
     // Make #appraisal-form always target the visible form
     function syncFormAnchor(){
