@@ -122,6 +122,26 @@
     .drawer-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .drawer-col a{display:block;padding:10px 0;color:#0b1e37;font-weight:600}
     @media (max-width:520px){.drawer-grid{grid-template-columns:1fr}}
+    
+    /* ---- Hide/reveal header on scroll ---- */
+.site-header{
+  will-change: transform;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.site-header.is-hidden{
+  transform: translateY(-100%);
+  box-shadow: none;
+}
+
+/* (optional) add a tiny shadow only when scrolled */
+.site-header.is-scrolled{
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .site-header{ transition: none; }
+}
 
     /* ========= Hero ========= */
     .hero{position:relative}
@@ -853,6 +873,47 @@
     drawerCls.addEventListener('click', closeDrawer);
     scrim.addEventListener('click', closeDrawer);
     window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
+    
+  (function(){
+    const header = document.querySelector('.site-header');
+    if(!header) return;
+
+    let lastY = window.scrollY;
+    let ticking = false;
+    const THRESHOLD = 10; // px before we decide to hide/reveal
+
+    function onScroll(){
+      const y = window.scrollY;
+      const delta = y - lastY;
+
+      // Add scrolled shadow class
+      if (y > 2) header.classList.add('is-scrolled');
+      else header.classList.remove('is-scrolled');
+
+      // Don’t hide while the drawer is open
+      const drawerOpen = document.getElementById('drawer')?.classList.contains('open');
+
+      if (!drawerOpen){
+        if (delta > THRESHOLD && y > 60){
+          // scrolling down
+          header.classList.add('is-hidden');
+        } else if (delta < -THRESHOLD){
+          // scrolling up
+          header.classList.remove('is-hidden');
+        }
+      }
+
+      lastY = y;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking){
+        window.requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    }, {passive:true});
+  })();
 
     // Make #appraisal-form always target the visible form
     function syncFormAnchor(){
