@@ -73,6 +73,28 @@
   .site-header__logo img{ height:32px }
 }
 
+/* Bigger logo without a chunky header bar */
+.site-header{ overflow: visible; }               /* allow logo to overhang a touch */
+.site-header__inner{ padding-block: 6px; }       /* keep the bar thin */
+
+/* Desktop/tablet default */
+.site-header__logo img{
+  height: clamp(40px, 6vw, 72px);                /* was clamp(28px,4vw,80px) */
+  width: auto;
+  margin-block: -2px;                             /* tiny overhang = visually larger */
+}
+
+/* Tablet & big phones */
+@media (max-width:700px){
+  .site-header__inner{ padding-block: 6px; }
+  .site-header__logo img{ height: 56px; }        /* was 45px */
+}
+
+/* Small phones */
+@media (max-width:520px){
+  .site-header__logo img{ height: 46px; }        /* was 32px */
+}
+
 /* ==== Site buttons (base + variant) ==== */
 .btn{
   display:inline-block;
