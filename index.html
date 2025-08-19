@@ -29,74 +29,76 @@
     [id]{scroll-margin-top:92px}
     html{scroll-behavior:smooth}
 
-  /* ========= Header (replace this whole block) ========= */
-.topbar{
-  position:sticky;top:0;z-index:80;
+ /* ========= Header (clean + consistent) ========= */
+.site-header{
+  position:sticky; top:0; z-index:80;
   background:rgba(255,255,255,.98);
   border-bottom:1px solid var(--border);
   backdrop-filter:saturate(1.1) blur(2px);
-  padding-top:env(safe-area-inset-top);
   box-shadow:0 2px 12px rgba(0,0,0,.06);
 }
 
-/* make the header row full-width with nice gutters */
-.topbar .container{
-  width:100% !important;
-  max-width:none !important;
-  padding-left:clamp(14px,4vw,28px);
-  padding-right:clamp(14px,4vw,28px);
+.site-header__inner{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:10px clamp(16px,4vw,28px);
 }
 
-/* layout: logo | spacer | CTA buttons | menu */
-.topbar .row{
-  display:grid;
-  grid-template-columns:auto 1fr auto auto;
-  align-items:center;
-  gap:14px;
-  padding:12px 0;
+.site-header__logo img{
+  display:block; height:clamp(28px,4vw,44px); width:auto; /* keeps logo tidy on all screens */
 }
 
-/* logo sizing */
-.header-logo{ 
-  display:block;
-  height:clamp(34px,5vw,52px);   /* desktop/tablet bigger, mobile smaller */
-  width:auto;
+.site-header__actions{
+  display:flex; align-items:center; gap:12px; margin-left:auto;
 }
 
-/* button group sits to the right */
-.cta-nav{
-  display:inline-grid;
-  grid-auto-flow:column;
-  gap:12px;
-  align-items:center;
-  justify-self:end;              /* push to right */
+/* hamburger (you already have these styles; keeping here for clarity) */
+.menu-btn{background:transparent;border:0;padding:8px;cursor:pointer}
+.menu-icon{position:relative;display:block;width:26px;height:18px}
+.menu-icon span{position:absolute;left:0;right:0;height:2px;background:var(--brand)}
+.menu-icon span:nth-child(1){top:0}
+.menu-icon span:nth-child(2){top:8px}
+.menu-icon span:nth-child(3){bottom:0}
+
+/* Mobile tweaks */
+@media (max-width:700px){
+  .site-header__inner{ padding:8px clamp(14px,4vw,22px) }
+  .site-header__logo img{ height:36px }
+  .site-header__actions .btn{ padding:10px 12px; min-height:40px; border-radius:12px; font-size:.95rem }
 }
 
-/* drawer (hamburger) button also to the right edge */
-.menu-btn{ background:transparent;border:0;padding:8px;cursor:pointer;justify-self:end }
-.menu-icon{ position:relative;display:block;width:26px;height:18px }
-.menu-icon span{ position:absolute;left:0;right:0;height:2px;background:var(--brand) }
-.menu-icon span:nth-child(1){ top:0 } .menu-icon span:nth-child(2){ top:8px } .menu-icon span:nth-child(3){ bottom:0 }
+@media (max-width:520px){
+  /* keep “Call us” + menu; hide the big CTA to save space */
+  .site-header__actions .btn:not(.secondary){ display:none; }
+  .site-header__actions{ gap:10px }
+  .site-header__logo img{ height:32px }
+}
 
-/* buttons */
-.btn{display:inline-block;background:var(--accent);color:#fff;border:0;border-radius:12px;padding:12px 18px;font-weight:800;letter-spacing:.2px;min-height:44px;box-shadow:0 6px 18px rgba(10,132,255,.22);cursor:pointer;white-space:nowrap}
-.btn.secondary{background:#ebf3fb;color:var(--brand)}
+/* ==== Site buttons (base + variant) ==== */
+.btn{
+  display:inline-block;
+  background:var(--accent);
+  color:#fff;
+  border:0;
+  border-radius:12px;
+  padding:12px 18px;
+  font-weight:800;
+  letter-spacing:.2px;
+  min-height:44px;
+  box-shadow:0 6px 18px rgba(10,132,255,.22);
+  cursor:pointer;
+  white-space:nowrap;
+  text-decoration:none;
+}
+.btn.secondary{
+  background:#ebf3fb;
+  color:var(--brand);
+}
 @media (hover:hover) and (pointer:fine){
-  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(10,132,255,.28);transition:transform .18s ease,box-shadow .18s ease}
-}
-
-/* --- Mobile tweaks --- */
-@media (max-width:640px){
-  .topbar .row{ gap:10px; padding:10px 0 }
-  .header-logo{ height:40px }             /* prevent huge logo on phones */
-  .cta-nav{ gap:10px }
-  .cta-nav .btn{ padding:10px 12px; min-height:40px; border-radius:12px; font-size:.95rem }
-  .cta-nav .btn:not(.secondary){ display:none }  /* keep just “Call us” on small screens */
-}
-
-@media (max-width:420px){
-  .cta-nav{ grid-auto-flow:row; justify-items:end }
-  .cta-nav .btn{ width:auto }
+  .btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 24px rgba(10,132,255,.28);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
 }
 
     /* ========== CLEAN HAMBURGER + DRAWER ========== */
@@ -504,14 +506,20 @@
 
  <!-- Header -->
 <header class="site-header">
-  <div class="logo">
-    <img src="assets/images/Google Ads Wide Logo.png" alt="First National Connect">
-  </div>
+  <div class="site-header__inner">
+    <a class="site-header__logo" href="#">
+      <img src="assets/images/Google Ads Wide Logo.png" alt="First National Connect">
+    </a>
 
-  <div class="header-buttons">
-    <a href="tel:0800000000" class="btn-secondary">Call us</a>
-    <a href="#form" class="btn-primary">Get my Free Appraisal</a>
-    <button class="menu-toggle" aria-expanded="false">☰</button>
+    <nav class="site-header__actions">
+      <a href="tel:0800000000" class="btn secondary">Call us</a>
+      <a href="#appraisal-form" class="btn">Get my Free Appraisal</a>
+
+      <!-- matches the JS that looks for #menuBtn -->
+      <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-label="Open menu">
+        <span class="menu-icon"><span></span><span></span><span></span></span>
+      </button>
+    </nav>
   </div>
 </header>
 
