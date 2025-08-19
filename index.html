@@ -528,6 +528,63 @@
     .pac-item-query{ font-weight:700 !important; color:#0b1e37 !important; }
     .pac-matched{ color:#00467F !important; }
     .pac-logo:after{ display:none !important; }
+    
+    /* ===== CTA panel styled like Simple Steps ===== */
+.cta-panel {
+  background:#fff;
+  position:relative;
+  z-index:1;
+  border-radius:16px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-2);
+  padding:clamp(28px,4vw,40px);
+  max-width:760px;
+  margin-inline:auto;
+  text-align:center;
+  overflow:hidden; /* contain the splash */
+}
+
+.cta-panel::before,
+.cta-panel::after {
+  content:"";
+  position:absolute;
+  inset:auto -8vw -14vw -8vw;
+  height:56vw;
+  z-index:-1;
+  filter:blur(50px);
+  opacity:.55;
+  pointer-events:none;
+  background:
+    radial-gradient(40% 50% at 20% 30%, #0A84FF 0%, transparent 65%),
+    radial-gradient(32% 40% at 85% 20%, #14b8a6 0%, transparent 70%),
+    radial-gradient(38% 46% at 70% 80%, #f97316 0%, transparent 65%),
+    radial-gradient(42% 52% at 10% 85%, #7c3aed 0%, transparent 70%);
+}
+.cta-panel::after {
+  transform:rotate(8deg);
+  opacity:.35;
+}
+
+/* Headings get the same gradient text effect */
+.cta-panel h3 {
+  margin:0 0 12px;
+  font-size:clamp(20px,2.4vw,28px);
+  background:linear-gradient(90deg,#0A84FF,#7c3aed 55%, #14b8a6);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  font-weight:800;
+}
+
+.cta-panel p {
+  margin:0 0 18px;
+  color:#344861;
+}
+
+.cta-panel .btn {
+  color:#fff;
+  background:var(--accent);
+}
   </style>
 </head>
 <body>
