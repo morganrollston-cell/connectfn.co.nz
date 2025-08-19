@@ -161,6 +161,12 @@
 @media (prefers-reduced-motion: reduce){
   .site-header{ transition: none; }
 } 
+
+/* kill the transition right at the very top to avoid the tiny snap */
+.site-header.at-top{
+  transition: none;
+  box-shadow: none;
+}
   
     /* ========= Hero ========= */
     .hero{position:relative}
@@ -893,33 +899,37 @@
     scrim.addEventListener('click', closeDrawer);
     window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
     
-// Hide/reveal header on scroll
+// Hide on down, reveal on up — from anywhere on the page
 (() => {
   const header = document.querySelector('.site-header');
   if (!header) return;
 
   let lastY = window.scrollY;
-  const ACTIVATION = 60;   // don’t start hiding until 60px down the page
-  const SLOP       = 12;   // ignore tiny scroll wiggles
+  const SLOP = 10;   // ignore tiny jitters
   let ticking = false;
 
-  function onScroll() {
-    const y = window.scrollY;
+  function onScroll(){
+    const y  = window.scrollY;
     const dy = y - lastY;
 
-    // add/remove subtle shadow once we've moved a little
-    if (y > 2) header.classList.add('is-scrolled');
-    else header.classList.remove('is-scrolled');
+    // at top: no shadow + no transition
+    if (y <= 2){
+      header.classList.add('at-top');
+      header.classList.remove('is-scrolled');
+    } else {
+      header.classList.remove('at-top');
+      header.classList.add('is-scrolled');
+    }
 
-    // don’t hide while the drawer is open
+    // don't auto-hide if drawer is open
     const drawerOpen = document.getElementById('drawer')?.classList.contains('open');
 
-    if (!drawerOpen) {
-      if (y > ACTIVATION && dy > SLOP) {
-        // scrolling down past activation
+    if (!drawerOpen){
+      if (dy > SLOP){
+        // scrolling down
         header.classList.add('is-hidden');
-      } else if (dy < -SLOP) {
-        // scrolling up
+      } else if (dy < -SLOP){
+        // scrolling up — reveal immediately, regardless of position
         header.classList.remove('is-hidden');
       }
     }
@@ -929,7 +939,7 @@
   }
 
   window.addEventListener('scroll', () => {
-    if (!ticking) {
+    if (!ticking){
       requestAnimationFrame(onScroll);
       ticking = true;
     }
