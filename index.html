@@ -654,6 +654,16 @@
   background:var(--accent);
 }
 
+/* Restore background image behind CTA */
+.cta-image {
+  position: relative;
+  background:
+    linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.35)),
+    url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2400&auto=format&fit=crop')
+    center/cover no-repeat;
+  padding: clamp(80px,11vw,136px) 0;
+}
+
 /* === Avatar style override === */
 .avatar{
   --size: 160px;
@@ -1181,6 +1191,8 @@ body{ background:var(--bg); color:var(--ink); }
         </div>
       </div>
     </section>
+
+
 
     <!-- Terms -->
     <section class="terms" id="terms">
