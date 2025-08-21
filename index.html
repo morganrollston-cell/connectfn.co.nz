@@ -529,6 +529,105 @@
       }
     }
 
+/* ========= Our Team ========= */
+.section-team{
+  background:#fff;
+  padding:clamp(56px,9vw,112px) 0;
+}
+.section-team .heading{
+  margin:0 0 10px;
+  font-size:clamp(22px,2.8vw,34px);
+  line-height:1.15;
+  letter-spacing:.2px;
+  text-align:center;
+  color:#0b1e37;
+}
+.section-team .sublede{
+  margin:0 auto 24px;
+  color:#556476;
+  text-align:center;
+  max-width:64ch;
+}
+
+.team-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:clamp(16px,3.6vw,24px);
+  margin-top:clamp(18px,3vw,24px);
+}
+@media(min-width:760px){
+  .team-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+
+.agent-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:14px;
+  box-shadow:var(--shadow-1);
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:160px 1fr;
+  align-items:stretch;
+}
+@media(max-width:560px){
+  .agent-card{ grid-template-columns:1fr; }
+}
+
+/* photo */
+.agent-photo{
+  background:#dfe7f0 center/cover no-repeat;
+  min-height:220px;
+}
+@media(min-width:561px){
+  .agent-photo{ min-height:auto; }
+}
+
+/* content */
+.agent-body{
+  padding:clamp(16px,3.2vw,22px);
+  display:grid;
+  gap:10px;
+}
+.agent-name{
+  margin:0;
+  font-size:clamp(18px,2.2vw,22px);
+  color:#0b1e37;
+}
+.agent-role{
+  margin:0;
+  color:#5a6a7f;
+  font-weight:600;
+}
+.agent-meta{
+  display:grid;
+  gap:6px;
+  color:#354861;
+  font-size:.95rem;
+}
+.agent-meta a{ color:var(--brand); text-decoration:none; }
+
+.agent-cta{
+  margin-top:6px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+/* tiny chips (optional) */
+.badges{
+  display:flex; flex-wrap:wrap; gap:8px; margin-top:2px;
+}
+.badge{
+  display:inline-grid; place-items:center;
+  border:1px solid var(--border);
+  color:#556476;
+  background:#f8fbff;
+  border-radius:999px;
+  padding:6px 10px;
+  font-weight:700;
+  font-size:.82rem;
+}
+
     /* === Make Spring Campaign T&Cs bigger like FAQs === */
     .terms{ padding: clamp(72px, 12vw, 140px) 0 !important; border-top: 1px solid var(--border); }
     .terms h2{ font-size: clamp(26px, 4vw, 44px); margin-bottom: 28px; }
@@ -834,6 +933,68 @@
         </div>
       </div>
     </section>
+
+<section class="section-team" id="team">
+  <div class="container">
+    <h2 class="heading">Meet the team</h2>
+    <p class="sublede">Local experts across Nelson/Tasman, focused on clarity, service and strong sale outcomes.</p>
+
+    <div class="team-grid">
+      <!-- Agent 1 -->
+      <article class="agent-card">
+        <!-- Replace the URL with your actual agent headshot -->
+        <div class="agent-photo" style="background-image:url('https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=1200&auto=format&fit=crop');"></div>
+        <div class="agent-body">
+          <h3 class="agent-name">Alex Carter</h3>
+          <p class="agent-role">Licensed Sales Consultant</p>
+
+          <div class="badges">
+            <span class="badge">Nelson</span>
+            <span class="badge">Residential</span>
+          </div>
+
+          <div class="agent-meta">
+            <div>📞 <a href="tel:+64271234567">+64 27 123 4567</a></div>
+            <div>✉️ <a href="mailto:alex@fnconnect.co.nz">alex@fnconnect.co.nz</a></div>
+          </div>
+
+          <div class="agent-cta">
+            <a class="btn secondary" href="tel:+64271234567">Call Alex</a>
+            <a class="btn" href="mailto:alex@fnconnect.co.nz">Email Alex</a>
+            <!-- Optional: link to profile/listings -->
+            <!-- <a class="btn secondary" href="/agents/alex-carter">View profile</a> -->
+          </div>
+        </div>
+      </article>
+
+      <!-- Agent 2 -->
+      <article class="agent-card">
+        <!-- Replace the URL with your actual agent headshot -->
+        <div class="agent-photo" style="background-image:url('https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop');"></div>
+        <div class="agent-body">
+          <h3 class="agent-name">Mia Thompson</h3>
+          <p class="agent-role">Sales Associate</p>
+
+          <div class="badges">
+            <span class="badge">Tasman</span>
+            <span class="badge">Appraisals</span>
+          </div>
+
+          <div class="agent-meta">
+            <div>📞 <a href="tel:+64279876543">+64 27 987 6543</a></div>
+            <div>✉️ <a href="mailto:mia@fnconnect.co.nz">mia@fnconnect.co.nz</a></div>
+          </div>
+
+          <div class="agent-cta">
+            <a class="btn secondary" href="tel:+64279876543">Call Mia</a>
+            <a class="btn" href="mailto:mia@fnconnect.co.nz">Email Mia</a>
+            <!-- <a class="btn secondary" href="/agents/mia-thompson">View profile</a> -->
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
 
     <!-- CTA STRIP -->
     <section class="cta-strip">
