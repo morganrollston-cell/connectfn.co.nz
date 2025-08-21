@@ -828,6 +828,116 @@
   box-shadow:0 4px 16px rgba(0,0,0,.08); /* soft shadow only */
 }
 .avatar::after{ display:none; }
+
+/* === SAFE THEME PATCH — non-destructive overrides (paste at end) === */
+
+/* Global */
+body{ background:var(--bg); color:var(--ink); }
+a{ color:var(--brand); }
+
+/* Header + Drawer */
+.site-header{
+  background: color-mix(in oklab, var(--surface), transparent 2%);
+  border-bottom:1px solid var(--border);
+  box-shadow:var(--shadow-1);
+}
+.drawer{ background:var(--surface); border-left:1px solid var(--border); }
+.drawer-head{ color:var(--ink); }
+.drawer-col a{ color:var(--ink); }
+.drawer-search input{
+  background:var(--surface);
+  color:var(--ink);
+  border:1px solid var(--border);
+}
+
+/* Cards / panels / modules */
+.card,
+.info-copy,
+.profile,
+.agent-e,
+.ljt-stage,
+.section-steps,
+.section-info,
+.section-team,
+.cta-panel{
+  background:var(--surface);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-1);
+}
+
+/* Forms */
+input, select{
+  background:var(--surface);
+  color:var(--ink);
+  border:1px solid var(--border);
+}
+input::placeholder, select::placeholder{ color: color-mix(in oklab, var(--muted), transparent 10%); }
+label{ color:var(--ink); }
+
+/* FAQ */
+.faq-pro{ background:var(--surface); }
+.faq-list{ border-top:1px solid var(--border); }
+.faq-item{ border-bottom:1px solid var(--border); }
+.faq-q{ background:var(--surface); color:var(--ink); }
+.faq-icon{
+  background: color-mix(in oklab, var(--bg), var(--surface) 50%);
+  color:var(--ink);
+}
+
+/* CTA strip (keeps your brand color) */
+.cta-strip{ background:var(--brand); color:#fff; }
+.cta-strip .btn{
+  background:#fff; color:var(--brand);
+  box-shadow: var(--shadow-1);
+}
+
+/* Hero: keep the image, tune overlay for both themes */
+.hero-media{
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklab, #000 36%, transparent),
+      color-mix(in oklab, #000 18%, transparent)
+    ),
+    url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2400&auto=format&fit=crop') center/cover no-repeat;
+}
+
+/* Buttons */
+.btn{ background:var(--accent); color:#fff; box-shadow:var(--shadow-1); }
+.btn.secondary{
+  background: color-mix(in oklab, var(--accent), white 88%);
+  color: var(--brand);
+  border: 1px solid var(--border);
+}
+
+/* Team / editorial bits */
+.tag{
+  background: color-mix(in oklab, var(--bg), var(--surface) 60%);
+  color: var(--muted);
+  border:1px solid var(--border);
+}
+
+/* Footer (intentionally dark section) — keep look but align borders */
+.footer-pro{ border-top:1px solid color-mix(in oklab, #000, #fff 15% / 10%); }
+.legal{ border-top:1px solid color-mix(in oklab, #fff, #000 90% / 10%); }
+
+/* Inputs focus state (use tokens) */
+input:focus, select:focus{
+  border-color: color-mix(in oklab, var(--accent), white 25%);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent), white 75% / 25%);
+  outline: 0;
+}
+
+/* Shadows (ensure consistent depth for key blocks) */
+.profile:hover,
+.agent-e:hover{
+  box-shadow: var(--shadow-2);
+}
+
+/* Optional: elevate header only when scrolled */
+.site-header.is-scrolled{ box-shadow: var(--shadow-1); }
+
+/* Drawer scrim unchanged; works well in both themes */
+
   </style>
 </head>
 <body>
