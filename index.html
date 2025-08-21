@@ -529,103 +529,130 @@
       }
     }
 
-/* ========= Our Team ========= */
+/* ========= Our Team — Editorial Layout ========= */
 .section-team{
+  position:relative;
   background:#fff;
-  padding:clamp(56px,9vw,112px) 0;
+  padding:clamp(64px,10vw,140px) 0;
+  overflow:hidden;
 }
-.section-team .heading{
-  margin:0 0 10px;
-  font-size:clamp(22px,2.8vw,34px);
-  line-height:1.15;
-  letter-spacing:.2px;
-  text-align:center;
-  color:#0b1e37;
+.section-team::before,
+.section-team::after{
+  content:"";
+  position:absolute; inset:auto -12vw -18vw -12vw; height:64vw; z-index:0;
+  filter:blur(56px); opacity:.45; pointer-events:none;
+  background:
+    radial-gradient(40% 50% at 20% 30%, #0A84FF 0%, transparent 65%),
+    radial-gradient(32% 40% at 85% 20%, #14b8a6 0%, transparent 70%),
+    radial-gradient(38% 46% at 70% 80%, #f97316 0%, transparent 65%),
+    radial-gradient(42% 52% at 10% 85%, #7c3aed 0%, transparent 70%);
 }
-.section-team .sublede{
-  margin:0 auto 24px;
-  color:#556476;
-  text-align:center;
-  max-width:64ch;
+.section-team::after{ transform:rotate(6deg); opacity:.28; }
+
+.team-head{
+  position:relative; z-index:1;
+  text-align:center; margin-bottom:clamp(20px,3vw,28px);
+}
+.team-eyebrow{
+  display:inline-block; font-weight:800; letter-spacing:.2px;
+  color:#0b1e37; background:#ebf3fb; border:1px solid var(--border);
+  padding:6px 12px; border-radius:999px; font-size:.9rem;
+}
+.team-title{
+  margin:10px 0 8px; font-size:clamp(24px,3.2vw,40px); line-height:1.15; color:#0b1e37;
+}
+.team-sub{
+  margin:0 auto; color:#556476; max-width:62ch;
 }
 
-.team-grid{
-  display:grid;
+/* Cards row (2 profiles) */
+.team-rail{
+  position:relative; z-index:1;
+  display:grid; gap:clamp(18px,3vw,28px);
   grid-template-columns:1fr;
-  gap:clamp(16px,3.6vw,24px);
-  margin-top:clamp(18px,3vw,24px);
+  margin-top:clamp(26px,4vw,40px);
 }
-@media(min-width:760px){
-  .team-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+@media(min-width:980px){
+  .team-rail{ grid-template-columns:1.05fr .95fr; align-items:stretch; }
 }
 
-.agent-card{
+/* Editorial card */
+.agent-e{
+  position:relative;
+  display:grid;
+  grid-template-columns: minmax(0, 480px) 1fr;
+  gap:clamp(16px,3vw,26px);
+  align-items:stretch;
   background:#fff;
   border:1px solid var(--border);
-  border-radius:14px;
+  border-radius:18px;
   box-shadow:var(--shadow-1);
   overflow:hidden;
-  display:grid;
-  grid-template-columns:160px 1fr;
-  align-items:stretch;
 }
-@media(max-width:560px){
-  .agent-card{ grid-template-columns:1fr; }
+@media(max-width:820px){
+  .agent-e{ grid-template-columns:1fr; }
 }
 
-/* photo */
-.agent-photo{
+/* Left: big portrait */
+.agent-e__photo{
+  position:relative;
   background:#dfe7f0 center/cover no-repeat;
-  min-height:220px;
+  min-height:420px;
 }
-@media(min-width:561px){
-  .agent-photo{ min-height:auto; }
+@media(min-width:821px){
+  .agent-e__photo{ min-height:auto; }
 }
-
-/* content */
-.agent-body{
-  padding:clamp(16px,3.2vw,22px);
-  display:grid;
-  gap:10px;
-}
-.agent-name{
-  margin:0;
-  font-size:clamp(18px,2.2vw,22px);
-  color:#0b1e37;
-}
-.agent-role{
-  margin:0;
-  color:#5a6a7f;
-  font-weight:600;
-}
-.agent-meta{
-  display:grid;
-  gap:6px;
-  color:#354861;
-  font-size:.95rem;
-}
-.agent-meta a{ color:var(--brand); text-decoration:none; }
-
-.agent-cta{
-  margin-top:6px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
+/* soft vignette on photo edge */
+.agent-e__photo::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(90deg, rgba(0,0,0,.12), transparent 32% 68%, rgba(0,0,0,.08));
+  mix-blend-mode:multiply; opacity:.25; pointer-events:none;
 }
 
-/* tiny chips (optional) */
-.badges{
-  display:flex; flex-wrap:wrap; gap:8px; margin-top:2px;
+/* Right: content */
+.agent-e__body{
+  display:grid; align-content:start; gap:12px;
+  padding:clamp(18px,3.2vw,28px);
 }
-.badge{
+.agent-e__name{
+  margin:0; font-size:clamp(22px,2.6vw,28px); color:#0b1e37; line-height:1.15;
+}
+.agent-e__role{
+  margin:0; color:#5a6a7f; font-weight:700;
+}
+
+/* Elegant one–sentence bio */
+.agent-e__lede{
+  margin:2px 0 10px; color:#344861; font-size:1.02rem; line-height:1.6;
+}
+
+/* Quote block—soft and graceful */
+.agent-e__quote{
+  margin:6px 0 8px; color:#2b3545; font-size:clamp(18px,2.1vw,22px);
+  line-height:1.6; position:relative; padding-left:30px;
+}
+.agent-e__quote::before{
+  content:"“"; position:absolute; left:0; top:-6px;
+  font-size:36px; font-weight:900; line-height:1; color:#7aa8ff; opacity:.9;
+}
+
+/* Meta + contact */
+.agent-e__meta{ display:grid; gap:6px; color:#354861; }
+.agent-e__meta a{ color:var(--brand); text-decoration:none; }
+
+.agent-e__cta{ display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+
+/* tiny chips */
+.agent-e__tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; }
+.tag{
   display:inline-grid; place-items:center;
-  border:1px solid var(--border);
-  color:#556476;
-  background:#f8fbff;
-  border-radius:999px;
-  padding:6px 10px;
-  font-weight:700;
-  font-size:.82rem;
+  border:1px solid var(--border); color:#556476; background:#f8fbff;
+  border-radius:999px; padding:6px 10px; font-weight:700; font-size:.82rem;
+}
+
+/* Subtle lift on hover (desktop only) */
+@media (hover:hover) and (pointer:fine){
+  .agent-e:hover{ transform:translateY(-2px); box-shadow:0 18px 48px rgba(0,0,0,.12); transition:.2s ease; }
 }
 
     /* === Make Spring Campaign T&Cs bigger like FAQs === */
@@ -934,61 +961,66 @@
       </div>
     </section>
 
+<!-- OUR TEAM PROFILES -->
 <section class="section-team" id="team">
   <div class="container">
-    <h2 class="heading">Meet the team</h2>
-    <p class="sublede">Local experts across Nelson/Tasman, focused on clarity, service and strong sale outcomes.</p>
+    <div class="team-head">
+      <span class="team-eyebrow">Our Team</span>
+      <h2 class="team-title">People-first, results-driven.</h2>
+      <p class="team-sub">Two experienced, local specialists dedicated to clarity, care and standout outcomes across Nelson &amp; Tasman.</p>
+    </div>
 
-    <div class="team-grid">
-      <!-- Agent 1 -->
-      <article class="agent-card">
-        <!-- Replace the URL with your actual agent headshot -->
-        <div class="agent-photo" style="background-image:url('https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=1200&auto=format&fit=crop');"></div>
-        <div class="agent-body">
-          <h3 class="agent-name">Alex Carter</h3>
-          <p class="agent-role">Licensed Sales Consultant</p>
+    <div class="team-rail">
+      <!-- Profile 1 -->
+      <article class="agent-e">
+        <div class="agent-e__photo" style="background-image:url('https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1600&auto=format&fit=crop');" aria-label="Portrait of Agent 1"></div>
+        <div class="agent-e__body">
+          <h3 class="agent-e__name">Mia Thompson</h3>
+          <p class="agent-e__role">Licensed Sales Consultant</p>
+          <p class="agent-e__lede">Specialising in premium residential sales with a calm, thorough approach from first meeting to sold.</p>
+          <blockquote class="agent-e__quote">I focus on preparation and clear communication. The right plan turns good interest into the best possible result.</blockquote>
 
-          <div class="badges">
-            <span class="badge">Nelson</span>
-            <span class="badge">Residential</span>
+          <div class="agent-e__tags">
+            <span class="tag">Nelson</span>
+            <span class="tag">Residential</span>
+            <span class="tag">Auctions</span>
           </div>
 
-          <div class="agent-meta">
-            <div>📞 <a href="tel:+64271234567">+64 27 123 4567</a></div>
-            <div>✉️ <a href="mailto:alex@fnconnect.co.nz">alex@fnconnect.co.nz</a></div>
-          </div>
-
-          <div class="agent-cta">
-            <a class="btn secondary" href="tel:+64271234567">Call Alex</a>
-            <a class="btn" href="mailto:alex@fnconnect.co.nz">Email Alex</a>
-            <!-- Optional: link to profile/listings -->
-            <!-- <a class="btn secondary" href="/agents/alex-carter">View profile</a> -->
-          </div>
-        </div>
-      </article>
-
-      <!-- Agent 2 -->
-      <article class="agent-card">
-        <!-- Replace the URL with your actual agent headshot -->
-        <div class="agent-photo" style="background-image:url('https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop');"></div>
-        <div class="agent-body">
-          <h3 class="agent-name">Mia Thompson</h3>
-          <p class="agent-role">Sales Associate</p>
-
-          <div class="badges">
-            <span class="badge">Tasman</span>
-            <span class="badge">Appraisals</span>
-          </div>
-
-          <div class="agent-meta">
+          <div class="agent-e__meta">
             <div>📞 <a href="tel:+64279876543">+64 27 987 6543</a></div>
             <div>✉️ <a href="mailto:mia@fnconnect.co.nz">mia@fnconnect.co.nz</a></div>
           </div>
 
-          <div class="agent-cta">
-            <a class="btn secondary" href="tel:+64279876543">Call Mia</a>
+          <div class="agent-e__cta">
             <a class="btn" href="mailto:mia@fnconnect.co.nz">Email Mia</a>
-            <!-- <a class="btn secondary" href="/agents/mia-thompson">View profile</a> -->
+            <a class="btn secondary" href="tel:+64279876543">Call Mia</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Profile 2 -->
+      <article class="agent-e">
+        <div class="agent-e__photo" style="background-image:url('https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=1600&auto=format&fit=crop');" aria-label="Portrait of Agent 2"></div>
+        <div class="agent-e__body">
+          <h3 class="agent-e__name">Sofia Reed</h3>
+          <p class="agent-e__role">Sales Associate</p>
+          <p class="agent-e__lede">Known for sharp pricing advice and gentle, detail-led campaigns that make selling feel easy.</p>
+          <blockquote class="agent-e__quote">Every home has a story. We present it beautifully, target the right buyers and negotiate with care.</blockquote>
+
+          <div class="agent-e__tags">
+            <span class="tag">Tasman</span>
+            <span class="tag">Appraisals</span>
+            <span class="tag">Marketing</span>
+          </div>
+
+          <div class="agent-e__meta">
+            <div>📞 <a href="tel:+64271234567">+64 27 123 4567</a></div>
+            <div>✉️ <a href="mailto:sofia@fnconnect.co.nz">sofia@fnconnect.co.nz</a></div>
+          </div>
+
+          <div class="agent-e__cta">
+            <a class="btn" href="mailto:sofia@fnconnect.co.nz">Email Sofia</a>
+            <a class="btn secondary" href="tel:+64271234567">Call Sofia</a>
           </div>
         </div>
       </article>
