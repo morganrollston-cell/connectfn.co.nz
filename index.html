@@ -655,6 +655,70 @@
   .agent-e:hover{ transform:translateY(-2px); box-shadow:0 18px 48px rgba(0,0,0,.12); transition:.2s ease; }
 }
 
+/* ===== Our Team — Circular Profiles (2-up) ===== */
+.team-grid{
+  position:relative; z-index:1;
+  display:grid; gap:clamp(20px,3vw,36px);
+  grid-template-columns:1fr;
+  justify-items:center;
+  margin-top:clamp(26px,4vw,40px);
+}
+@media (min-width:900px){
+  .team-grid{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
+}
+
+.profile{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:18px;
+  box-shadow:var(--shadow-1);
+  padding:clamp(18px,3.2vw,28px);
+  text-align:center;
+  max-width:520px;
+}
+@media (hover:hover) and (pointer:fine){
+  .profile:hover{ transform:translateY(-2px); box-shadow:0 18px 48px rgba(0,0,0,.12); transition:.2s ease; }
+}
+
+/* circular avatar with soft halo */
+.avatar{
+  --size: 160px;
+  width:var(--size); height:var(--size);
+  border-radius:50%;
+  overflow:hidden; margin:0 auto 14px; position:relative;
+  box-shadow:0 0 0 8px #f2f7ff; /* soft ring */
+}
+.avatar::after{
+  content:""; position:absolute; inset:-14px;
+  background:
+    radial-gradient(40% 50% at 20% 30%, rgba(10,132,255,.35) 0%, transparent 65%),
+    radial-gradient(32% 40% at 85% 20%, rgba(20,184,166,.28) 0%, transparent 70%),
+    radial-gradient(38% 46% at 70% 80%, rgba(249,115,22,.18) 0%, transparent 65%),
+    radial-gradient(42% 52% at 10% 85%, rgba(124,58,237,.2) 0%, transparent 70%);
+  filter: blur(18px);
+  z-index:-1;
+  border-radius:50%;
+}
+.avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+.name{ margin:6px 0 2px; font-size:clamp(18px,2.2vw,22px); font-weight:800; color:#0b1e37; letter-spacing:.2px; }
+.role{ margin:0 0 8px; font-weight:800; color:var(--brand); }
+.bio{ margin:0 0 14px; color:#4a5970; line-height:1.6; }
+
+.actions{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:8px 0 10px; }
+.actions .btn{ min-height:40px; padding:10px 14px; }
+
+.social{ display:flex; gap:10px; justify-content:center; margin-top:6px; }
+.social a{
+  width:36px; height:36px; border-radius:50%;
+  display:grid; place-items:center;
+  border:1px solid var(--border);
+  color:#4a5970; background:#f8fbff; text-decoration:none;
+}
+.social a:hover{ transform:translateY(-1px); }
+
+.social svg{ width:18px; height:18px; display:block; }
+
     /* === Make Spring Campaign T&Cs bigger like FAQs === */
     .terms{ padding: clamp(72px, 12vw, 140px) 0 !important; border-top: 1px solid var(--border); }
     .terms h2{ font-size: clamp(26px, 4vw, 44px); margin-bottom: 28px; }
@@ -970,62 +1034,68 @@
       <p class="team-sub">Two experienced, local specialists dedicated to clarity, care and standout outcomes across Nelson &amp; Tasman.</p>
     </div>
 
-    <div class="team-rail">
-      <!-- Profile 1 -->
-      <article class="agent-e">
-        <div class="agent-e__photo" style="background-image:url('https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1600&auto=format&fit=crop');" aria-label="Portrait of Agent 1"></div>
-        <div class="agent-e__body">
-          <h3 class="agent-e__name">Mia Thompson</h3>
-          <p class="agent-e__role">Licensed Sales Consultant</p>
-          <p class="agent-e__lede">Specialising in premium residential sales with a calm, thorough approach from first meeting to sold.</p>
-          <blockquote class="agent-e__quote">I focus on preparation and clear communication. The right plan turns good interest into the best possible result.</blockquote>
+<div class="team-grid">
 
-          <div class="agent-e__tags">
-            <span class="tag">Nelson</span>
-            <span class="tag">Residential</span>
-            <span class="tag">Auctions</span>
-          </div>
-
-          <div class="agent-e__meta">
-            <div>📞 <a href="tel:+64279876543">+64 27 987 6543</a></div>
-            <div>✉️ <a href="mailto:mia@fnconnect.co.nz">mia@fnconnect.co.nz</a></div>
-          </div>
-
-          <div class="agent-e__cta">
-            <a class="btn" href="mailto:mia@fnconnect.co.nz">Email Mia</a>
-            <a class="btn secondary" href="tel:+64279876543">Call Mia</a>
-          </div>
-        </div>
-      </article>
-
-      <!-- Profile 2 -->
-      <article class="agent-e">
-        <div class="agent-e__photo" style="background-image:url('https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=1600&auto=format&fit=crop');" aria-label="Portrait of Agent 2"></div>
-        <div class="agent-e__body">
-          <h3 class="agent-e__name">Sofia Reed</h3>
-          <p class="agent-e__role">Sales Associate</p>
-          <p class="agent-e__lede">Known for sharp pricing advice and gentle, detail-led campaigns that make selling feel easy.</p>
-          <blockquote class="agent-e__quote">Every home has a story. We present it beautifully, target the right buyers and negotiate with care.</blockquote>
-
-          <div class="agent-e__tags">
-            <span class="tag">Tasman</span>
-            <span class="tag">Appraisals</span>
-            <span class="tag">Marketing</span>
-          </div>
-
-          <div class="agent-e__meta">
-            <div>📞 <a href="tel:+64271234567">+64 27 123 4567</a></div>
-            <div>✉️ <a href="mailto:sofia@fnconnect.co.nz">sofia@fnconnect.co.nz</a></div>
-          </div>
-
-          <div class="agent-e__cta">
-            <a class="btn" href="mailto:sofia@fnconnect.co.nz">Email Sofia</a>
-            <a class="btn secondary" href="tel:+64271234567">Call Sofia</a>
-          </div>
-        </div>
-      </article>
+  <!-- Agent 1 -->
+  <article class="profile">
+    <div class="avatar">
+      <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800&auto=format&fit=crop"
+           alt="Portrait of Mia Thompson">
     </div>
-  </div>
+    <h3 class="name">Mia Thompson</h3>
+    <p class="role">Licensed Sales Consultant</p>
+    <p class="bio">Premium residential specialist known for calm guidance, sharp pricing advice and polished campaigns.</p>
+
+    <div class="actions">
+      <a class="btn" href="tel:+64279876543">Call Mia</a>
+      <a class="btn secondary" href="mailto:mia@fnconnect.co.nz">Email</a>
+    </div>
+
+    <div class="social" aria-label="Mia social links">
+      <a href="https://www.linkedin.com/" aria-label="LinkedIn">
+        <!-- LinkedIn icon -->
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 8.5H3.75V20h3.19V8.5zM5.35 7.15a1.85 1.85 0 1 0 0-3.7 1.85 1.85 0 0 0 0 3.7zM20.25 20v-6.35c0-3.4-1.82-4.99-4.25-4.99-1.96 0-2.83 1.1-3.32 1.87v-1.63H9.5V20h3.18v-6.2c0-1.64.31-3.23 2.35-3.23 2 0 2.03 1.86 2.03 3.33V20h3.19z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/" aria-label="Instagram">
+        <!-- Instagram icon -->
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 7.3A4.7 4.7 0 1 0 12 16.7 4.7 4.7 0 0 0 12 7.3Zm0-2.3c-3.89 0-7.05 3.16-7.05 7.05S8.11 19.1 12 19.1s7.05-3.16 7.05-7.05S15.89 5 12 5Zm5.4-.9a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z"/></svg>
+      </a>
+      <a href="mailto:mia@fnconnect.co.nz" aria-label="Email">
+        <!-- Mail icon -->
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 6H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2Zm0 2v.01L12 13 4 8.01V8h16ZM4 16V9.24l7.4 4.63a1 1 0 0 0 1.2 0L20 9.24V16H4Z"/></svg>
+      </a>
+    </div>
+  </article>
+
+  <!-- Agent 2 -->
+  <article class="profile">
+    <div class="avatar">
+      <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=800&auto=format&fit=crop"
+           alt="Portrait of Sofia Reed">
+    </div>
+    <h3 class="name">Sofia Reed</h3>
+    <p class="role">Sales Associate</p>
+    <p class="bio">Detail-led campaigns and gentle negotiation style that make selling feel simple and supported.</p>
+
+    <div class="actions">
+      <a class="btn" href="tel:+64271234567">Call Sofia</a>
+      <a class="btn secondary" href="mailto:sofia@fnconnect.co.nz">Email</a>
+    </div>
+
+    <div class="social" aria-label="Sofia social links">
+      <a href="https://www.linkedin.com/" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 8.5H3.75V20h3.19V8.5zM5.35 7.15a1.85 1.85 0 1 0 0-3.7 1.85 1.85 0 0 0 0 3.7zM20.25 20v-6.35c0-3.4-1.82-4.99-4.25-4.99-1.96 0-2.83 1.1-3.32 1.87v-1.63H9.5V20h3.18v-6.2c0-1.64.31-3.23 2.35-3.23 2 0 2.03 1.86 2.03 3.33V20h3.19z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 7.3A4.7 4.7 0 1 0 12 16.7 4.7 4.7 0 0 0 12 7.3Zm0-2.3c-3.89 0-7.05 3.16-7.05 7.05S8.11 19.1 12 19.1s7.05-3.16 7.05-7.05S15.89 5 12 5Zm5.4-.9a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z"/></svg>
+      </a>
+      <a href="mailto:sofia@fnconnect.co.nz" aria-label="Email">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 6H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2Zm0 2v.01L12 13 4 8.01V8h16ZM4 16V9.24l7.4 4.63a1 1 0 0 0 1.2 0L20 9.24V16H4Z"/></svg>
+      </a>
+    </div>
+  </article>
+
+</div>
 </section>
 
     <!-- CTA STRIP -->
