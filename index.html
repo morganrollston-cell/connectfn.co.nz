@@ -818,6 +818,16 @@
   color:#fff;
   background:var(--accent);
 }
+
+/* === Avatar style override === */
+.avatar{
+  --size: 160px;
+  width:var(--size); height:var(--size);
+  border-radius:50%;
+  overflow:hidden; margin:0 auto 14px;
+  box-shadow:0 4px 16px rgba(0,0,0,.08); /* soft shadow only */
+}
+.avatar::after{ display:none; }
   </style>
 </head>
 <body>
