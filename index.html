@@ -1275,178 +1275,221 @@ body{ background:var(--bg); color:var(--ink); }
   </div>
 </footer>
 
-  <script>
-    // Drawer controls
-    const menuBtn   = document.getElementById('menuBtn');
-    const drawer    = document.getElementById('drawer');
-    const scrim     = document.getElementById('scrim');
-    const drawerCls = document.getElementById('drawerClose');
+ <script>
+  // Drawer controls
+  const menuBtn   = document.getElementById('menuBtn');
+  const drawer    = document.getElementById('drawer');
+  const scrim     = document.getElementById('scrim');
+  const drawerCls = document.getElementById('drawerClose');
 
-    function openDrawer(){drawer.classList.add('open');scrim.classList.add('show');drawer.setAttribute('aria-hidden','false');menuBtn.setAttribute('aria-expanded','true')}
-    function closeDrawer(){drawer.classList.remove('open');scrim.classList.remove('show');drawer.setAttribute('aria-hidden','true');menuBtn.setAttribute('aria-expanded','false')}
-    menuBtn.addEventListener('click', openDrawer);
-    drawerCls.addEventListener('click', closeDrawer);
-    scrim.addEventListener('click', closeDrawer);
-    window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
-    
-(function(){
-  var header = document.querySelector('.site-header');
-  if (!header) return;
+  function openDrawer(){drawer.classList.add('open');scrim.classList.add('show');drawer.setAttribute('aria-hidden','false');menuBtn.setAttribute('aria-expanded','true')}
+  function closeDrawer(){drawer.classList.remove('open');scrim.classList.remove('show');drawer.setAttribute('aria-hidden','true');menuBtn.setAttribute('aria-expanded','false')}
+  menuBtn.addEventListener('click', openDrawer);
+  drawerCls.addEventListener('click', closeDrawer);
+  scrim.addEventListener('click', closeDrawer);
+  window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
 
-  var lastY = 0;                 // last scroll position
-  var ticking = false;
-  var revealTimer = null;
-  var THRESHOLD = 8;             // px delta to trigger
-  var MIN_HIDE_Y = 60;           // don’t hide until we’ve scrolled past this
+  /* ---- Hide/reveal header on scroll ---- */
+  (function(){
+    var header = document.querySelector('.site-header');
+    if (!header) return;
 
-  // ensure it starts visible
-  header.classList.remove('is-hidden');
+    var lastY = 0;
+    var ticking = false;
+    var revealTimer = null;
+    var THRESHOLD = 8;
+    var MIN_HIDE_Y = 60;
 
-  function onScroll(){
-    // clamp to avoid iOS elastic negative values
-    var y = Math.max(0, window.pageYOffset || document.documentElement.scrollTop || 0);
-    var delta = y - lastY;
+    header.classList.remove('is-hidden');
 
-    // Add/remove tiny shadow when scrolled
-    if (y > 2) header.classList.add('is-scrolled');
-    else header.classList.remove('is-scrolled');
+    function onScroll(){
+      var y = Math.max(0, window.pageYOffset || document.documentElement.scrollTop || 0);
+      var delta = y - lastY;
 
-    // Don’t auto-hide if the drawer is open (no optional chaining)
-    var drawer = document.getElementById('drawer');
-    var drawerOpen = drawer && drawer.classList.contains('open');
+      if (y > 2) header.classList.add('is-scrolled');
+      else header.classList.remove('is-scrolled');
 
-    if (!drawerOpen){
-      // Hide on scroll-down (after a little distance)
-      if (delta > THRESHOLD && y > MIN_HIDE_Y){
-        header.classList.add('is-hidden');
+      var drawer = document.getElementById('drawer');
+      var drawerOpen = drawer && drawer.classList.contains('open');
+
+      if (!drawerOpen){
+        if (delta > THRESHOLD && y > MIN_HIDE_Y){
+          header.classList.add('is-hidden');
+        } else if (delta < -THRESHOLD){
+          header.classList.remove('is-hidden');
+        }
       }
-      // Show on scroll-up
-      else if (delta < -THRESHOLD){
+
+      if (revealTimer) clearTimeout(revealTimer);
+      revealTimer = setTimeout(function(){
         header.classList.remove('is-hidden');
+      }, 140);
+
+      lastY = y;
+      ticking = false;
+    }
+
+    function onScrollHandler(){
+      if (!ticking){
+        window.requestAnimationFrame(onScroll);
+        ticking = true;
       }
     }
 
-    // Also reveal if user pauses shortly after moving (feels snappier)
-    if (revealTimer) clearTimeout(revealTimer);
-    revealTimer = setTimeout(function(){
-      header.classList.remove('is-hidden');
-    }, 140);
+    window.addEventListener('scroll', onScrollHandler, {passive:true});
+  })();
 
-    lastY = y;
-    ticking = false;
-  }
-
-  function onScrollHandler(){
-    if (!ticking){
-      window.requestAnimationFrame(onScroll);
-      ticking = true;
+  // Make #appraisal-form always target the visible form
+  function syncFormAnchor(){
+    const desktopHolder = document.getElementById('hero-form-holder');
+    const mobileHolder  = document.getElementById('mobile-form-holder');
+    if (!desktopHolder || !mobileHolder) return;
+    if (window.matchMedia('(min-width:900px)').matches){
+      desktopHolder.id = 'appraisal-form';
+      mobileHolder.id  = 'mobile-form-holder';
+    } else {
+      desktopHolder.id = 'hero-form-holder';
+      mobileHolder.id  = 'appraisal-form';
     }
   }
+  addEventListener('DOMContentLoaded', syncFormAnchor);
+  addEventListener('resize', syncFormAnchor);
 
-  window.addEventListener('scroll', onScrollHandler, {passive:true});
-})();
+  /* === FORM → AJAX submit + inline thank-you (replaces old demo handler) === */
+  function hookForm(holderId){
+    const holder = document.getElementById(holderId);
+    if(!holder) return;
+    const form = holder.querySelector('form');
+    if(!form) return;
 
-    // Make #appraisal-form always target the visible form
-    function syncFormAnchor(){
-      const desktopHolder = document.getElementById('hero-form-holder');
-      const mobileHolder  = document.getElementById('mobile-form-holder');
-      if (!desktopHolder || !mobileHolder) return;
-      if (window.matchMedia('(min-width:900px)').matches){
-        desktopHolder.id = 'appraisal-form';
-        mobileHolder.id  = 'mobile-form-holder';
-      } else {
-        desktopHolder.id = 'hero-form-holder';
-        mobileHolder.id  = 'appraisal-form';
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Collect field values (works for either desktop or mobile form)
+      const data = {
+        address: form.querySelector('[name="address"]')?.value?.trim() || '',
+        full_name: form.querySelector('[name="full_name"]')?.value?.trim() || '',
+        phone: form.querySelector('[name="phone"]')?.value?.trim() || '',
+        email: form.querySelector('[name="email"]')?.value?.trim() || '',
+        timeframe: form.querySelector('[name="timeframe"]')?.value || '',
+        source: 'Spring Appraisal LP',
+        page_url: location.href
+      };
+
+      if(!data.full_name || !data.phone || !data.email){
+        alert('Please complete name, phone and email.');
+        return;
       }
-    }
-    addEventListener('DOMContentLoaded', syncFormAnchor);
-    addEventListener('resize', syncFormAnchor);
 
-    // Demo-only submit handler
-    function hookForm(holderId){
-      const f = document.getElementById(holderId)?.querySelector('form');
-      f?.addEventListener('submit', e=>{
-        e.preventDefault();
-        alert('Thanks — form captured (preview). Connect a backend to go live.');
-        f.reset();
+      const btn = form.querySelector('button[type="submit"]');
+      const oldLabel = btn?.textContent;
+      if(btn){ btn.disabled = true; btn.textContent = 'Sending…'; }
+
+      try{
+        // POST to your backend (create /api/lead as shown earlier)
+        const res = await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if(!res.ok) throw new Error('Server error');
+
+        // Swap the form box for an inline thank-you panel
+        holder.innerHTML = `
+          <div class="thankyou" style="padding:18px; text-align:center">
+            <h3 style="margin:0 0 8px">🎉 Thanks for entering the draw!</h3>
+            <p style="margin:0 0 12px">
+              One of our team will contact you soon about your free property appraisal.
+              We’ve also confirmed your entry for the $2,500 spring giveaway.
+            </p>
+            <p style="margin:0; color:#64748b; font-size:12px">
+              A confirmation email has been sent to <b>${data.email.replace(/</g,'&lt;')}</b>.
+            </p>
+          </div>
+        `;
+      }catch(err){
+        console.error(err);
+        alert('Sorry — something went wrong submitting your details. Please try again, or call us.');
+        if(btn){ btn.disabled = false; btn.textContent = oldLabel; }
+      }
+    });
+  }
+  // Attach to both holders (whichever is visible will catch the submit)
+  hookForm('hero-form-holder');
+  hookForm('mobile-form-holder');
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const answer = item.querySelector('.faq-a');
+      const open = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      answer.hidden = !open;
+      btn.querySelector('.faq-icon').textContent = open ? '–' : '+';
+    });
+  });
+
+  // === LJT Testimonials slider ===
+  (function(){
+    const wrap  = document.querySelector('.ljt');
+    if(!wrap) return;
+    const track = wrap.querySelector('.ljt-track');
+    const slides= Array.from(wrap.querySelectorAll('.ljt-slide'));
+    const dots  = Array.from(wrap.querySelectorAll('.ljt-dot'));
+    const prev  = wrap.querySelector('.ljt-prev');
+    const next  = wrap.querySelector('.ljt-next');
+    let index = 0, timer;
+
+    function go(i){
+      index = (i + slides.length) % slides.length;
+      track.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach((d,n)=>d.setAttribute('aria-selected', n===index ? 'true' : 'false'));
+      restart();
+    }
+    function restart(){ clearInterval(timer); timer = setInterval(()=>go(index+1), 6000); }
+    dots.forEach((d,n)=>d.addEventListener('click',()=>go(n)));
+    prev?.addEventListener('click',()=>go(index-1));
+    next?.addEventListener('click',()=>go(index+1));
+
+    const stage = wrap.querySelector('.ljt-stage');
+    stage?.addEventListener('mouseenter', ()=>clearInterval(timer));
+    stage?.addEventListener('mouseleave', restart);
+    restart();
+  })();
+
+  /* ===== Google Places Autocomplete ===== */
+  function initAddressAutocomplete(){
+    const options = {
+      fields: ['formatted_address','address_components','geometry'],
+      types: ['address'],
+      componentRestrictions: { country: ['nz'] }
+    };
+    const inputs = [
+      document.getElementById('address'),
+      document.getElementById('addressMobile')
+    ].filter(Boolean);
+
+    inputs.forEach(input => {
+      const ac = new google.maps.places.Autocomplete(input, options);
+      ac.addListener('place_changed', () => {
+        const place = ac.getPlace();
+        if (place && place.formatted_address){
+          input.value = place.formatted_address;
+        }
       });
-    }
-    hookForm('hero-form-holder'); hookForm('mobile-form-holder');
-
-    // FAQ accordion
-    document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const item = btn.closest('.faq-item');
-        const answer = item.querySelector('.faq-a');
-        const open = item.classList.toggle('open');
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        answer.hidden = !open;
-        btn.querySelector('.faq-icon').textContent = open ? '–' : '+';
+      input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+          const dd = document.querySelector('.pac-container');
+          const open = dd && getComputedStyle(dd).display !== 'none';
+          if (open) e.preventDefault();
+        }
       });
     });
-
-    // === LJT Testimonials slider (unchanged logic) ===
-    (function(){
-      const wrap  = document.querySelector('.ljt');
-      if(!wrap) return;
-      const track = wrap.querySelector('.ljt-track');
-      const slides= Array.from(wrap.querySelectorAll('.ljt-slide'));
-      const dots  = Array.from(wrap.querySelectorAll('.ljt-dot'));
-      const prev  = wrap.querySelector('.ljt-prev');
-      const next  = wrap.querySelector('.ljt-next');
-      let index = 0, timer;
-
-      function go(i){
-        index = (i + slides.length) % slides.length;
-        track.style.transform = `translateX(-${index * 100}%)`;
-        dots.forEach((d,n)=>d.setAttribute('aria-selected', n===index ? 'true' : 'false'));
-        restart();
-      }
-      function restart(){ clearInterval(timer); timer = setInterval(()=>go(index+1), 6000); }
-      dots.forEach((d,n)=>d.addEventListener('click',()=>go(n)));
-      prev?.addEventListener('click',()=>go(index-1));
-      next?.addEventListener('click',()=>go(index+1));
-
-      const stage = wrap.querySelector('.ljt-stage');
-      stage?.addEventListener('mouseenter', ()=>clearInterval(timer));
-      stage?.addEventListener('mouseleave', restart);
-      restart();
-    })();
-
-    /* ===== Google Places Autocomplete ===== */
-    function initAddressAutocomplete(){
-      const options = {
-        fields: ['formatted_address','address_components','geometry'],
-        types: ['address'],
-        componentRestrictions: { country: ['nz'] } // set to ['nz'] if NZ-only
-      };
-      const inputs = [
-        document.getElementById('address'),
-        document.getElementById('addressMobile')
-      ].filter(Boolean);
-
-      inputs.forEach(input => {
-        const ac = new google.maps.places.Autocomplete(input, options);
-
-        ac.addListener('place_changed', () => {
-          const place = ac.getPlace();
-          if (place && place.formatted_address){
-            input.value = place.formatted_address;
-          }
-        });
-
-        // Stop Enter from submitting when a suggestion is open
-        input.addEventListener('keydown', e => {
-          if (e.key === 'Enter') {
-            const dd = document.querySelector('.pac-container');
-            const open = dd && getComputedStyle(dd).display !== 'none';
-            if (open) e.preventDefault();
-          }
-        });
-      });
-    }
-  </script>
-  <!-- TODO: replace YOUR_GOOGLE_MAPS_API_KEY with your actual key (Maps JS + Places enabled) -->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN9ItH4RG4IAaS6zPRpP6n19Qi8iBU_nE&libraries=places&callback=initAddressAutocomplete"></script>
+  }
+  // initAddressAutocomplete is called by the Maps script via &callback=
+</script>
+<!-- Keep this Maps script include (ensure your real API key is present) -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN9ItH4RG4IAaS6zPRpP6n19Qi8iBU_nE&libraries=places&callback=initAddressAutocomplete"></script>
 </body>
 </html>
