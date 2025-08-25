@@ -1406,61 +1406,74 @@ Jurisdiction
       const oldLabel = btn?.textContent;
       if(btn){ btn.disabled = true; btn.textContent = 'Sending…'; }
 
-      try{
-        // === Google Sheets Web App endpoint ===
-        const SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbyZIieU4qJuI0CLDxpTYLQFsSvTZxiYsCrXMg5A1h3QHdixLiIkXEvX1aevabBdnmOT/exec';
-        const SHARED_SECRET     = 'Spring Promo'; // must match Apps Script EXACTLY
+try{
+  const SHEETS_WEBAPP_URL = 'PASTE YOUR LATEST /exec URL HERE';
+  const SHARED_SECRET     = 'Spring Promo';
 
-        // Send as URL-encoded to avoid CORS preflight
-        const payload = new URLSearchParams({
-          address:   data.address,
-          full_name: data.full_name,
-          phone:     data.phone,
-          email:     data.email,
-          timeframe: data.timeframe,
-          source:    data.source,
-          page_url:  data.page_url,
-          __secret:  SHARED_SECRET
-        });
+  const payload = new URLSearchParams({
+    address:   data.address,
+    full_name: data.full_name,
+    phone:     data.phone,
+    email:     data.email,
+    timeframe: data.timeframe,
+    source:    data.source,
+    page_url:  data.page_url,
+    __secret:  SHARED_SECRET
+  });
 
-        const res  = await fetch(SHEETS_WEBAPP_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-          body: payload.toString()
-        });
+  const res = await fetch(SHEETS_WEBAPP_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+    body: payload.toString()
+  });
 
-        const text = await res.text();
-        console.log('[Sheets POST] status:', res.status, 'body:', text);
+  const contentType = res.headers.get('content-type') || '';
+  let responseOk = res.ok;
+  let bodyText = '';
+  let bodyJson = null;
 
-        let json = {};
-        try { json = JSON.parse(text); } catch(e){
-          throw new Error('Non-JSON response from Sheets web app: ' + text);
-        }
-        if(!json.ok) throw new Error(json.error || 'Server error');
-
-        // Success → swap the form for the thank-you panel
-        holder.innerHTML = `
-          <div class="thankyou" style="padding:18px; text-align:center">
-            <h3 style="margin:0 0 8px">🎉 Thanks for entering the draw!</h3>
-            <p style="margin:0 0 12px">
-              One of our team will contact you soon about your free property appraisal.
-              We’ve also confirmed your entry for the $2,500 spring giveaway.
-            </p>
-            <p style="margin:0; color:#64748b; font-size:12px">
-              A confirmation email has been sent to <b>${data.email.replace(/</g,'&lt;')}</b>.
-            </p>
-          </div>
-        `;
-      }catch(err){
-        console.error('[Sheets POST] Error:', err);
-        alert('Sorry — something went wrong submitting your details. Please try again, or call us.');
-        if(btn){ btn.disabled = false; btn.textContent = oldLabel; }
-      }
-    });
+  if (contentType.includes('application/json')) {
+    bodyJson = await res.json();
+    // if server returns { ok:false } treat as failure
+    if (bodyJson && bodyJson.ok === false) responseOk = false;
+  } else {
+    bodyText = await res.text();
   }
+
+  console.log('[Sheets POST] status:', res.status, 'ctype:', contentType, 'json:', bodyJson, 'text:', bodyText?.slice(0,200));
+
+  if (!responseOk) {
+    throw new Error((bodyJson && bodyJson.error) || 'Server error');
+  }
+
+  // Success → swap the form for the thank-you panel
+  holder.innerHTML = `
+    <div class="thankyou" style="padding:18px; text-align:center">
+      <h3 style="margin:0 0 8px">🎉 Thanks for entering the draw!</h3>
+      <p style="margin:0 0 12px">
+        One of our team will contact you soon about your free property appraisal.
+        We’ve also confirmed your entry for the $2,500 spring giveaway.
+      </p>
+      <p style="margin:0; color:#64748b; font-size:12px">
+        A confirmation email has been sent to <b>${data.email.replace(/</g,'&lt;')}</b>.
+      </p>
+    </div>
+  `;
+}catch(err){
+  console.error('[Sheets POST] Error:', err);
+  alert('Sorry — something went wrong submitting your details. Please try again, or call us.');
+  if(btn){ btn.disabled = false; btn.textContent = oldLabel; }
+}
   // Attach to both holders (whichever is visible will catch the submit)
-  hookForm('hero-form-holder');
-  hookForm('mobile-form-holder');
+  addEventListener('DOMContentLoaded', () => {
+  syncFormAnchor();            // set the correct ID (desktop vs mobile)
+  hookForm('appraisal-form');  // always attach to whichever one is visible
+});
+
+addEventListener('resize', () => {
+  syncFormAnchor();            // update ID on resize
+  hookForm('appraisal-form');  // reattach if it changed
+});
 
   // FAQ accordion
   document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
