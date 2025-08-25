@@ -1385,37 +1385,34 @@ Jurisdiction
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      
+            try{
+        // === Google Sheets Web App endpoint ===
+        const SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbzxlVjfYv96aP1H-HyoQTkPD6ru-4pkZupdx6_n9Nz7Sx1_a1Fi-rgX2d3bCRt5M68e/exec';
+        const SHARED_SECRET     = 'Spring Promo'; // must match Apps Script
 
-      // Collect field values (works for either desktop or mobile form)
-      const data = {
-        address: form.querySelector('[name="address"]')?.value?.trim() || '',
-        full_name: form.querySelector('[name="full_name"]')?.value?.trim() || '',
-        phone: form.querySelector('[name="phone"]')?.value?.trim() || '',
-        email: form.querySelector('[name="email"]')?.value?.trim() || '',
-        timeframe: form.querySelector('[name="timeframe"]')?.value || '',
-        source: 'Spring Appraisal LP',
-        page_url: location.href
-      };
-
-      if(!data.full_name || !data.phone || !data.email){
-        alert('Please complete name, phone and email.');
-        return;
-      }
-
-      const btn = form.querySelector('button[type="submit"]');
-      const oldLabel = btn?.textContent;
-      if(btn){ btn.disabled = true; btn.textContent = 'Sending…'; }
-
-      try{
-        // POST to your backend (create /api/lead as shown earlier)
-        const res = await fetch('/api/lead', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
+        // Send as URL-encoded to avoid CORS preflight
+        const payload = new URLSearchParams({
+          address:   data.address,
+          full_name: data.full_name,
+          phone:     data.phone,
+          email:     data.email,
+          timeframe: data.timeframe,
+          source:    data.source,
+          page_url:  data.page_url,
+          __secret:  SHARED_SECRET
         });
-        if(!res.ok) throw new Error('Server error');
 
-        // Swap the form box for an inline thank-you panel
+        const res = await fetch(SHEETS_WEBAPP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+          body: payload.toString()
+        });
+
+        const json = await res.json();
+        if(!json.ok) throw new Error(json.error || 'Server error');
+
+        // Success → swap the form for the thank-you panel (unchanged)
         holder.innerHTML = `
           <div class="thankyou" style="padding:18px; text-align:center">
             <h3 style="margin:0 0 8px">🎉 Thanks for entering the draw!</h3>
@@ -1433,12 +1430,7 @@ Jurisdiction
         alert('Sorry — something went wrong submitting your details. Please try again, or call us.');
         if(btn){ btn.disabled = false; btn.textContent = oldLabel; }
       }
-    });
-  }
-  // Attach to both holders (whichever is visible will catch the submit)
-  hookForm('hero-form-holder');
-  hookForm('mobile-form-holder');
-
+      
   // FAQ accordion
   document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
     btn.addEventListener('click', () => {
