@@ -1296,7 +1296,7 @@ Jurisdiction
   </div>
 </footer>
 
- <script>
+<script>
   // Drawer controls
   const menuBtn   = document.getElementById('menuBtn');
   const drawer    = document.getElementById('drawer');
@@ -1376,10 +1376,40 @@ Jurisdiction
   addEventListener('DOMContentLoaded', syncFormAnchor);
   addEventListener('resize', syncFormAnchor);
 
-            try{
+  /* === FORM → AJAX submit + inline thank-you (Sheets) === */
+  function hookForm(holderId){
+    const holder = document.getElementById(holderId);
+    if(!holder) return;
+    const form = holder.querySelector('form');
+    if(!form) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Collect field values (works for either desktop or mobile form)
+      const data = {
+        address:   form.querySelector('[name="address"]')?.value?.trim() || '',
+        full_name: form.querySelector('[name="full_name"]')?.value?.trim() || '',
+        phone:     form.querySelector('[name="phone"]')?.value?.trim() || '',
+        email:     form.querySelector('[name="email"]')?.value?.trim() || '',
+        timeframe: form.querySelector('[name="timeframe"]')?.value || '',
+        source:    'Spring Appraisal LP',
+        page_url:  location.href
+      };
+
+      if(!data.full_name || !data.phone || !data.email){
+        alert('Please complete name, phone and email.');
+        return;
+      }
+
+      const btn = form.querySelector('button[type="submit"]');
+      const oldLabel = btn?.textContent;
+      if(btn){ btn.disabled = true; btn.textContent = 'Sending…'; }
+
+      try{
         // === Google Sheets Web App endpoint ===
         const SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbyZjG1536L_GcgQC8Vu5LSy0RldZ3v9c5-h0teOsq5pgGOA2VWG9LAi2qZJ9v4hJ__y/exec';
-        const SHARED_SECRET     = 'Spring Promo'; // must match Apps Script
+        const SHARED_SECRET     = 'Spring Promo'; // must match Apps Script EXACTLY
 
         // Send as URL-encoded to avoid CORS preflight
         const payload = new URLSearchParams({
@@ -1393,18 +1423,24 @@ Jurisdiction
           __secret:  SHARED_SECRET
         });
 
-        const res = await fetch(SHEETS_WEBAPP_URL, {
+        const res  = await fetch(SHEETS_WEBAPP_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
           body: payload.toString()
         });
 
-        const json = await res.json();
+        const text = await res.text();
+        console.log('[Sheets POST] status:', res.status, 'body:', text);
+
+        let json = {};
+        try { json = JSON.parse(text); } catch(e){
+          throw new Error('Non-JSON response from Sheets web app: ' + text);
+        }
         if(!json.ok) throw new Error(json.error || 'Server error');
 
-        // Success → swap the form for the thank-you panel (unchanged)
+        // Success → swap the form for the thank-you panel
         holder.innerHTML = `
-          <div class="thank-you" style="padding:18px; text-align:center">
+          <div class="thankyou" style="padding:18px; text-align:center">
             <h3 style="margin:0 0 8px">🎉 Thanks for entering the draw!</h3>
             <p style="margin:0 0 12px">
               One of our team will contact you soon about your free property appraisal.
@@ -1416,11 +1452,16 @@ Jurisdiction
           </div>
         `;
       }catch(err){
-        console.error(err);
+        console.error('[Sheets POST] Error:', err);
         alert('Sorry — something went wrong submitting your details. Please try again, or call us.');
         if(btn){ btn.disabled = false; btn.textContent = oldLabel; }
       }
-      
+    });
+  }
+  // Attach to both holders (whichever is visible will catch the submit)
+  hookForm('hero-form-holder');
+  hookForm('mobile-form-holder');
+
   // FAQ accordion
   document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
     btn.addEventListener('click', () => {
