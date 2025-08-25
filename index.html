@@ -1376,16 +1376,6 @@ Jurisdiction
   addEventListener('DOMContentLoaded', syncFormAnchor);
   addEventListener('resize', syncFormAnchor);
 
-  /* === FORM → AJAX submit + inline thank-you (replaces old demo handler) === */
-  function hookForm(holderId){
-    const holder = document.getElementById(holderId);
-    if(!holder) return;
-    const form = holder.querySelector('form');
-    if(!form) return;
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
             try{
         // === Google Sheets Web App endpoint ===
         const SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbyZjG1536L_GcgQC8Vu5LSy0RldZ3v9c5-h0teOsq5pgGOA2VWG9LAi2qZJ9v4hJ__y/exec';
