@@ -1406,65 +1406,63 @@ Jurisdiction
       const oldLabel = btn?.textContent;
       if(btn){ btn.disabled = true; btn.textContent = 'Sending…'; }
 
-      try{
-        const SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbyZIieU4qJuI0CLDxpTYLQFsSvTZxiYsCrXMg5A1h3QHdixLiIkXEvX1aevabBdnmOT/exec';
-        const SHARED_SECRET     = 'Spring Promo'; // must match Apps Script EXACTLY
+try{
+  const SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbyZIieU4qJuI0CLDxpTYLQFsSvTZxiYsCrXMg5A1h3QHdixLiIkXEvX1aevabBdnmOT/exec';
+  const SHARED_SECRET     = 'Spring Promo';
 
-        // Send as URL-encoded to avoid CORS preflight
-        const payload = new URLSearchParams({
-          address:   data.address,
-          full_name: data.full_name,
-          phone:     data.phone,
-          email:     data.email,
-          timeframe: data.timeframe,
-          source:    data.source,
-          page_url:  data.page_url,
-          __secret:  SHARED_SECRET
-        });
+  const payload = new URLSearchParams({
+    address:   data.address,
+    full_name: data.full_name,
+    phone:     data.phone,
+    email:     data.email,
+    timeframe: data.timeframe,
+    source:    data.source,
+    page_url:  data.page_url,
+    __secret:  SHARED_SECRET
+  });
 
-        const res  = await fetch(SHEETS_WEBAPP_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-          body: payload.toString()
-        });
+  const res = await fetch(SHEETS_WEBAPP_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+    body: payload.toString()
+  });
 
-        // Be tolerant of non-JSON responses
-        const contentType = res.headers.get('content-type') || '';
-        let responseOk = res.ok;
-        let bodyText = '';
-        let bodyJson = null;
+  // If Apps Script replies with anything 2xx, treat as success.
+  // (Sometimes it returns text/html or text/plain instead of JSON.)
+  const status = res.status;
+  const ctype  = res.headers.get('content-type') || '';
+  let json = null, text = '';
 
-        if (contentType.includes('application/json')) {
-          bodyJson = await res.json();
-          if (bodyJson && bodyJson.ok === false) responseOk = false;
-        } else {
-          bodyText = await res.text();
-        }
+  if (ctype.includes('application/json')) {
+    json = await res.json().catch(()=>null);
+  } else {
+    text = await res.text().catch(()=> '');
+  }
+  console.log('[Sheets POST]', {status, ctype, json, text: text?.slice(0,200)});
 
-        console.log('[Sheets POST] status:', res.status, 'ctype:', contentType, 'json:', bodyJson, 'text:', bodyText?.slice(0,200));
+  if (!res.ok) {
+    throw new Error((json && json.error) || `HTTP ${status}`);
+  }
 
-        if (!responseOk) {
-          throw new Error((bodyJson && bodyJson.error) || 'Server error');
-        }
+  // Success → swap the form for the thank-you panel
+  holder.innerHTML = `
+    <div class="thankyou" style="padding:18px; text-align:center">
+      <h3 style="margin:0 0 8px">🎉 Thanks for entering the draw!</h3>
+      <p style="margin:0 0 12px">
+        One of our team will contact you soon about your free property appraisal.
+        We’ve also confirmed your entry for the $2,500 spring giveaway.
+      </p>
+      <p style="margin:0; color:#64748b; font-size:12px">
+        A confirmation email has been sent to <b>${data.email.replace(/</g,'&lt;')}</b>.
+      </p>
+    </div>
+  `;
+} catch (err){
+  console.error('[Sheets POST] Error:', err);
+  alert('Sorry — something went wrong submitting your details. Please try again, or call us.');
+  if(btn){ btn.disabled = false; btn.textContent = oldLabel; }
+}
 
-        // Success → swap the form for the thank-you panel
-        holder.innerHTML = `
-          <div class="thankyou" style="padding:18px; text-align:center">
-            <h3 style="margin:0 0 8px">🎉 Thanks for entering the draw!</h3>
-            <p style="margin:0 0 12px">
-              One of our team will contact you soon about your free property appraisal.
-              We’ve also confirmed your entry for the $2,500 spring giveaway.
-            </p>
-            <p style="margin:0; color:#64748b; font-size:12px">
-              A confirmation email has been sent to <b>${data.email.replace(/</g,'&lt;')}</b>.
-            </p>
-          </div>
-        `;
-      }catch(err){
-        console.error('[Sheets POST] Error:', err);
-        alert('Sorry — something went wrong submitting your details. Please try again, or call us.');
-        if(btn){ btn.disabled = false; btn.textContent = oldLabel; }
-      }
     });
   }
 
