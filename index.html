@@ -1355,11 +1355,9 @@ function syncFormAnchor(){
 addEventListener('DOMContentLoaded', syncFormAnchor);
 addEventListener('resize', syncFormAnchor);
 
-function
-  // === CONFIG ===
+function {
   const ENDPOINT = "https://script.google.com/macros/s/AKfycbzU473MW9dhMTE1_HYKB-_iHS-6fbtQwjqqj5G2cHgmWkUa9gU7n3eYqfwCYILSloWM/exec";
 
-  // Capture UTM + context
   function getParams() {
     const u = new URL(window.location.href);
     return {
@@ -1371,14 +1369,14 @@ function
     };
   }
 
-  function serializeForm(form) {
+  function serializeFormform {
     const data = {};
     const fd = new FormData(form);
     for (const [k, v] of fd.entries()) data[k] = v;
     return Object.assign(data, getParams());
   }
 
-  function thankYouHTML(name) {
+  function thankYouHTMLname {
     const first = (name || '').trim().split(' ')[0] || 'Thanks';
     return `
       <div class="form-intro">
@@ -1397,15 +1395,15 @@ function
     `;
   }
 
-  async function submitToSheets(payload) {
+  async function submitToSheetspayload {
+    // Use text/plain to avoid preflight. Server still parses JSON string.
     const res = await fetch(ENDPOINT, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
     });
-    // If Apps Script ever sends non-2xx, still try to parse JSON for errors
     let json;
-    try { json = await res.json(); } catch(e) { json = { ok: false, error: 'Invalid JSON from server' }; }
+    try { json = await res.json(); } catch (_) { json = { ok: false, error: 'Invalid JSON from server' }; }
     return json;
   }
 
@@ -1418,43 +1416,39 @@ function
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (submitting) return; // prevent double submit
+      if (submitting) return;
 
-      // Built-in HTML5 validation
       if (!form.checkValidity()) {
         form.reportValidity();
         return;
       }
 
-      // Button loading state
       const btn = form.querySelector('button[type="submit"]');
-      const origText = btn ? btn.textContent : '';
-      if (btn) {
-        btn.disabled = true;
-        btn.textContent = 'Submitting...';
-      }
+      const orig = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
       submitting = true;
 
       const payload = serializeForm(form);
 
       try {
         const result = await submitToSheets(payload);
+        console.log('Submit result:', result);
         if (result && result.ok) {
           holder.innerHTML = thankYouHTML(payload.full_name);
         } else {
-          alert('Sorry, something went wrong submitting your details. Please try again.');
-          if (btn) { btn.disabled = false; btn.textContent = origText; }
+          alert('Sorry, something went wrong. Please try again.');
+          if (btn) { btn.disabled = false; btn.textContent = orig; }
           submitting = false;
         }
       } catch (err) {
-        alert('Network error. Please check your connection and try again.');
-        if (btn) { btn.disabled = false; btn.textContent = origText; }
+        console.error('Network error:', err);
+        alert('Network error. Please try again.');
+        if (btn) { btn.disabled = false; btn.textContent = orig; }
         submitting = false;
       }
     });
   }
 
-  // Wire both forms (desktop & mobile)
   wireForm('leadFormDesktop', '#hero-form-holder');
   wireForm('leadFormMobile', '#mobile-form-holder');
 })();
