@@ -1297,102 +1297,78 @@ Jurisdiction
 </footer>
 
 <script>
-  // Drawer controls
-  const menuBtn   = document.getElementById('menuBtn');
-  const drawer    = document.getElementById('drawer');
-  const scrim     = document.getElementById('scrim');
-  const drawerCls = document.getElementById('drawerClose');
+/* ————— Drawer + header (unchanged) ————— */
+const menuBtn   = document.getElementById('menuBtn');
+const drawer    = document.getElementById('drawer');
+const scrim     = document.getElementById('scrim');
+const drawerCls = document.getElementById('drawerClose');
 
-  function openDrawer(){drawer.classList.add('open');scrim.classList.add('show');drawer.setAttribute('aria-hidden','false');menuBtn.setAttribute('aria-expanded','true')}
-  function closeDrawer(){drawer.classList.remove('open');scrim.classList.remove('show');drawer.setAttribute('aria-hidden','true');menuBtn.setAttribute('aria-expanded','false')}
-  menuBtn?.addEventListener('click', openDrawer);
-  drawerCls?.addEventListener('click', closeDrawer);
-  scrim?.addEventListener('click', closeDrawer);
-  window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
+function openDrawer(){drawer.classList.add('open');scrim.classList.add('show');drawer.setAttribute('aria-hidden','false');menuBtn.setAttribute('aria-expanded','true')}
+function closeDrawer(){drawer.classList.remove('open');scrim.classList.remove('show');drawer.setAttribute('aria-hidden','true');menuBtn.setAttribute('aria-expanded','false')}
+menuBtn?.addEventListener('click', openDrawer);
+drawerCls?.addEventListener('click', closeDrawer);
+scrim?.addEventListener('click', closeDrawer);
+window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
 
-  /* ---- Hide/reveal header on scroll ---- */
-  (function(){
-    var header = document.querySelector('.site-header');
-    if (!header) return;
-
-    var lastY = 0;
-    var ticking = false;
-    var revealTimer = null;
-    var THRESHOLD = 8;
-    var MIN_HIDE_Y = 60;
-
-    header.classList.remove('is-hidden');
-
-    function onScroll(){
-      var y = Math.max(0, window.pageYOffset || document.documentElement.scrollTop || 0);
-      var delta = y - lastY;
-
-      if (y > 2) header.classList.add('is-scrolled');
-      else header.classList.remove('is-scrolled');
-
-      var drawerOpen = drawer && drawer.classList.contains('open');
-
-      if (!drawerOpen){
-        if (delta > THRESHOLD && y > MIN_HIDE_Y){
-          header.classList.add('is-hidden');
-        } else if (delta < -THRESHOLD){
-          header.classList.remove('is-hidden');
-        }
-      }
-
-      if (revealTimer) clearTimeout(revealTimer);
-      revealTimer = setTimeout(function(){
-        header.classList.remove('is-hidden');
-      }, 140);
-
-      lastY = y;
-      ticking = false;
+(function(){
+  const header = document.querySelector('.site-header'); if(!header) return;
+  let lastY=0, ticking=false, timer=null; const THRESHOLD=8, MINY=60;
+  header.classList.remove('is-hidden');
+  function onScroll(){
+    const y = Math.max(0, window.pageYOffset||document.documentElement.scrollTop||0);
+    const d = y-lastY;
+    if (y>2) header.classList.add('is-scrolled'); else header.classList.remove('is-scrolled');
+    const drawerOpen = drawer && drawer.classList.contains('open');
+    if (!drawerOpen){
+      if (d>THRESHOLD && y>MINY) header.classList.add('is-hidden');
+      else if (d<-THRESHOLD) header.classList.remove('is-hidden');
     }
-
-    function onScrollHandler(){
-      if (!ticking){
-        window.requestAnimationFrame(onScroll);
-        ticking = true;
-      }
-    }
-
-    window.addEventListener('scroll', onScrollHandler, {passive:true});
-  })();
-
-  // Make #appraisal-form always target the visible form (for anchors)
-  function syncFormAnchor(){
-    const desktopHolder = document.getElementById('hero-form-holder');
-    const mobileHolder  = document.getElementById('mobile-form-holder');
-    if (!desktopHolder || !mobileHolder) return;
-    if (window.matchMedia('(min-width:900px)').matches){
-      desktopHolder.id = 'appraisal-form';
-      mobileHolder.id  = 'mobile-form-holder';
-    } else {
-      desktopHolder.id = 'hero-form-holder';
-      mobileHolder.id  = 'appraisal-form';
-    }
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(()=>header.classList.remove('is-hidden'), 140);
+    lastY=y; ticking=false;
   }
-  addEventListener('DOMContentLoaded', syncFormAnchor);
-  addEventListener('resize', syncFormAnchor);
+  function onScrollHandler(){ if(!ticking){ window.requestAnimationFrame(onScroll); ticking=true; } }
+  window.addEventListener('scroll', onScrollHandler, {passive:true});
+})();
 
-  /* === FORM → AJAX submit + inline thank-you (Sheets) === */
-  function hookForm(holderId){
+/* ————— Anchor target follows visible form (unchanged) ————— */
+function syncFormAnchor(){
+  const desktopHolder = document.getElementById('hero-form-holder');
+  const mobileHolder  = document.getElementById('mobile-form-holder');
+  if (!desktopHolder || !mobileHolder) return;
+  if (window.matchMedia('(min-width:900px)').matches){
+    desktopHolder.id = 'appraisal-form';
+    mobileHolder.id  = 'mobile-form-holder';
+  } else {
+    desktopHolder.id = 'hero-form-holder';
+    mobileHolder.id  = 'appraisal-form';
+  }
+}
+addEventListener('DOMContentLoaded', syncFormAnchor);
+addEventListener('resize', syncFormAnchor);
+
+/* ————— Forms → POST to Apps Script + thank-you swap ————— */
+(function(){
+  // ✅ SET THIS to your *current* deployed Web App URL (the one that shows “OK” in Safari)
+  const SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbx2UNWq9eSiEfp8JsRub6JHJjWa49T0lR0eytibqZdUGiaZrKJsvK-1YbfcJWKoOC-C/exec';
+  const SHARED_SECRET     = 'Spring Promo';  // must match Apps Script
+
+  function attachSubmit(holderId){
     const holder = document.getElementById(holderId);
     if(!holder) return;
     const form = holder.querySelector('form');
-    if(!form || form.dataset.bound === '1') return;
-    form.dataset.bound = '1';
+    if(!form) return;
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Collect field values (works for either desktop or mobile form)
+      const get = (name) => (form.querySelector(`[name="${name}"]`)?.value || '').trim();
       const data = {
-        address:   form.querySelector('[name="address"]')?.value?.trim() || '',
-        full_name: form.querySelector('[name="full_name"]')?.value?.trim() || '',
-        phone:     form.querySelector('[name="phone"]')?.value?.trim() || '',
-        email:     form.querySelector('[name="email"]')?.value?.trim() || '',
-        timeframe: form.querySelector('[name="timeframe"]')?.value || '',
+        address:   get('address'),
+        full_name: get('full_name'),
+        phone:     get('phone'),
+        email:     get('email'),
+        timeframe: get('timeframe'),
         source:    'Spring Appraisal LP',
         page_url:  location.href
       };
@@ -1403,13 +1379,11 @@ Jurisdiction
       }
 
       const btn = form.querySelector('button[type="submit"]');
-      const oldLabel = btn?.textContent;
+      const prev = btn?.textContent;
       if(btn){ btn.disabled = true; btn.textContent = 'Sending…'; }
 
       try{
-        const SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbw_V-ajWdXxYxmmtsLczmfDoduQSkY4z5RQUQ2bgkXk1Fca74ZhpFG33O8Zq3uH2U1M/exec';
-        const SHARED_SECRET     = 'Spring Promo';
-
+        // Send URL-encoded to avoid CORS preflight (best for iPad Safari)
         const payload = new URLSearchParams({
           address:   data.address,
           full_name: data.full_name,
@@ -1427,21 +1401,21 @@ Jurisdiction
           body: payload.toString()
         });
 
-        const status = res.status;
-        const ctype  = res.headers.get('content-type') || '';
-        let json = null, text = '';
-
+        // Accept JSON or text “OK” (some Script deployments return text/plain)
+        const ctype = (res.headers.get('content-type')||'').toLowerCase();
+        let ok = res.ok;
         if (ctype.includes('application/json')) {
-          json = await res.json().catch(()=>null);
+          const json = await res.json().catch(()=>null);
+          if (json && json.ok === false) ok = false;
         } else {
-          text = await res.text().catch(()=> '');
+          const text = (await res.text().catch(()=>'')) || '';
+          // treat plain “OK” or empty 2xx as success
+          if (!res.ok && !/^\s*ok\s*$/i.test(text)) ok = false;
         }
 
-        if (!res.ok || (json && json.ok === false)) {
-          throw new Error((json && json.error) || `HTTP ${status}`);
-        }
+        if (!ok) throw new Error('Server error');
 
-        // Success → swap the form for the thank-you panel
+        // ✅ Success → thank-you panel
         holder.innerHTML = `
           <div class="thankyou" style="padding:18px; text-align:center">
             <h3 style="margin:0 0 8px">🎉 Thanks for entering the draw!</h3>
@@ -1457,87 +1431,77 @@ Jurisdiction
       } catch (err){
         console.error('[Sheets POST] Error:', err);
         alert('Sorry — something went wrong submitting your details. Please try again, or call us.');
-        if(btn){ btn.disabled = false; btn.textContent = oldLabel; }
+        if(btn){ btn.disabled = false; btn.textContent = prev; }
       }
     });
   }
 
-  // Attach to both holders (listeners stay even if IDs change later)
-  hookForm('hero-form-holder');
-  hookForm('mobile-form-holder');
+  // Attach to both holders; whichever contains a form will handle submit
+  attachSubmit('hero-form-holder');
+  attachSubmit('mobile-form-holder');
+})();
 
-  // FAQ accordion
-  document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.faq-item');
-      const answer = item.querySelector('.faq-a');
-      const open = item.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (answer) answer.hidden = !open;
-      const icon = btn.querySelector('.faq-icon');
-      if (icon) icon.textContent = open ? '–' : '+';
+/* ————— FAQ accordion (unchanged) ————— */
+document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const answer = item.querySelector('.faq-a');
+    const open = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (answer) answer.hidden = !open;
+    (btn.querySelector('.faq-icon')||{}).textContent = open ? '–' : '+';
+  });
+});
+
+/* ————— Testimonials slider (unchanged) ————— */
+(function(){
+  const wrap  = document.querySelector('.ljt'); if(!wrap) return;
+  const track = wrap.querySelector('.ljt-track');
+  const slides= Array.from(wrap.querySelectorAll('.ljt-slide'));
+  const dots  = Array.from(wrap.querySelectorAll('.ljt-dot'));
+  const prev  = wrap.querySelector('.ljt-prev');
+  const next  = wrap.querySelector('.ljt-next');
+  let index = 0, timer;
+  function go(i){
+    index = (i + slides.length) % slides.length;
+    if(track) track.style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach((d,n)=>d.setAttribute('aria-selected', n===index ? 'true' : 'false'));
+    restart();
+  }
+  function restart(){ clearInterval(timer); timer = setInterval(()=>go(index+1), 6000); }
+  dots.forEach((d,n)=>d.addEventListener('click',()=>go(n)));
+  prev?.addEventListener('click',()=>go(index-1));
+  next?.addEventListener('click',()=>go(index+1));
+  const stage = wrap.querySelector('.ljt-stage');
+  stage?.addEventListener('mouseenter', ()=>clearInterval(timer));
+  stage?.addEventListener('mouseleave', restart);
+  restart();
+})();
+
+/* ————— Google Places (unchanged) ————— */
+function initAddressAutocomplete(){
+  const options = {
+    fields: ['formatted_address','address_components','geometry'],
+    types: ['address'],
+    componentRestrictions: { country: ['nz'] }
+  };
+  const inputs = [ document.getElementById('address'), document.getElementById('addressMobile') ].filter(Boolean);
+  inputs.forEach(input => {
+    const ac = new google.maps.places.Autocomplete(input, options);
+    ac.addListener('place_changed', () => {
+      const place = ac.getPlace();
+      if (place && place.formatted_address) input.value = place.formatted_address;
+    });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        const dd = document.querySelector('.pac-container');
+        const open = dd && getComputedStyle(dd).display !== 'none';
+        if (open) e.preventDefault();
+      }
     });
   });
-
-  // === LJT Testimonials slider ===
-  (function(){
-    const wrap  = document.querySelector('.ljt');
-    if(!wrap) return;
-    const track = wrap.querySelector('.ljt-track');
-    const slides= Array.from(wrap.querySelectorAll('.ljt-slide'));
-    const dots  = Array.from(wrap.querySelectorAll('.ljt-dot'));
-    const prev  = wrap.querySelector('.ljt-prev');
-    const next  = wrap.querySelector('.ljt-next');
-    let index = 0, timer;
-
-    function go(i){
-      index = (i + slides.length) % slides.length;
-      if (track) track.style.transform = `translateX(-${index * 100}%)`;
-      dots.forEach((d,n)=>d.setAttribute('aria-selected', n===index ? 'true' : 'false'));
-      restart();
-    }
-    function restart(){ clearInterval(timer); timer = setInterval(()=>go(index+1), 6000); }
-    dots.forEach((d,n)=>d.addEventListener('click',()=>go(n)));
-    prev?.addEventListener('click',()=>go(index-1));
-    next?.addEventListener('click',()=>go(index+1));
-
-    const stage = wrap.querySelector('.ljt-stage');
-    stage?.addEventListener('mouseenter', ()=>clearInterval(timer));
-    stage?.addEventListener('mouseleave', restart);
-    restart();
-  })();
-
-  /* ===== Google Places Autocomplete ===== */
-  function initAddressAutocomplete(){
-    const options = {
-      fields: ['formatted_address','address_components','geometry'],
-      types: ['address'],
-      componentRestrictions: { country: ['nz'] }
-    };
-    const inputs = [
-      document.getElementById('address'),
-      document.getElementById('addressMobile')
-    ].filter(Boolean);
-
-    inputs.forEach(input => {
-      const ac = new google.maps.places.Autocomplete(input, options);
-      ac.addListener('place_changed', () => {
-        const place = ac.getPlace();
-        if (place && place.formatted_address){
-          input.value = place.formatted_address;
-        }
-      });
-      input.addEventListener('keydown', e => {
-        if (e.key === 'Enter') {
-          const dd = document.querySelector('.pac-container');
-          const open = dd && getComputedStyle(dd).display !== 'none';
-          if (open) e.preventDefault();
-        }
-      });
-    });
-  }
-  // Make callback visible for the Maps script
-  window.initAddressAutocomplete = initAddressAutocomplete;
+}
+// (Maps script calls initAddressAutocomplete via &callback=)
 </script>
 <!-- Keep this Maps script include (ensure your real API key is present) -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN9ItH4RG4IAaS6zPRpP6n19Qi8iBU_nE&libraries=places&callback=initAddressAutocomplete"></script>
