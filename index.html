@@ -756,6 +756,14 @@ body{ background:var(--bg); color:var(--ink); }
   opacity:.28;            /* softer glow */
   filter: blur(42px);
 }
+
+.step.done {
+  background: #e8f7ee;
+  color: #1a7f43;
+  border: 1px solid #bde5c8;
+}
+.next-steps ul { margin: 0.5rem 0 0; padding-left: 1.2rem; }
+.next-steps li { margin: 0.25rem 0; }
   </style>
 </head>
 <body>
@@ -1347,98 +1355,108 @@ function syncFormAnchor(){
 addEventListener('DOMContentLoaded', syncFormAnchor);
 addEventListener('resize', syncFormAnchor);
 
-/* ————— Forms → POST to Apps Script + thank-you swap ————— */
-(function(){
-  // ✅ SET THIS to your *current* deployed Web App URL (the one that shows “OK” in Safari)
-  const SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbx2UNWq9eSiEfp8JsRub6JHJjWa49T0lR0eytibqZdUGiaZrKJsvK-1YbfcJWKoOC-C/exec';
-  const SHARED_SECRET     = 'Spring Promo';  // must match Apps Script
+function
+  // === CONFIG ===
+  const ENDPOINT = "https://script.google.com/macros/s/AKfycbzU473MW9dhMTE1_HYKB-_iHS-6fbtQwjqqj5G2cHgmWkUa9gU7n3eYqfwCYILSloWM/exec";
 
-  function attachSubmit(holderId){
-    const holder = document.getElementById(holderId);
-    if(!holder) return;
-    const form = holder.querySelector('form');
-    if(!form) return;
+  // Capture UTM + context
+  function getParams() {
+    const u = new URL(window.location.href);
+    return {
+      page: u.origin + u.pathname,
+      utm_source: u.searchParams.get('utm_source') || '',
+      utm_medium: u.searchParams.get('utm_medium') || '',
+      utm_campaign: u.searchParams.get('utm_campaign') || '',
+      user_agent: navigator.userAgent
+    };
+  }
+
+  function serializeForm(form) {
+    const data = {};
+    const fd = new FormData(form);
+    for (const [k, v] of fd.entries()) data[k] = v;
+    return Object.assign(data, getParams());
+  }
+
+  function thankYouHTML(name) {
+    const first = (name || '').trim().split(' ')[0] || 'Thanks';
+    return `
+      <div class="form-intro">
+        <div class="step done">Step 1 ✓</div>
+        <h3>${first}, we’ve got your request!</h3>
+        <p>Thanks for booking your free appraisal. We’ll be in touch shortly to confirm a time.</p>
+      </div>
+      <div class="next-steps">
+        <h4>What happens next?</h4>
+        <ul>
+          <li>We review comparable sales and current market conditions.</li>
+          <li>We’ll contact you to lock in a time that suits.</li>
+          <li>You’ll get a clear estimate and practical next steps.</li>
+        </ul>
+      </div>
+    `;
+  }
+
+  async function submitToSheets(payload) {
+    const res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    // If Apps Script ever sends non-2xx, still try to parse JSON for errors
+    let json;
+    try { json = await res.json(); } catch(e) { json = { ok: false, error: 'Invalid JSON from server' }; }
+    return json;
+  }
+
+  function wireForm(formId, holderSelector) {
+    const form = document.getElementById(formId);
+    const holder = document.querySelector(holderSelector);
+    if (!form || !holder) return;
+
+    let submitting = false;
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (submitting) return; // prevent double submit
 
-      const get = (name) => (form.querySelector(`[name="${name}"]`)?.value || '').trim();
-      const data = {
-        address:   get('address'),
-        full_name: get('full_name'),
-        phone:     get('phone'),
-        email:     get('email'),
-        timeframe: get('timeframe'),
-        source:    'Spring Appraisal LP',
-        page_url:  location.href
-      };
-
-      if(!data.full_name || !data.phone || !data.email){
-        alert('Please complete name, phone and email.');
+      // Built-in HTML5 validation
+      if (!form.checkValidity()) {
+        form.reportValidity();
         return;
       }
 
+      // Button loading state
       const btn = form.querySelector('button[type="submit"]');
-      const prev = btn?.textContent;
-      if(btn){ btn.disabled = true; btn.textContent = 'Sending…'; }
+      const origText = btn ? btn.textContent : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Submitting...';
+      }
+      submitting = true;
 
-      try{
-        // Send URL-encoded to avoid CORS preflight (best for iPad Safari)
-        const payload = new URLSearchParams({
-          address:   data.address,
-          full_name: data.full_name,
-          phone:     data.phone,
-          email:     data.email,
-          timeframe: data.timeframe,
-          source:    data.source,
-          page_url:  data.page_url,
-          __secret:  SHARED_SECRET
-        });
+      const payload = serializeForm(form);
 
-        const res = await fetch(SHEETS_WEBAPP_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-          body: payload.toString()
-        });
-
-        // Accept JSON or text “OK” (some Script deployments return text/plain)
-        const ctype = (res.headers.get('content-type')||'').toLowerCase();
-        let ok = res.ok;
-        if (ctype.includes('application/json')) {
-          const json = await res.json().catch(()=>null);
-          if (json && json.ok === false) ok = false;
+      try {
+        const result = await submitToSheets(payload);
+        if (result && result.ok) {
+          holder.innerHTML = thankYouHTML(payload.full_name);
         } else {
-          const text = (await res.text().catch(()=>'')) || '';
-          // treat plain “OK” or empty 2xx as success
-          if (!res.ok && !/^\s*ok\s*$/i.test(text)) ok = false;
+          alert('Sorry, something went wrong submitting your details. Please try again.');
+          if (btn) { btn.disabled = false; btn.textContent = origText; }
+          submitting = false;
         }
-
-        if (!ok) throw new Error('Server error');
-
-        // ✅ Success → thank-you panel
-        holder.innerHTML = `
-          <div class="thankyou" style="padding:18px; text-align:center">
-            <h3 style="margin:0 0 8px">🎉 Thanks for entering the draw!</h3>
-            <p style="margin:0 0 12px">
-              One of our team will contact you soon about your free property appraisal.
-              We’ve also confirmed your entry for the $2,500 spring giveaway.
-            </p>
-            <p style="margin:0; color:#64748b; font-size:12px">
-              A confirmation email has been sent to <b>${data.email.replace(/</g,'&lt;')}</b>.
-            </p>
-          </div>
-        `;
-      } catch (err){
-        console.error('[Sheets POST] Error:', err);
-        alert('Sorry — something went wrong submitting your details. Please try again, or call us.');
-        if(btn){ btn.disabled = false; btn.textContent = prev; }
+      } catch (err) {
+        alert('Network error. Please check your connection and try again.');
+        if (btn) { btn.disabled = false; btn.textContent = origText; }
+        submitting = false;
       }
     });
   }
 
-  // Attach to both holders; whichever contains a form will handle submit
-  attachSubmit('hero-form-holder');
-  attachSubmit('mobile-form-holder');
+  // Wire both forms (desktop & mobile)
+  wireForm('leadFormDesktop', '#hero-form-holder');
+  wireForm('leadFormMobile', '#mobile-form-holder');
 })();
 
 /* ————— FAQ accordion (unchanged) ————— */
