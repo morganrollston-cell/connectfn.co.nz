@@ -817,135 +817,113 @@ body{ background:var(--bg); color:var(--ink); }
 						<p class="footnote"><a href="#terms">Read more about the T&amp;Cs here</a>.</p>
           </div>
 
-        <div class="hero-form">
-  <div class="form-holder card" id="hero-form-holder">
-    <form id="leadFormDesktop"
-          name="lead"
-          method="POST"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-          novalidate>
-      <!-- Netlify hidden fields -->
-      <input type="hidden" name="form-name" value="lead">
-      <p class="hidden" style="display:none;">
-        <label>Don’t fill this out if you're human:
-          <input name="bot-field">
-        </label>
-      </p>
-
-      <div class="form-intro">
-        <div class="step">Step 1</div>
-        <h3>Ready to find out what your home is worth?</h3>
-        <p>Your appraisal includes a full assessment of your property, comparable local sales,
-          current market conditions and clear next steps.</p>
-      </div>
-
-      <!-- Full-width: Address -->
-      <div class="form-group">
-        <label for="address">Property address</label>
-        <input id="address" type="text" name="address"
-               placeholder="e.g., 10 Example St, Richmond"
-               autocomplete="street-address" required>
-      </div>
-
-      <!-- Two-up row: Name + Phone -->
-      <div class="form-row">
-        <div class="form-group">
-          <label for="full_name">Full name</label>
-          <input id="full_name" type="text" name="full_name"
-                 autocomplete="name" required>
-        </div>
-        <div class="form-group">
-          <label for="phone">Phone</label>
-          <input id="phone" type="tel" name="phone"
-                 autocomplete="tel" required>
-        </div>
-      </div>
-
-      <!-- Full-width: Email -->
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input id="email" type="email" name="email"
-               autocomplete="email" required>
-      </div>
-
-      <!-- Full-width: Timeframe -->
-      <div class="form-group">
-        <label for="timeframe">When are you thinking of selling?</label>
-        <select id="timeframe" name="timeframe" required>
-          <option value="" disabled selected>Select timeframe</option>
-          <option>Now</option>
-          <option>1–3 months</option>
-          <option>3–6 months</option>
-          <option>Just curious</option>
-        </select>
-      </div>
-
-      <button class="btn block" type="submit">Get my Free Appraisal</button>
-      <p class="fine">By submitting, you agree to our Terms &amp; Conditions and Privacy Policy.</p>
-    </form>
+          <div class="hero-form">
+            <div class="form-holder card" id="hero-form-holder">
+<form id="leadFormDesktop" novalidate>
+  <div class="form-intro">
+    <div class="step">Step 1</div>
+    <h3>Ready to find out what your home is worth?</h3>
+    <p>Your appraisal includes a full assessment of your property, comparable local sales,
+      current market conditions and clear next steps.</p>
   </div>
-</div>
-        
-<section class="form-wrap">
-  <div class="form-holder card" id="mobile-form-holder" aria-labelledby="form-heading">
-    <form id="leadFormMobile"
-          name="lead"
-          method="POST"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-          novalidate>
-      <!-- Netlify hidden fields -->
-      <input type="hidden" name="form-name" value="lead">
-      <p class="hidden" style="display:none;">
-        <label>Don’t fill this out if you're human:
-          <input name="bot-field">
-        </label>
-      </p>
 
-      <div class="form-intro">
-        <div class="step">Step 1</div>
-        <h3>Ready to find out what your home is worth?</h3>
-        <p>Your appraisal includes a full assessment of your property, comparable local sales,
-          current market conditions and clear next steps.</p>
-      </div>
-
-      <label for="addressMobile">Property address
-        <input id="addressMobile" type="text" name="address" placeholder="e.g., 10 Example St, Richmond"
-               autocomplete="street-address" required>
-      </label>
-
-      <div class="row2">
-        <label>Full name
-          <input type="text" name="full_name" 
-                 autocomplete="name" required>
-        </label>
-        <label>Phone
-          <input type="tel" name="phone" 
-                 autocomplete="tel" required>
-        </label>
-      </div>
-
-      <label>Email
-        <input type="email" name="email" 
-               autocomplete="email" required>
-      </label>
-
-      <label>When are you thinking of selling?
-        <select name="timeframe" required>
-          <option value="" disabled selected>Select timeframe</option>
-          <option>Now</option>
-          <option>1–3 months</option>
-          <option>3–6 months</option>
-          <option>Just curious</option>
-        </select>
-      </label>
-
-      <button class="btn block" type="submit">Get my Free Appraisal</button>
-      <p class="fine">By submitting, you agree to our T&amp;Cs and Privacy Policy.</p>
-    </form>
+  <!-- Full-width: Address -->
+  <div class="form-group">
+    <label for="address">Property address</label>
+    <input id="address" type="text" name="address"
+           placeholder="e.g., 10 Example St, Richmond"
+           autocomplete="street-address" required>
   </div>
-</section>
+
+  <!-- Two-up row: Name + Phone -->
+  <div class="form-row">
+    <div class="form-group">
+      <label for="full_name">Full name</label>
+      <input id="full_name" type="text" name="full_name"
+             autocomplete="name" required>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input id="phone" type="tel" name="phone"
+             autocomplete="tel" required>
+    </div>
+  </div>
+
+  <!-- Full-width: Email -->
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input id="email" type="email" name="email"
+           autocomplete="email" required>
+  </div>
+
+  <!-- Full-width: Timeframe -->
+  <div class="form-group">
+    <label for="timeframe">When are you thinking of selling?</label>
+    <select id="timeframe" name="timeframe" required>
+      <option value="" disabled selected>Select timeframe</option>
+      <option>Now</option>
+      <option>1–3 months</option>
+      <option>3–6 months</option>
+      <option>Just curious</option>
+    </select>
+  </div>
+
+  <button class="btn block" type="submit">Get my Free Appraisal</button>
+  <p class="fine">By submitting, you agree to our Terms & Conditions and Privacy Policy.</p>
+</form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MOBILE/TIGHT FORM DUPLICATE -->
+    <section class="form-wrap">
+      <div class="form-holder card" id="mobile-form-holder" aria-labelledby="form-heading">
+<form id="leadFormMobile" novalidate>
+  <div class="form-intro">
+    <div class="step">Step 1</div>
+    <h3>Ready to find out what your home is worth?</h3>
+    <p>Your appraisal includes a full assessment of your property, comparable local sales,
+      current market conditions and clear next steps.</p>
+  </div>
+
+  <label for="addressMobile">Property address
+    <input id="addressMobile" type="text" name="address" placeholder="e.g., 10 Example St, Richmond"
+           autocomplete="street-address" required>
+  </label>
+
+  <div class="row2">
+    <label>Full name
+      <input type="text" name="full_name" 
+             autocomplete="name" required>
+    </label>
+    <label>Phone
+      <input type="tel" name="phone" 
+             autocomplete="tel" required>
+    </label>
+  </div>
+
+  <label>Email
+    <input type="email" name="email" 
+           autocomplete="email" required>
+  </label>
+
+  <label>When are you thinking of selling?
+    <select name="timeframe" required>
+      <option value="" disabled selected>Select timeframe</option>
+      <option>Now</option>
+      <option>1–3 months</option>
+      <option>3–6 months</option>
+      <option>Just curious</option>
+    </select>
+  </label>
+
+  <button class="btn block" type="submit">Get my Free Appraisal</button>
+  <p class="fine">By submitting, you agree to our T&Cs and Privacy Policy.</p>
+</form>
+      </div>
+    </section>
 
     <!-- SIMPLE STEPS -->
     <section class="section-steps" id="simple-steps">
@@ -1361,39 +1339,44 @@ window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
   window.addEventListener('scroll', onScrollHandler, {passive:true});
 })();
 
-/* ————— FORM: Netlify Forms integration + smooth anchor ————— */
-
-/* 1) Scroll to the correct (visible) form WITHOUT renaming IDs */
-function visibleFormHolder(){
-  const desktop = document.querySelector('#hero-form-holder');
-  const mobile  = document.querySelector('#mobile-form-holder');
-  const isDesktop = window.matchMedia('(min-width:900px)').matches;
-  return isDesktop ? desktop : mobile;
+/* ————— Anchor target follows visible form (unchanged) ————— */
+function syncFormAnchor(){
+  const desktopHolder = document.getElementById('hero-form-holder');
+  const mobileHolder  = document.getElementById('mobile-form-holder');
+  if (!desktopHolder || !mobileHolder) return;
+  if (window.matchMedia('(min-width:900px)').matches){
+    desktopHolder.id = 'appraisal-form';
+    mobileHolder.id  = 'mobile-form-holder';
+  } else {
+    desktopHolder.id = 'hero-form-holder';
+    mobileHolder.id  = 'appraisal-form';
+  }
 }
-document.querySelectorAll('a[href="#appraisal-form"]').forEach(a=>{
-  a.addEventListener('click', (e)=>{
-    e.preventDefault();
-    const holder = visibleFormHolder();
-    holder?.scrollIntoView({behavior:'smooth', block:'start'});
-  });
-});
+addEventListener('DOMContentLoaded', syncFormAnchor);
+addEventListener('resize', syncFormAnchor);
 
-/* 2) Netlify AJAX submit (posts to "/" with x-www-form-urlencoded) */
-(function(){
-  function toURLEncoded(data){
-    return Object.keys(data)
-      .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
-      .join('&');
+function {
+  const ENDPOINT = 'https://script.google.com/macros/s/AKfycbwCzXCfWUHB2hsd9f5ZY1Bxj2yd83pK2Tn4eZVD_j6ah8XLS5EBPbK14ah1bxfXp4T0/exec';
+
+  function getParams() {
+    const u = new URL(window.location.href);
+    return {
+      page: u.origin + u.pathname,
+      utm_source: u.searchParams.get('utm_source') || '',
+      utm_medium: u.searchParams.get('utm_medium') || '',
+      utm_campaign: u.searchParams.get('utm_campaign') || '',
+      user_agent: navigator.userAgent
+    };
   }
-  function serialize(form){
+
+  function serializeFormform {
+    const data = {};
     const fd = new FormData(form);
-    const obj = {};
-    for (const [k,v] of fd.entries()) obj[k] = v;
-    // Netlify requires "form-name" in the body for AJAX posts
-    if (!obj['form-name']) obj['form-name'] = form.getAttribute('name') || 'lead';
-    return obj;
+    for (const [k, v] of fd.entries()) data[k] = v;
+    return Object.assign(data, getParams());
   }
-  function thankYouHTML(name){
+
+  function thankYouHTMLname {
     const first = (name || '').trim().split(' ')[0] || 'Thanks';
     return `
       <div class="form-intro">
@@ -1408,51 +1391,67 @@ document.querySelectorAll('a[href="#appraisal-form"]').forEach(a=>{
           <li>We’ll contact you to lock in a time that suits.</li>
           <li>You’ll get a clear estimate and practical next steps.</li>
         </ul>
-      </div>`;
+      </div>
+    `;
   }
-  async function submitNetlify(form, holder){
-    // prevent double submit per form
-    if (form.dataset.submitting === 'true') return;
-    form.dataset.submitting = 'true';
 
-    const btn = form.querySelector('button[type="submit"]');
-    const orig = btn ? btn.textContent : '';
-    if (btn){ btn.disabled = true; btn.textContent = 'Submitting...'; }
-
-    const payload = serialize(form);
-    try{
-      const res = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: toURLEncoded(payload)
-      });
-      if (res.ok){
-        holder.innerHTML = thankYouHTML(payload.full_name);
-      } else {
-        alert('Submission failed. Please try again.');
-        if (btn){ btn.disabled = false; btn.textContent = orig; }
-        form.dataset.submitting = 'false';
-      }
-    } catch(err){
-      alert('Network error. Please try again.');
-      if (btn){ btn.disabled = false; btn.textContent = orig; }
-      form.dataset.submitting = 'false';
-    }
+  async function submitToSheetspayload {
+    // Use text/plain to avoid preflight. Server still parses JSON string.
+    const res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    });
+    let json;
+    try { json = await res.json(); } catch (_) { json = { ok: false, error: 'Invalid JSON from server' }; }
+    return json;
   }
-  function wire(formId, holderSel){
+
+  function wireForm(formId, holderSelector) {
     const form = document.getElementById(formId);
-    const holder = document.querySelector(holderSel);
+    const holder = document.querySelector(holderSelector);
     if (!form || !holder) return;
-    form.addEventListener('submit', (e)=>{
+
+    let submitting = false;
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (!form.checkValidity()){ form.reportValidity(); return; }
-      submitNetlify(form, holder);
+      if (submitting) return;
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const btn = form.querySelector('button[type="submit"]');
+      const orig = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
+      submitting = true;
+
+      const payload = serializeForm(form);
+
+      try {
+        const result = await submitToSheets(payload);
+        console.log('Submit result:', result);
+        if (result && result.ok) {
+          holder.innerHTML = thankYouHTML(payload.full_name);
+        } else {
+          alert('Sorry, something went wrong. Please try again.');
+          if (btn) { btn.disabled = false; btn.textContent = orig; }
+          submitting = false;
+        }
+      } catch (err) {
+        console.error('Network error:', err);
+        alert('Network error. Please try again.');
+        if (btn) { btn.disabled = false; btn.textContent = orig; }
+        submitting = false;
+      }
     });
   }
-  // Wire both forms
-  wire('leadFormDesktop', '#hero-form-holder');
-  wire('leadFormMobile', '#mobile-form-holder');
-})()
+
+  wireForm('leadFormDesktop', '#hero-form-holder');
+  wireForm('leadFormMobile', '#mobile-form-holder');
+})();
 
 /* ————— FAQ accordion (unchanged) ————— */
 document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
