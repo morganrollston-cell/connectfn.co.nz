@@ -1305,9 +1305,9 @@ Jurisdiction
 
   function openDrawer(){drawer.classList.add('open');scrim.classList.add('show');drawer.setAttribute('aria-hidden','false');menuBtn.setAttribute('aria-expanded','true')}
   function closeDrawer(){drawer.classList.remove('open');scrim.classList.remove('show');drawer.setAttribute('aria-hidden','true');menuBtn.setAttribute('aria-expanded','false')}
-  menuBtn.addEventListener('click', openDrawer);
-  drawerCls.addEventListener('click', closeDrawer);
-  scrim.addEventListener('click', closeDrawer);
+  menuBtn?.addEventListener('click', openDrawer);
+  drawerCls?.addEventListener('click', closeDrawer);
+  scrim?.addEventListener('click', closeDrawer);
   window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
 
   /* ---- Hide/reveal header on scroll ---- */
@@ -1330,7 +1330,6 @@ Jurisdiction
       if (y > 2) header.classList.add('is-scrolled');
       else header.classList.remove('is-scrolled');
 
-      var drawer = document.getElementById('drawer');
       var drawerOpen = drawer && drawer.classList.contains('open');
 
       if (!drawerOpen){
@@ -1381,7 +1380,8 @@ Jurisdiction
     const holder = document.getElementById(holderId);
     if(!holder) return;
     const form = holder.querySelector('form');
-    if(!form) return;
+    if(!form || form.dataset.bound === '1') return;
+    form.dataset.bound = '1';
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -1406,78 +1406,61 @@ Jurisdiction
       const oldLabel = btn?.textContent;
       if(btn){ btn.disabled = true; btn.textContent = 'Sending…'; }
 
-try{
-  const SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxJBaAa12wMIGPKyS9rpd_xux-wKeC8yhsVGraxlfcCJdlaQAKNVkhJO1VPG-XnV_jW/exec';
-  const SHARED_SECRET     = 'Spring Promo';
+      try{
+        const SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxJBaAa12wMIGPKyS9rpd_xux-wKeC8yhsVGraxlfcCJdlaQAKNVkhJO1VPG-XnV_jW/exec';
+        const SHARED_SECRET     = 'Spring Promo';
 
-  const payload = new URLSearchParams({
-    address:   data.address,
-    full_name: data.full_name,
-    phone:     data.phone,
-    email:     data.email,
-    timeframe: data.timeframe,
-    source:    data.source,
-    page_url:  data.page_url,
-    __secret:  SHARED_SECRET
-  });
+        const payload = new URLSearchParams({
+          address:   data.address,
+          full_name: data.full_name,
+          phone:     data.phone,
+          email:     data.email,
+          timeframe: data.timeframe,
+          source:    data.source,
+          page_url:  data.page_url,
+          __secret:  SHARED_SECRET
+        });
 
-  const res = await fetch(SHEETS_WEBAPP_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-    body: payload.toString()
-  });
+        const res = await fetch(SHEETS_WEBAPP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+          body: payload.toString()
+        });
 
-  const status = res.status;
-  const ctype  = res.headers.get('content-type') || '';
-  let json = null, text = '';
+        const status = res.status;
+        const ctype  = res.headers.get('content-type') || '';
+        let json = null, text = '';
 
-  if (ctype.includes('application/json')) {
-    json = await res.json().catch(()=>null);
-  } else {
-    text = await res.text().catch(()=> '');
+        if (ctype.includes('application/json')) {
+          json = await res.json().catch(()=>null);
+        } else {
+          text = await res.text().catch(()=> '');
+        }
+
+        if (!res.ok || (json && json.ok === false)) {
+          throw new Error((json && json.error) || `HTTP ${status}`);
+        }
+
+        // Success → swap the form for the thank-you panel
+        holder.innerHTML = `
+          <div class="thankyou" style="padding:18px; text-align:center">
+            <h3 style="margin:0 0 8px">🎉 Thanks for entering the draw!</h3>
+            <p style="margin:0 0 12px">
+              One of our team will contact you soon about your free property appraisal.
+              We’ve also confirmed your entry for the $2,500 spring giveaway.
+            </p>
+            <p style="margin:0; color:#64748b; font-size:12px">
+              A confirmation email has been sent to <b>${data.email.replace(/</g,'&lt;')}</b>.
+            </p>
+          </div>
+        `;
+      } catch (err){
+        console.error('[Sheets POST] Error:', err);
+        alert('Sorry — something went wrong submitting your details. Please try again, or call us.');
+        if(btn){ btn.disabled = false; btn.textContent = oldLabel; }
+      }
+    });
   }
-
-  // 💬 visible debug panel on the page (remove later)
-  const dbg = document.createElement('div');
-  dbg.style.cssText = 'position:fixed;left:8px;bottom:8px;right:8px;background:#0b1e37;color:#fff;padding:10px;border-radius:10px;font:14px/1.4 system-ui;z-index:99999';
-  dbg.innerHTML = `
-    <div><b>Sheets POST</b> — status: ${status}, type: ${ctype || '(none)'}</div>
-    ${json ? `<pre style="white-space:pre-wrap;margin:6px 0 0">${JSON.stringify(json,null,2)}</pre>` :
-              text ? `<pre style="white-space:pre-wrap;margin:6px 0 0">${text.slice(0,600)}</pre>` : ''}
-    <div style="opacity:.7;margin-top:6px">Tap to dismiss</div>
-  `;
-  dbg.addEventListener('click', ()=>dbg.remove());
-  document.body.appendChild(dbg);
-
-  if (!res.ok || (json && json.ok === false)) {
-    throw new Error((json && json.error) || `HTTP ${status}`);
-  }
-
-  // Success → swap the form for the thank-you panel
-  holder.innerHTML = `
-    <div class="thankyou" style="padding:18px; text-align:center">
-      <h3 style="margin:0 0 8px">🎉 Thanks for entering the draw!</h3>
-      <p style="margin:0 0 12px">
-        One of our team will contact you soon about your free property appraisal.
-        We’ve also confirmed your entry for the $2,500 spring giveaway.
-      </p>
-      <p style="margin:0; color:#64748b; font-size:12px">
-        A confirmation email has been sent to <b>${data.email.replace(/</g,'&lt;')}</b>.
-      </p>
-    </div>
-  `;
-} catch (err){
-  // also show error in the debug panel so you can see it on iPad
-  const dbg = document.createElement('div');
-  dbg.style.cssText = 'position:fixed;left:8px;bottom:8px;right:8px;background:#9b1c1c;color:#fff;padding:10px;border-radius:10px;font:14px/1.4 system-ui;z-index:99999';
-  dbg.textContent = 'Submit error: ' + (err && err.message ? err.message : err);
-  dbg.addEventListener('click', ()=>dbg.remove());
-  document.body.appendChild(dbg);
-
-  console.error('[Sheets POST] Error:', err);
-  alert('Sorry — something went wrong submitting your details. Please try again, or call us.');
-  if(btn){ btn.disabled = false; btn.textContent = oldLabel; }
-}
 
   // Attach to both holders (listeners stay even if IDs change later)
   hookForm('hero-form-holder');
@@ -1490,8 +1473,9 @@ try{
       const answer = item.querySelector('.faq-a');
       const open = item.classList.toggle('open');
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      answer.hidden = !open;
-      btn.querySelector('.faq-icon').textContent = open ? '–' : '+';
+      if (answer) answer.hidden = !open;
+      const icon = btn.querySelector('.faq-icon');
+      if (icon) icon.textContent = open ? '–' : '+';
     });
   });
 
@@ -1508,7 +1492,7 @@ try{
 
     function go(i){
       index = (i + slides.length) % slides.length;
-      track.style.transform = `translateX(-${index * 100}%)`;
+      if (track) track.style.transform = `translateX(-${index * 100}%)`;
       dots.forEach((d,n)=>d.setAttribute('aria-selected', n===index ? 'true' : 'false'));
       restart();
     }
@@ -1552,7 +1536,8 @@ try{
       });
     });
   }
-  // initAddressAutocomplete is called by the Maps script via &callback=
+  // Make callback visible for the Maps script
+  window.initAddressAutocomplete = initAddressAutocomplete;
 </script>
 <!-- Keep this Maps script include (ensure your real API key is present) -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN9ItH4RG4IAaS6zPRpP6n19Qi8iBU_nE&libraries=places&callback=initAddressAutocomplete"></script>
