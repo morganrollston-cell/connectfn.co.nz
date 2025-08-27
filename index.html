@@ -1311,8 +1311,8 @@ const drawer    = document.getElementById('drawer');
 const scrim     = document.getElementById('scrim');
 const drawerCls = document.getElementById('drawerClose');
 
-function openDrawer(){drawer.classList.add('open');scrim.classList.add('show');drawer.setAttribute('aria-hidden','false');menuBtn.setAttribute('aria-expanded','true')}
-function closeDrawer(){drawer.classList.remove('open');scrim.classList.remove('show');drawer.setAttribute('aria-hidden','true');menuBtn.setAttribute('aria-expanded','false')}
+function openDrawer(){drawer.classList.add('open');scrim.classList.add('show');drawer.setAttribute('aria-hidden','false');menuBtn.setAttribute('aria-expanded','true');}
+function closeDrawer(){drawer.classList.remove('open');scrim.classList.remove('show');drawer.setAttribute('aria-hidden','true');menuBtn.setAttribute('aria-expanded','false');}
 menuBtn?.addEventListener('click', openDrawer);
 drawerCls?.addEventListener('click', closeDrawer);
 scrim?.addEventListener('click', closeDrawer);
@@ -1355,103 +1355,15 @@ function syncFormAnchor(){
 addEventListener('DOMContentLoaded', syncFormAnchor);
 addEventListener('resize', syncFormAnchor);
 
-function {
-  const ENDPOINT = 'https://script.google.com/macros/s/AKfycbwCzXCfWUHB2hsd9f5ZY1Bxj2yd83pK2Tn4eZVD_j6ah8XLS5EBPbK14ah1bxfXp4T0/exec';
-
-  function getParams() {
-    const u = new URL(window.location.href);
-    return {
-      page: u.origin + u.pathname,
-      utm_source: u.searchParams.get('utm_source') || '',
-      utm_medium: u.searchParams.get('utm_medium') || '',
-      utm_campaign: u.searchParams.get('utm_campaign') || '',
-      user_agent: navigator.userAgent
-    };
-  }
-
-  function serializeFormform {
-    const data = {};
-    const fd = new FormData(form);
-    for (const [k, v] of fd.entries()) data[k] = v;
-    return Object.assign(data, getParams());
-  }
-
-  function thankYouHTMLname {
-    const first = (name || '').trim().split(' ')[0] || 'Thanks';
-    return `
-      <div class="form-intro">
-        <div class="step done">Step 1 ✓</div>
-        <h3>${first}, we’ve got your request!</h3>
-        <p>Thanks for booking your free appraisal. We’ll be in touch shortly to confirm a time.</p>
-      </div>
-      <div class="next-steps">
-        <h4>What happens next?</h4>
-        <ul>
-          <li>We review comparable sales and current market conditions.</li>
-          <li>We’ll contact you to lock in a time that suits.</li>
-          <li>You’ll get a clear estimate and practical next steps.</li>
-        </ul>
-      </div>
-    `;
-  }
-
-  async function submitToSheetspayload {
-    // Use text/plain to avoid preflight. Server still parses JSON string.
-    const res = await fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
-    });
-    let json;
-    try { json = await res.json(); } catch (_) { json = { ok: false, error: 'Invalid JSON from server' }; }
-    return json;
-  }
-
-  function wireForm(formId, holderSelector) {
-    const form = document.getElementById(formId);
-    const holder = document.querySelector(holderSelector);
-    if (!form || !holder) return;
-
-    let submitting = false;
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (submitting) return;
-
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-
-      const btn = form.querySelector('button[type="submit"]');
-      const orig = btn ? btn.textContent : '';
-      if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
-      submitting = true;
-
-      const payload = serializeForm(form);
-
-      try {
-        const result = await submitToSheets(payload);
-        console.log('Submit result:', result);
-        if (result && result.ok) {
-          holder.innerHTML = thankYouHTML(payload.full_name);
-        } else {
-          alert('Sorry, something went wrong. Please try again.');
-          if (btn) { btn.disabled = false; btn.textContent = orig; }
-          submitting = false;
-        }
-      } catch (err) {
-        console.error('Network error:', err);
-        alert('Network error. Please try again.');
-        if (btn) { btn.disabled = false; btn.textContent = orig; }
-        submitting = false;
-      }
-    });
-  }
-
-  wireForm('leadFormDesktop', '#hero-form-holder');
-  wireForm('leadFormMobile', '#mobile-form-holder');
-})();
+/* ————— Smooth scroll for “Get my Free Appraisal” buttons ————— */
+document.querySelectorAll('a[href="#appraisal-form"]').forEach(a=>{
+  a.addEventListener('click', (e)=>{
+    e.preventDefault();
+    // whichever holder currently has id="appraisal-form"
+    const target = document.getElementById('appraisal-form');
+    target?.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
 
 /* ————— FAQ accordion (unchanged) ————— */
 document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
