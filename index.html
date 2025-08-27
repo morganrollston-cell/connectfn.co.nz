@@ -765,15 +765,90 @@ body{ background:var(--bg); color:var(--ink); }
 .next-steps ul { margin: 0.5rem 0 0; padding-left: 1.2rem; }
 .next-steps li { margin: 0.25rem 0; }
 
-.hero-title{font-size:clamp(28px,4vw,44px);line-height:1.1;margin:0 0 .4rem}
-.hero-sub{max-width:42ch;margin:0 0 .8rem;opacity:.95}
-.hero-bullets{list-style:none;padding:0;margin:0 0 1rem;display:grid;gap:.25rem}
-.hero-bullets li{display:flex;align-items:center}
-.hero-ctas{display:flex;gap:.75rem;align-items:center;margin:.4rem 0 .6rem}
-.btn{display:inline-block;padding:.85rem 1.1rem;border-radius:.6rem;font-weight:600;text-decoration:none}
-.btn-primary{background:#0a66ff;color:#fff}
-.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.6);color:#fff}
-.hero-legal{display:block;margin-top:.25rem;opacity:.7;font-size:.85em}
+/* === HERO (above-the-fold) — safe, self-contained === */
+
+/* Stronger overlay so white text always reads on the photo */
+.hero-media{
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.50), rgba(0,0,0,.24)),
+    url('assets/images/Header-image.jpg') center/cover no-repeat !important;
+}
+
+/* Container & max width for tidy wrapping next to the form */
+.hero-copy{ max-width: 46ch; }
+
+/* Promo badge */
+.promo-badge{
+  display:inline-block;
+  background:#00467F;
+  color:#fff;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:.9rem;
+  font-weight:800;
+  letter-spacing:.2px;
+  margin:0 0 10px;
+}
+
+/* Headline */
+.overlay h1{
+  margin:0 0 10px;
+  font-size: clamp(28px, 5vw, 52px);
+  line-height:1.08;
+  color:#fff;
+  text-shadow: 0 3px 18px rgba(0,0,0,.38);
+}
+
+/* Highlight span inside H1 */
+.hl{
+  background: linear-gradient(transparent 62%, rgba(255,255,255,.3) 62%);
+  font-weight:800;
+  letter-spacing:.2px;
+}
+
+/* Subheading (lede) */
+.overlay .lede{
+  margin: 0 0 12px;
+  color:#e9f1f8;
+  font-size: clamp(16px, 2vw, 20px);
+  line-height:1.6;
+  text-shadow: 0 2px 12px rgba(0,0,0,.28);
+}
+
+/* Bullets: visible, white, compact spacing */
+.hero-bullets{
+  margin: 0 0 14px;
+  padding-left: 1.15rem;
+  list-style: disc;
+  color:#ffffff;
+}
+.hero-bullets li{
+  margin: .25rem 0;
+  line-height:1.5;
+}
+
+/* Footnote link */
+.footnote{
+  font-size: 12px;
+  color:#e3eaf2;
+  margin-top: 6px;
+}
+.footnote a{ color:#e3eaf2; text-decoration: underline; }
+
+/* Desktop spacing so text doesn’t collide with the form */
+@media (min-width:900px){
+  .overlay .inner{
+    padding-bottom: clamp(200px, 18vw, 280px);
+  }
+}
+
+/* Mobile: larger overlay padding + type that fits */
+@media (max-width:640px){
+  .hero-media{ height: 500px; }
+  .overlay .inner{ padding: 18px 16px 170px; }
+  .overlay h1{ font-size: 1.55rem; line-height:1.18; }
+  .overlay .lede{ font-size: 1rem; line-height:1.5; }
+}
   </style>
 </head>
 <body>
