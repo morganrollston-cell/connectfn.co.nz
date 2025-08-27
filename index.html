@@ -857,6 +857,11 @@ body{ background:var(--bg); color:var(--ink); }
   -webkit-text-fill-color: transparent;
   font-weight: 900;
 }
+
+.hero-copy h1 {
+  max-width: 18ch; /* keeps it ~2 lines on desktop */
+  line-height: 1.15;
+}
   </style>
 </head>
 <body>
@@ -905,7 +910,10 @@ body{ background:var(--bg); color:var(--ink); }
         <div class="inner container hero-grid">
           <div class="hero-copy">
             <span class="promo-badge">Spring promo</span>
-            <h1>Get Your Free Property Appraisal - Plus Go in the Draw to Win <span class="hl">$2,500</span>.</h1>
+            <h1>
+  Get Your Free Property Appraisal  
+  & Go in the Draw to Win <span class="hl">$2,500</span>
+</h1>
             <p class="lede"> Get a clear, expert valuation of your Nelson/Tasman property and a simple plan to maximise your sale price.
   Plus, if you choose to list with us after your appraisal, you’ll go in the draw to win another $2,500 —
   <strong>that’s up to $5,000 in total.</strong></p>
