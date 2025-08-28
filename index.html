@@ -1603,13 +1603,19 @@ document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
       }
       Object.entries(getUTMParams()).forEach(([k, v]) => fd.append(k, v));
 
-      try {
-        const body = new URLSearchParams(fd).toString();
-        const res = await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body
-        });
+   try {
+  // SAFARI-SAFE ENCODING
+  const obj = {};
+  fd.forEach((value, key) => { obj[key] = value; });
+  const encoded = Object.keys(obj)
+    .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k]))
+    .join('&');
+
+  const res = await fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: encoded
+  });
 
         if (res.ok) {
           holder.innerHTML = thankYouHTML(fd.get('full_name'));
