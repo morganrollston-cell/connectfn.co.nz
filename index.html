@@ -1034,24 +1034,26 @@ ljt-meta.no-avatar{
 
 /* ===== Trust Badges ===== */
 .trust-badges {
-  background:#fff; 
-  padding:16px 0; /* very light spacing */
+  background: #fff;
+  padding: 8px 0;          /* tighten vertical spacing */
+  margin-top: 0;           /* remove gap above */
 }
 
 .trust-row {
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:24px; /* small clean spacing between badges */
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;               /* slightly reduced spacing between badges */
+  margin: 0;               /* no extra spacing above/below */
 }
 
 .trust-badge {
-  font-weight:600;
-  color:#2b2f38;
-  display:flex;
-  align-items:center;
-  font-size:clamp(14px,1.4vw,16px);
-  white-space:nowrap;
+  font-weight: 600;
+  color: #2b2f38;
+  display: flex;
+  align-items: center;
+  font-size: clamp(14px, 1.2vw, 16px);
+  white-space: nowrap;
 }
 
   </style>
