@@ -1056,6 +1056,24 @@ ljt-meta.no-avatar{
   white-space: nowrap;
 }
 
+/* --- Tighten spacing around trust badges + testimonials --- */
+
+/* 1) Make trust badges sit flush with the white area */
+main > section.trust-badges { 
+  margin-top: 0 !important;      /* cancel global section margin */
+}
+.trust-badges { 
+  padding: 6px 0 10px !important; /* a hair tighter than 8px */
+}
+
+/* 2) Bring testimonials up slightly (smaller gap below badges) */
+main > section.ljt { 
+  margin-top: 8px !important;     /* override global margin (was 28–72px) */
+}
+.ljt { 
+  padding-top: 24px !important;   /* was clamp(48px,9vw,112px); just the top */
+}
+
   </style>
 </head>
 <body>
