@@ -994,7 +994,7 @@ body{ background:var(--bg); color:var(--ink); }
 }
 
 /* No-avatar testimonial meta layout */
-.ljt-meta.no-avatar{
+ljt-meta.no-avatar{
   display:grid;
   grid-template-columns: 1fr auto;   /* name/location | stars */
   align-items:center;
@@ -1012,55 +1012,76 @@ body{ background:var(--bg); color:var(--ink); }
 /* hide Netlify honeypot row */
 .nf-hide{position:absolute;left:-9999px;opacity:0;height:0;width:0;pointer-events:none}
 
-/* === Testimonial alignment fix (paste after existing .ljt styles) === */
-.ljt { padding: clamp(48px, 9vw, 112px) 0; }
-
-.ljt-row{
-  display:grid;
-  grid-template-columns: minmax(340px, 560px) minmax(420px, 640px);
-  gap: clamp(18px, 4vw, 40px);
-  align-items: center;          /* <- centers the two columns vertically */
+/* === Testimonials Layout (simple + clean left alignment) === */
+.ljt {
+  padding: clamp(48px, 9vw, 112px) 0;
+  background: #f9fafb; /* optional, keeps it airy */
 }
 
-.ljt-lead{
+.ljt-lead {
   text-align: left;
-  justify-self: start;
-  max-width: 560px;
+  max-width: 620px;
+  margin: 0 auto 32px 0;  /* sticks left, space below */
 }
 
-.ljt-title{ margin: .15em 0 .25em; }
-.ljt-sub{ margin: 0; opacity: .85; }
-
-.ljt-stage{
-  justify-self: end;            /* <- pushes the card to the right column edge */
-  width: 100%;
-  max-width: 640px;
+.ljt-eyebrow {
+  font-weight: 600;
+  color: var(--brand);
+  margin-bottom: 6px;
 }
 
-.ljt-track{ display:flex; transition:transform .45s ease; }
-.ljt-slide{ flex: 0 0 100%; padding: 0; } /* tighter */
-.ljt-bubble{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:14px;
+.ljt-title {
+  font-size: clamp(24px, 3vw, 36px);
+  margin: 0 0 10px;
+  color: #122033;
+}
+
+.ljt-sub {
+  font-size: 16px;
+  color: #3b4a62;
+  margin: 0 0 16px;
+}
+
+.ljt-dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.ljt-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--brand);
+  background: transparent;
+  cursor: pointer;
+}
+
+.ljt-dot[aria-selected="true"] {
+  background: var(--brand);
+}
+
+/* Testimonials slider itself */
+.ljt-stage {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.ljt-track {
+  display: flex;
+  transition: transform .45s ease;
+}
+
+.ljt-slide {
+  flex: 0 0 100%;
+}
+
+.ljt-bubble {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
   box-shadow: var(--shadow-1);
-  padding: clamp(16px,2.2vw,20px);
-}
-
-/* dots sit a touch closer to the subhead */
-.ljt-dots{ margin-top: 10px; }
-
-/* Mobile/tablet: stack neatly and stretch the card */
-@media (max-width: 900px){
-  .ljt-row{
-    grid-template-columns: 1fr;
-    align-items: start;
-  }
-  .ljt-lead{ justify-self: stretch; }
-  .ljt-stage{
-    justify-self: stretch;
-    max-width: none;
-  }
+  padding: clamp(16px, 2.2vw, 20px);
 }
   </style>
 </head>
