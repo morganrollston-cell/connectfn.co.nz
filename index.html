@@ -862,6 +862,20 @@ body{ background:var(--bg); color:var(--ink); }
   max-width: 18ch; /* keeps it ~2 lines on desktop */
   line-height: 1.15;
 }
+
+/* No-avatar testimonial meta layout */
+.ljt-meta.no-avatar{
+  display:grid;
+  grid-template-columns: 1fr auto;   /* name/location | stars */
+  align-items:center;
+  gap:10px;
+}
+.ljt-id{ display:grid; line-height:1.1; }
+.ljt-name{ font-weight:800; color:#0b1e37; }
+.ljt-loc{ color:#64748b; font-size:.95rem; }
+
+/* Optional: tighten spacing now there’s no avatar */
+.ljt-bubble{ gap:10px; }
   </style>
 </head>
 <body>
@@ -1052,52 +1066,61 @@ body{ background:var(--bg); color:var(--ink); }
       <div class="ljt-stage" aria-live="polite">
         <div class="ljt-track">
           <!-- Slide 1 -->
-          <article class="ljt-slide">
-            <figure class="ljt-bubble">
-                  <div class="ljt-name">Heather B.</div>
-                  <div class="ljt-loc">Richmond</div>
-                </div>
-                <div class="ljt-stars" aria-hidden="true">★★★★★</div>
-              </div>
-<blockquote class="ljt-quote">
-  Kim is fantastic — an <strong>excellent communicator</strong> and highly professional.
-  Her <strong>positive, helpful energy</strong> made the selling journey <strong>easy and stress-free</strong>.
-</blockquote>
-              <figcaption class="ljt-author">Appraisal &amp; sale, 2024</figcaption>
-            </figure>
-          </article>
+<article class="ljt-slide">
+  <figure class="ljt-bubble">
+    <div class="ljt-meta no-avatar">
+      <div class="ljt-id">
+        <div class="ljt-name">Heather B.</div>
+        <div class="ljt-loc">Richmond</div>
+      </div>
+      <div class="ljt-stars" aria-hidden="true">★★★★★</div>
+    </div>
 
-          <!-- Slide 2 -->
-          <article class="ljt-slide">
-            <figure class="ljt-bubble">
-                  <div class="ljt-name">Amanda Jane F.</div>
-                  <div class="ljt-loc">Stoke</div>
-                </div>
-                <div class="ljt-stars" aria-hidden="true">★★★★★</div>
-              </div>
-<blockquote class="ljt-quote">
-  Penelope sold our second property after 8 years with the same <strong>positive, no-nonsense approach</strong>.
-  Her <strong>marketing skill, clear communication, and professional style</strong> made the process seamless.
-</blockquote>
-              <figcaption class="ljt-author">Seller, 2024</figcaption>
-            </figure>
-          </article>
+    <blockquote class="ljt-quote">
+      Kim is fantastic — an <strong>excellent communicator</strong> and highly professional.
+      Her <strong>positive, helpful energy</strong> made the selling journey <strong>easy and stress-free</strong>.
+    </blockquote>
+    <figcaption class="ljt-author">Appraisal &amp; sale, 2024</figcaption>
+  </figure>
+</article>
 
-          <!-- Slide 3 -->
-          <article class="ljt-slide">
-            <figure class="ljt-bubble">
-                  <div class="ljt-name">Darryl &amp; Ange</div>
-                  <div class="ljt-loc">Nelson</div>
-                </div>
-                <div class="ljt-stars" aria-hidden="true">★★★★★</div>
-              </div>
-<blockquote class="ljt-quote">
-  We bought our dream home with Penelope’s help and loved her <strong>genuine, down-to-earth approach</strong>.
-  She gave excellent advice, kept us updated, and made the process <strong>stress-free</strong>.
-</blockquote>
-              <figcaption class="ljt-author">Buyer, 2024</figcaption>
-            </figure>
-          </article>
+<!-- Slide 2 -->
+<article class="ljt-slide">
+  <figure class="ljt-bubble">
+    <div class="ljt-meta no-avatar">
+      <div class="ljt-id">
+        <div class="ljt-name">Amanda Jane F.</div>
+        <div class="ljt-loc">Stoke</div>
+      </div>
+      <div class="ljt-stars" aria-hidden="true">★★★★★</div>
+    </div>
+
+    <blockquote class="ljt-quote">
+      Penelope sold our second property after 8 years with the same <strong>positive, no-nonsense approach</strong>.
+      Her <strong>marketing skill, clear communication, and professional style</strong> made the process seamless.
+    </blockquote>
+    <figcaption class="ljt-author">Seller, 2024</figcaption>
+  </figure>
+</article>
+
+<!-- Slide 3 -->
+<article class="ljt-slide">
+  <figure class="ljt-bubble">
+    <div class="ljt-meta no-avatar">
+      <div class="ljt-id">
+        <div class="ljt-name">Darryl &amp; Ange</div>
+        <div class="ljt-loc">Nelson</div>
+      </div>
+      <div class="ljt-stars" aria-hidden="true">★★★★★</div>
+    </div>
+
+    <blockquote class="ljt-quote">
+      We bought our dream home with Penelope’s help and loved her <strong>genuine, down-to-earth approach</strong>.
+      She gave excellent advice, kept us updated, and made the process <strong>stress-free</strong>.
+    </blockquote>
+    <figcaption class="ljt-author">Buyer, 2024</figcaption>
+  </figure>
+</article>
         </div>
 
         <!-- Arrows (your JS already wires these up) -->
