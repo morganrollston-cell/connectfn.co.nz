@@ -876,6 +876,11 @@ body{ background:var(--bg); color:var(--ink); }
 
 /* Optional: tighten spacing now there’s no avatar */
 .ljt-bubble{ gap:10px; }
+
+.nf-hide { display: none; }
+
+/* hide Netlify honeypot row */
+.nf-hide{position:absolute;left:-9999px;opacity:0;height:0;width:0;pointer-events:none}
   </style>
 </head>
 <body>
@@ -941,7 +946,16 @@ body{ background:var(--bg); color:var(--ink); }
 
           <div class="hero-form">
             <div class="form-holder card" id="hero-form-holder">
-<form id="leadFormDesktop" novalidate>
+<form id="leadFormDesktop"
+      name="appraisal"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      novalidate>
+  <input type="hidden" name="form-name" value="appraisal">
+  <p class="nf-hide">
+    <label>Don’t fill this out: <input name="bot-field"></label>
+  </p>
   <div class="form-intro">
     <div class="step">Step 1 of 2</div>
     <h3>Get Your Free Appraisal & Secure Your Spot in the $2,500 Giveaway</h3>
@@ -1001,7 +1015,16 @@ body{ background:var(--bg); color:var(--ink); }
     <!-- MOBILE/TIGHT FORM DUPLICATE -->
     <section class="form-wrap">
       <div class="form-holder card" id="mobile-form-holder" aria-labelledby="form-heading">
-<form id="leadFormMobile" novalidate>
+<form id="leadFormMobile"
+      name="appraisal"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      novalidate>
+  <input type="hidden" name="form-name" value="appraisal">
+  <p class="nf-hide">
+    <label>Don’t fill this out: <input name="bot-field"></label>
+  </p>
   <div class="form-intro">
     <div class="step">Step 1 of 2</div>
     <h3>Get Your Free Appraisal & Secure Your Spot in the $2,500 Giveaway</h3>
@@ -1523,6 +1546,88 @@ document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
   stage?.addEventListener('mouseenter', ()=>clearInterval(timer));
   stage?.addEventListener('mouseleave', restart);
   restart();
+})();
+
+// === Netlify form handler ===
+(function () {
+  function getUTMParams() {
+    const u = new URL(window.location.href);
+    return {
+      page: u.origin + u.pathname,
+      utm_source:   u.searchParams.get('utm_source')   || '',
+      utm_medium:   u.searchParams.get('utm_medium')   || '',
+      utm_campaign: u.searchParams.get('utm_campaign') || '',
+      user_agent: navigator.userAgent
+    };
+  }
+
+  function thankYouHTML(firstName) {
+    const first = (firstName || 'Thanks').toString().trim().split(' ')[0];
+    return `
+      <div class="form-intro">
+        <div class="step done">Step 1 ✓</div>
+        <h3>${first}, we’ve got your request!</h3>
+        <p>Thanks for booking your free appraisal. We’ll be in touch shortly to confirm a time.</p>
+      </div>
+      <div class="next-steps">
+        <h4>What happens next?</h4>
+        <ul>
+          <li>We review comparable sales and current market conditions.</li>
+          <li>We’ll contact you to lock in a time that suits.</li>
+          <li>You’ll get a clear estimate and practical next steps.</li>
+        </ul>
+      </div>
+    `;
+  }
+
+  function wireNetlifyForm(formId) {
+    const form = document.getElementById(formId);
+    if (!form) return;
+
+    // find the closest .form-holder so it works even if ids get renamed
+    const holder = form.closest('.form-holder') 
+                || document.querySelector('#appraisal-form');
+    if (!holder) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+
+      const btn = form.querySelector('button[type="submit"]');
+      const orig = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
+
+      const fd = new FormData(form);
+      if (!fd.get('form-name')) {
+        fd.set('form-name', form.getAttribute('name') || 'appraisal');
+      }
+      Object.entries(getUTMParams()).forEach(([k, v]) => fd.append(k, v));
+
+      try {
+        const body = new URLSearchParams(fd).toString();
+        const res = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body
+        });
+
+        if (res.ok) {
+          holder.innerHTML = thankYouHTML(fd.get('full_name'));
+        } else {
+          throw new Error(`Netlify returned ${res.status}`);
+        }
+      } catch (err) {
+        console.error('Netlify submit failed', err);
+        alert('Sorry, something went wrong. Please try again.');
+        if (btn) { btn.disabled = false; btn.textContent = orig; }
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    wireNetlifyForm('leadFormDesktop');
+    wireNetlifyForm('leadFormMobile');
+  });
 })();
 
 /* ————— Google Places (unchanged) ————— */
