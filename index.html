@@ -1011,6 +1011,57 @@ body{ background:var(--bg); color:var(--ink); }
 
 /* hide Netlify honeypot row */
 .nf-hide{position:absolute;left:-9999px;opacity:0;height:0;width:0;pointer-events:none}
+
+/* === Testimonial alignment fix (paste after existing .ljt styles) === */
+.ljt { padding: clamp(48px, 9vw, 112px) 0; }
+
+.ljt-row{
+  display:grid;
+  grid-template-columns: minmax(340px, 560px) minmax(420px, 640px);
+  gap: clamp(18px, 4vw, 40px);
+  align-items: center;          /* <- centers the two columns vertically */
+}
+
+.ljt-lead{
+  text-align: left;
+  justify-self: start;
+  max-width: 560px;
+}
+
+.ljt-title{ margin: .15em 0 .25em; }
+.ljt-sub{ margin: 0; opacity: .85; }
+
+.ljt-stage{
+  justify-self: end;            /* <- pushes the card to the right column edge */
+  width: 100%;
+  max-width: 640px;
+}
+
+.ljt-track{ display:flex; transition:transform .45s ease; }
+.ljt-slide{ flex: 0 0 100%; padding: 0; } /* tighter */
+.ljt-bubble{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:14px;
+  box-shadow: var(--shadow-1);
+  padding: clamp(16px,2.2vw,20px);
+}
+
+/* dots sit a touch closer to the subhead */
+.ljt-dots{ margin-top: 10px; }
+
+/* Mobile/tablet: stack neatly and stretch the card */
+@media (max-width: 900px){
+  .ljt-row{
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  .ljt-lead{ justify-self: stretch; }
+  .ljt-stage{
+    justify-self: stretch;
+    max-width: none;
+  }
+}
   </style>
 </head>
 <body>
