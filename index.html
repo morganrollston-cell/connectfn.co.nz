@@ -1072,6 +1072,75 @@ main > section.ljt{
 /* (keep this if you still want a compact heading in testimonials) */
 /* .ljt{ padding-top:24px !important; } */
 
+/* === MOBILE-ONLY CONVERSION OVERRIDES (<=900px) === */
+@media (max-width: 900px){
+
+  /* De-clutter header: keep hamburger only */
+  .site-header__actions .btn{ display:none !important; }
+  .menu-btn{ display:block; }
+
+  /* Hero text: tighter + clamp subtext */
+  .overlay h1{ font-size:1.35rem; line-height:1.15; }
+  .overlay .lede{
+    font-size:1rem; line-height:1.45;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  .hero-bullets{ margin-top:6px }
+
+  /* Pull form higher so it’s above the fold */
+  .form-wrap{ transform: translateY(-72px) !important; }
+
+  /* Input usability */
+  input, select{ font-size:16px; min-height:48px; }
+  .btn.block{ min-height:52px; font-size:1.05rem; }
+
+  /* Sticky CTA always visible */
+  .cta-sticky{
+    position:fixed; left:16px; right:16px; bottom:14px; z-index:1000;
+    display:flex; justify-content:center; align-items:center;
+    padding:14px 18px; border-radius:12px;
+    background:var(--accent); color:#fff;
+    font-weight:800; font-size:1.05rem;
+    box-shadow:0 12px 28px rgba(10,132,255,.32);
+  }
+  body{ padding-bottom:80px; }
+
+  /* Hide EMAIL visually on mobile but keep it for Netlify/Make */
+  #leadFormMobile label:has(input[name="email"]){
+    position:absolute !important;
+    left:-9999px !important;
+    opacity:0 !important;
+    pointer-events:none !important;
+  }
+
+  /* Timeframe dropdown → pill buttons */
+  #leadFormMobile select[name="timeframe"]{ display:none !important; }
+  #leadFormMobile .timeframe-pills{
+    display:flex; flex-wrap:wrap; gap:8px; margin:8px 0;
+  }
+  #leadFormMobile .timeframe-pills label{
+    flex:1 1 calc(50% - 8px);
+    text-align:center;
+    padding:10px 12px;
+    border:1px solid #dbe3ef;
+    border-radius:999px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  #leadFormMobile .timeframe-pills input{ display:none; }
+  #leadFormMobile .timeframe-pills input:checked + span{
+    background:#0A84FF; color:#fff; border-color:#0A84FF;
+  }
+
+  /* Cap tall imagery so form isn’t pushed down */
+  .info-media{ max-height:220px; overflow:hidden; border-radius:14px; }
+
+  /* Reduce spacing before trust/testimonials so form comes first */
+  .trust-badges{ padding-top:6px }
+  .ljt, .section-info{ margin-top:18px }
+}
+
   </style>
 </head>
 <body>
@@ -1239,6 +1308,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <option>Just curious</option>
     </select>
   </label>
+  <div class="timeframe-pills">
+  <label><input type="radio" name="timeframe" value="Now"><span>Now</span></label>
+  <label><input type="radio" name="timeframe" value="1–3 months"><span>1–3 months</span></label>
+  <label><input type="radio" name="timeframe" value="3–6 months"><span>3–6 months</span></label>
+  <label><input type="radio" name="timeframe" value="Just curious"><span>Just curious</span></label>
+</div>
 
   <button class="btn block" type="submit">Book Your Free Appraisal</button>
   <p class="fine">By submitting, you agree to our T&Cs and Privacy Policy.</p>
@@ -1904,5 +1979,21 @@ function initAddressAutocomplete(){
 </script>
 <!-- Keep this Maps script include (ensure your real API key is present) -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN9ItH4RG4IAaS6zPRpP6n19Qi8iBU_nE&libraries=places&callback=initAddressAutocomplete"></script>
+<!-- Sticky CTA (mobile only) -->
+<a href="#appraisal-form" class="cta-sticky">Start your free appraisal</a>
+
+<script>
+(function(){
+  if (window.matchMedia('(max-width:900px)').matches) {
+    const cta = document.querySelector('.cta-sticky');
+    cta?.addEventListener('click', e=>{
+      e.preventDefault();
+      const target=document.getElementById('appraisal-form');
+      target?.scrollIntoView({behavior:'smooth', block:'start'});
+      setTimeout(()=>target?.querySelector('input,select')?.focus(),400);
+    });
+  }
+})();
+</script>
 </body>
 </html>
