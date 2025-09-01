@@ -1106,14 +1106,6 @@ main > section.ljt{
   }
   body{ padding-bottom:80px; }
 
-  /* Hide EMAIL visually on mobile but keep it for Netlify/Make */
-  #leadFormMobile label:has(input[name="email"]){
-    position:absolute !important;
-    left:-9999px !important;
-    opacity:0 !important;
-    pointer-events:none !important;
-  }
-
   /* Timeframe dropdown → pill buttons */
   #leadFormMobile select[name="timeframe"]{ display:none !important; }
   #leadFormMobile .timeframe-pills{
