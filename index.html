@@ -1867,11 +1867,35 @@ document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
     body: encoded
   });
 
-        if (res.ok) {
-          holder.innerHTML = thankYouHTML(fd.get('full_name'));
-        } else {
-          throw new Error(`Netlify returned ${res.status}`);
+       if (res.ok) {
+  // ---- PUSH CONVERSION EVENT TO GTM ----
+  try {
+    const fullName = (fd.get('full_name') || '').toString().trim();
+    const [first_name, ...rest] = fullName.split(' ');
+    const last_name = rest.join(' ') || '';
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'lead_submit_success',               // <-- your GTM trigger listens for this
+      form_name: form.getAttribute('name') || 'Leads Spring Promo',
+      // Enhanced Conversions – plaintext; GTM will hash:
+      enhanced_conversion_data: {
+        email: (fd.get('email') || '').toString().trim().toLowerCase(),
+        phone_number: (fd.get('phone') || '').toString().trim(),
+        first_name,
+        last_name,
+        home_address: {
+          street: (fd.get('address') || '').toString(),
+          country: 'NZ'
         }
+      }
+    });
+  } catch(e){ console.warn('EC push failed', e); }
+
+  // Show your thank-you UI last (so fields are still available if GTM reads DOM)
+  holder.innerHTML = thankYouHTML(fd.get('full_name'));
+} else {
+  throw new Error(`Netlify returned ${res.status}`);
+}
       } catch (err) {
         console.error('Netlify submit failed', err);
         alert('Sorry, something went wrong. Please try again.');
