@@ -1,1 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Meta -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Find out your property value — Kim Allred | First National Connect</title>
+  <meta name="description" content="Get your free property report from Kim Allred (First National Connect): comparable sales, current market value, and an in-person summary with advice to maximise your sale price." />
+  <link rel="canonical" href="https://sellwithconnect.com/agents/kimallred/" />
+  <meta name="theme-color" content="#00467F" />
 
+  <!-- Favicon (update paths if needed) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon.PNG">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.PNG">
+  <link rel="apple-touch-icon" href="/assets/images/favicon.PNG">
+
+  <!-- Brand CSS (reuse your sitewide file if you have it) -->
+  <link rel="preload" href="/assets/css/main.css" as="style" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+
+  <!-- Page-specific styles (kept lean; uses your brand tokens) -->
+  <style>
+    :root{
+      --brand:#00467F;
+      --accent:#0A84FF;
+      --ink:#1e2329;
+      --muted:#5c6470;
+      --bg:#f7f8fa;
+      --card:#ffffff;
+      --stroke:#e8eaf0;
+      --max:1100px;
+      --radius:16px;
+      --shadow:0 10px 30px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+    a{color:var(--brand);text-decoration:none}
+    header.topbar{
+      background:var(--brand);color:#fff;font-size:14px;text-align:center;padding:8px 12px
+    }
+    .nav{
+      background:#fff;border-bottom:1px solid var(--stroke)
+    }
+    .nav .wrap{max-width:var(--max);margin:auto;display:flex;align-items:center;justify-content:center;padding:14px}
+    .nav img{height:26px}
+
+    /* ===== Hero / poster layout (like your reference) ===== */
+    .poster{
+      background-image:linear-gradient(to bottom, rgba(0,0,0,.06), rgba(0,0,0,.06)), url('/assets/images/agents/kim/hero.jpg');
+      background-size:cover;background-position:center;
+      padding:24px 12px 28px
+    }
+    .wrap{max-width:var(--max);margin:auto}
+    .card{
+      background:var(--card);border:1px solid var(--stroke);border-radius:18px;box-shadow:var(--shadow);
+      max-width:760px;margin:auto;padding:18px
+    }
+    .card h1{
+      font-weight:700;line-height:1.08;margin:4px 0 12px;
+      font-size:clamp(28px,5.5vw,44px);letter-spacing:-.015em
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;background:#e9f1ff;color:#183b6c;border-radius:999px;
+      padding:6px 10px;font-size:13px;font-weight:600
+    }
+    .includes{margin:14px 0 8px}
+    .includes .title{
+      display:inline-block;background:var(--brand);color:#fff;padding:8px 12px;border-radius:8px;font-weight:700;font-size:15px
+    }
+    ul.ticks{list-style:none;margin:12px 0 10px;padding:0;display:grid;gap:10px}
+    ul.ticks li{display:flex;gap:10px;align-items:flex-start}
+    .tick{flex:0 0 auto;width:22px;height:22px;border-radius:50%;border:2px solid var(--brand);display:grid;place-items:center}
+    .tick svg{width:12px;height:12px;fill:var(--brand)}
+    .fine{color:var(--muted);font-size:13.5px}
+
+    /* ===== Multistep form ===== */
+    .form-shell{margin-top:14px;border-top:1px solid var(--stroke);padding-top:14px}
+    .stepbar{display:flex;align-items:center;gap:10px;margin:6px 0 14px}
+    .bar{flex:1;height:4px;background:#e6ecf5;border-radius:999px;overflow:hidden}
+    .bar .fill{height:100%;width:0;background:var(--brand);transition:width .25s ease}
+    .count{font-weight:700;font-variant-numeric:tabular-nums}
+    form{display:grid;gap:12px}
+    label{font-size:13px;color:var(--muted)}
+    input,select,textarea{
+      width:100%;padding:12px 12px;border:1px solid #dbe0e8;border-radius:12px;font:inherit;background:#fff
+    }
+    textarea{min-height:96px;resize:vertical}
+    .row{display:grid;gap:12px}
+    .row.two{grid-template-columns:1fr 1fr}
+    .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:6px}
+    .btn{
+      appearance:none;border:0;border-radius:10px;padding:13px 18px;font-weight:700;cursor:pointer
+    }
+    .btn.primary{background:var(--brand);color:#fff}
+    .btn.secondary{background:#eef2f8;color:#173257}
+    .error{color:#b00020;font-size:13px;margin-top:-6px}
+    .hidden{display:none !important}
+
+    /* ===== Agent block ===== */
+    .agent{
+      display:grid;gap:14px;border:1px solid var(--stroke);border-radius:16px;padding:14px;margin:18px 0 0;background:#fff
+    }
+    .agent .bio{display:flex;gap:14px;align-items:center}
+    .agent img{width:72px;height:72px;border-radius:50%;object-fit:cover}
+    blockquote{margin:4px 0 0;color:#2b3340}
+    blockquote p{margin:0 0 8px}
+    blockquote .sig{font-size:13px;color:var(--muted)}
+
+    /* ===== Footer ===== */
+    footer{
+      background:var(--brand);color:#fff;margin-top:24px
+    }
+    footer .wrap{display:grid;gap:12px;padding:18px 12px;text-align:center}
+    footer nav{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    footer a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+
+    /* ===== Responsive ===== */
+    @media (min-width: 760px){
+      .poster{padding:36px 16px 40px}
+      .card{padding:24px 22px}
+      .agent{grid-template-columns:1fr}
+    }
+    @media (min-width: 1000px){
+      .poster{padding:44px 16px 60px}
+      .card{padding:28px 26px}
+    }
+  </style>
+
+  <!-- (Optional) GTM / GA: you can keep global here for now; you'll split Ads later -->
+  <!-- <script>/* your GTM or GA snippet */</script> -->
+</head>
+<body>
+  <!-- Thin promise bar -->
+  <header class="topbar">We’ll let you know what your property is worth within 48 hours.</header>
+
+  <!-- Logo row -->
+  <div class="nav">
+    <div class="wrap">
+      <img src="assets/images/Google Ads Wide Logo.png" alt="First National Connect" />
+    </div>
+  </div>
+
+  <!-- Hero poster with central card -->
+  <section class="poster">
+    <div class="wrap">
+      <div class="card" id="card">
+        <span class="pill">First National Connect • Nelson &amp; Tasman</span>
+        <h1>Find out your<br/> property value</h1>
+
+        <div class="includes">
+          <span class="title">Our free report includes</span>
+          <ul class="ticks">
+            <li>
+              <span class="tick" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
+              </span>
+              Sales information for comparable sold properties in your area.
+            </li>
+            <li>
+              <span class="tick" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
+              </span>
+              Approximate current market value for your property.
+            </li>
+            <li>
+              <span class="tick" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
+              </span>
+              In-person report summary and consultation on how to maximise your sale price.
+            </li>
+            <li>
+              <span class="tick" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
+              </span>
+              Go in the draw to win <strong>$2,500</strong>. <span class="fine">(T&amp;Cs apply)</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Multistep form -->
+        <div class="form-shell">
+          <div class="stepbar">
+            <div class="bar" aria-hidden="true"><div class="fill" id="fill" style="width:0%"></div></div>
+            <span class="count"><span id="stepNum">1</span> of <span id="stepTotal">6</span></span>
+          </div>
+
+          <form id="lead-form" name="kim allred leads" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <!-- Netlify form bits -->
+            <input type="hidden" name="form-name" value="kim allred leads" />
+            <input type="hidden" name="agent" value="Kim Allred" />
+            <p class="hidden"><label>Don’t fill this out: <input name="bot-field" /></label></p>
+
+            <!-- STEP 1 -->
+            <div class="step" data-step="1">
+              <label for="address">Address *</label>
+              <input id="address" name="address" placeholder="Enter a location" required />
+              <div class="actions">
+                <button class="btn primary" data-next>Next</button>
+              </div>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="step hidden" data-step="2">
+              <div class="row two">
+                <div>
+                  <label for="first">First name *</label>
+                  <input id="first" name="first_name" autocomplete="given-name" required />
+                </div>
+                <div>
+                  <label for="last">Last name *</label>
+                  <input id="last" name="last_name" autocomplete="family-name" required />
+                </div>
+              </div>
+              <div class="actions">
+                <button class="btn secondary" data-prev>Back</button>
+                <button class="btn primary" data-next>Next</button>
+              </div>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="step hidden" data-step="3">
+              <div class="row two">
+                <div>
+                  <label for="email">Email *</label>
+                  <input id="email" type="email" name="email" autocomplete="email" required />
+                </div>
+                <div>
+                  <label for="phone">Phone *</label>
+                  <input id="phone" type="tel" name="phone" inputmode="tel" autocomplete="tel" required />
+                </div>
+              </div>
+              <div class="actions">
+                <button class="btn secondary" data-prev>Back</button>
+                <button class="btn primary" data-next>Next</button>
+              </div>
+            </div>
+
+            <!-- STEP 4 -->
+            <div class="step hidden" data-step="4">
+              <label for="timeframe">When are you thinking of selling? *</label>
+              <select id="timeframe" name="timeframe" required>
+                <option value="" selected disabled>Select one</option>
+                <option>Now</option>
+                <option>1–3 months</option>
+                <option>3–6 months</option>
+                <option>Just curious</option>
+              </select>
+              <div class="actions">
+                <button class="btn secondary" data-prev>Back</button>
+                <button class="btn primary" data-next>Next</button>
+              </div>
+            </div>
+
+            <!-- STEP 5 -->
+            <div class="step hidden" data-step="5">
+              <label for="notes">Anything else we should know?</label>
+              <textarea id="notes" name="notes" placeholder="Bedrooms, renovations, special features…"></textarea>
+              <div class="actions">
+                <button class="btn secondary" data-prev>Back</button>
+                <button class="btn primary" data-next>Next</button>
+              </div>
+            </div>
+
+            <!-- STEP 6 (consent + submit) -->
+            <div class="step hidden" data-step="6">
+              <label class="fine">
+                <input type="checkbox" name="consent" required />
+                I agree to be contacted by First National Connect (phone, email or text) about this appraisal request.
+              </label>
+              <p class="fine">By submitting, you agree to the <a href="/#terms">Terms &amp; Conditions</a> and <a href="/#privacy">Privacy Policy</a>.</p>
+              <div class="actions">
+                <button class="btn secondary" data-prev>Back</button>
+                <button class="btn primary" type="submit">Request my free appraisal</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Agent block -->
+        <div class="agent" aria-labelledby="agent-heading">
+          <div class="bio">
+            <img src="/assets/images/agents/kim/headshot.jpg" alt="Kim Allred" />
+            <div>
+              <strong id="agent-heading">Kim Allred</strong><br/>
+              Principal/Sales and Marketing<br/>First National Connect
+            </div>
+          </div>
+          <blockquote>
+            <p>“Whether you're planning to sell soon or just want to stay informed, our local expertise gives you a clear picture of your home's current value and what’s really happening in your neighbourhood market.”</p>
+            <div class="sig">Fill out the form to request your free appraisal now! We Put <em>You</em> First.</div>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap">
+      <img src="assets/images/Nelson:Tasman Logo .png" alt="First National Connect" style="height:22px; margin: 0 auto 2px;" />
+      <nav>
+        <a href="/#cookies">Cookie Policy</a>
+        <a href="/#privacy">Privacy Policy</a>
+        <a href="/#terms">Terms &amp; Conditions</a>
+      </nav>
+      <small>Licensed REAA 2008 t/a FIRST NATIONAL CONNECT</small>
+    </div>
+  </footer>
+
+  <!-- Multistep form logic (vanilla JS) -->
+  <script>
+    (function(){
+      const form = document.getElementById('lead-form');
+      const steps = Array.from(form.querySelectorAll('.step'));
+      const total = steps.length;
+      const fill = document.getElementById('fill');
+      const stepNum = document.getElementById('stepNum');
+      const stepTotal = document.getElementById('stepTotal');
+      const card = document.getElementById('card');
+      stepTotal.textContent = total;
+
+      let current = 0;
+      show(current);
+
+      // Button handlers
+      form.addEventListener('click', function(e){
+        const next = e.target.closest('[data-next]');
+        const prev = e.target.closest('[data-prev]');
+        if(next){
+          e.preventDefault();
+          if(validateStep(current)){
+            current = Math.min(current+1, total-1);
+            show(current);
+          }
+        }
+        if(prev){
+          e.preventDefault();
+          current = Math.max(current-1, 0);
+          show(current);
+        }
+      });
+
+      function show(i){
+        steps.forEach((el, idx) => el.classList.toggle('hidden', idx !== i));
+        stepNum.textContent = i+1;
+        const pct = ((i) / (total-1)) * 100;
+        fill.style.width = pct + '%';
+        // focus first input of the step
+        const input = steps[i].querySelector('input, select, textarea, button[type="submit"]');
+        if(input) setTimeout(()=>input.focus(), 10);
+      }
+
+      function validateStep(i){
+        // Basic HTML5 validation for required fields in this step
+        const fields = Array.from(steps[i].querySelectorAll('[required]'));
+        for(const f of fields){
+          if(!f.reportValidity()){ return false; }
+        }
+        return true;
+      }
+
+      // Netlify success UX: inline thank-you without leaving page
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        if(!validateStep(current)) return;
+        const data = new FormData(form);
+        try{
+          await fetch('/', { method:'POST', body:data });
+          card.innerHTML = `
+            <div class="wrap">
+              <h1>Thanks, we’ve got your request!</h1>
+              <p class="fine">We’ll confirm details and let you know your property’s value within 48 hours.</p>
+              <div class="agent" style="margin-top:14px">
+                <div class="bio">
+                  <img src="/assets/images/agents/kim/headshot.jpg" alt="Kim Allred"/>
+                  <div><strong>Kim Allred</strong><br/>First National Connect</div>
+                </div>
+              </div>
+            </div>`;
+          window.scrollTo({top:0, behavior:'smooth'});
+        }catch(err){
+          alert('Sorry, something went wrong. Please try again.');
+          console.error(err);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
