@@ -73,6 +73,37 @@
     @media (min-width:768px){
       .brand-logo--footer{ height:56px; }
     }
+    
+    /* Header bar stays fixed size */
+.nav .wrap {
+  max-width: var(--max);
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;         /* mobile bar height */
+  padding: 0 16px;
+  overflow: hidden;     /* clip oversized logo */
+}
+@media (min-width:768px) {
+  .nav .wrap { height: 72px; }  /* desktop bar height */
+}
+
+/* Scale logo slightly bigger to counteract transparent padding */
+.nav .brand-logo {
+  display: block;
+  height: 130%;         /* bigger than bar */
+  max-height: none;     /* allow >100% */
+  width: auto;
+  transform: translateY(2px); /* nudge down if needed */
+}
+
+@media (min-width:768px) {
+  .nav .brand-logo {
+    height: 120%;       /* desktop scaling */
+    transform: translateY(0); /* adjust if logo looks off-center */
+  }
+}
 
     /* ===== Hero / poster layout ===== */
     .poster{
