@@ -9,16 +9,16 @@
   <link rel="canonical" href="https://sellwithconnect.com/agents/kimallred/" />
   <meta name="theme-color" content="#00467F" />
 
-  <!-- Favicon (update paths if needed) -->
+  <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon.PNG">
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.PNG">
   <link rel="apple-touch-icon" href="/assets/images/favicon.PNG">
 
-  <!-- Brand CSS (reuse your sitewide file if you have it) -->
+  <!-- Brand CSS -->
   <link rel="preload" href="/assets/css/main.css" as="style" />
   <link rel="stylesheet" href="/assets/css/main.css" />
 
-  <!-- Page-specific styles (kept lean; uses your brand tokens) -->
+  <!-- Page-specific styles -->
   <style>
     :root{
       --brand:#00467F;
@@ -35,16 +35,24 @@
     *{box-sizing:border-box}
     body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
     a{color:var(--brand);text-decoration:none}
+
+    /* Top promise bar (unchanged size) */
     header.topbar{
       background:var(--brand);color:#fff;font-size:14px;text-align:center;padding:8px 12px
     }
-    .nav{
-      background:#fff;border-bottom:1px solid var(--stroke)
-    }
-    .nav .wrap{max-width:var(--max);margin:auto;display:flex;align-items:center;justify-content:center;padding:14px}
-    .nav img{height:26px}
 
-    /* ===== Hero / poster layout (like your reference) ===== */
+    /* Logo row (keep bar size; only logo scales via classes) */
+    .nav{background:#fff;border-bottom:1px solid var(--stroke)}
+    .nav .wrap{max-width:var(--max);margin:auto;display:flex;align-items:center;justify-content:center;padding:14px}
+    .brand-logo{display:block;margin:0 auto}
+    .brand-logo--header{height:44px}         /* bigger header logo */
+    .brand-logo--footer{height:44px}         /* bigger footer logo */
+    @media (min-width:768px){
+      .brand-logo--header{height:64px}
+      .brand-logo--footer{height:56px}
+    }
+
+    /* ===== Hero / poster layout ===== */
     .poster{
       background-image:linear-gradient(to bottom, rgba(0,0,0,.06), rgba(0,0,0,.06)), url('/assets/images/agents/kim/hero.jpg');
       background-size:cover;background-position:center;
@@ -107,9 +115,7 @@
     blockquote .sig{font-size:13px;color:var(--muted)}
 
     /* ===== Footer ===== */
-    footer{
-      background:var(--brand);color:#fff;margin-top:24px
-    }
+    footer{background:var(--brand);color:#fff;margin-top:24px}
     footer .wrap{display:grid;gap:12px;padding:18px 12px;text-align:center}
     footer nav{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
     footer a{color:#fff;text-decoration:underline;text-underline-offset:3px}
@@ -126,7 +132,7 @@
     }
   </style>
 
-  <!-- (Optional) GTM / GA: you can keep global here for now; you'll split Ads later -->
+  <!-- (Optional) GTM / GA -->
   <!-- <script>/* your GTM or GA snippet */</script> -->
 </head>
 <body>
@@ -136,7 +142,7 @@
   <!-- Logo row -->
   <div class="nav">
     <div class="wrap">
-      <img src="/assets/images/big-blue-logo.png" alt="First National Connect" />
+      <img src="/assets/images/big-blue-logo.png" alt="First National Connect" class="brand-logo brand-logo--header" />
     </div>
   </div>
 
@@ -297,7 +303,7 @@
   <!-- Footer -->
   <footer>
     <div class="wrap">
-      <img src="/assets/images/big-white-logo.png" alt="First National Connect" style="height:22px; margin: 0 auto 2px;" />
+      <img src="/assets/images/big-white-logo.png" alt="First National Connect" class="brand-logo brand-logo--footer" />
       <nav>
         <a href="/#cookies">Cookie Policy</a>
         <a href="/#privacy">Privacy Policy</a>
@@ -345,13 +351,11 @@
         stepNum.textContent = i+1;
         const pct = ((i) / (total-1)) * 100;
         fill.style.width = pct + '%';
-        // focus first input of the step
         const input = steps[i].querySelector('input, select, textarea, button[type="submit"]');
         if(input) setTimeout(()=>input.focus(), 10);
       }
 
       function validateStep(i){
-        // Basic HTML5 validation for required fields in this step
         const fields = Array.from(steps[i].querySelectorAll('[required]'));
         for(const f of fields){
           if(!f.reportValidity()){ return false; }
@@ -372,7 +376,7 @@
               <p class="fine">We’ll confirm details and let you know your property’s value within 48 hours.</p>
               <div class="agent" style="margin-top:14px">
                 <div class="bio">
-                  <img src="/assets/images/agents/kim/headshot.jpg" alt="Kim Allred"/>
+                  <img src="/assets/images/Kim-Allred-Headshot.png" alt="Kim Allred"/>
                   <div><strong>Kim Allred</strong><br/>First National Connect</div>
                 </div>
               </div>
