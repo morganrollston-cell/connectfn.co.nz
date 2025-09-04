@@ -29,27 +29,49 @@
       --card:#ffffff;
       --stroke:#e8eaf0;
       --max:1100px;
-      --radius:16px;
       --shadow:0 10px 30px rgba(0,0,0,.08);
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
     a{color:var(--brand);text-decoration:none}
 
-    /* Top promise bar (unchanged size) */
+    /* ===== Top promise bar (unchanged size) ===== */
     header.topbar{
       background:var(--brand);color:#fff;font-size:14px;text-align:center;padding:8px 12px
     }
 
-    /* Logo row (keep bar size; only logo scales via classes) */
-    .nav{background:#fff;border-bottom:1px solid var(--stroke)}
-    .nav .wrap{max-width:var(--max);margin:auto;display:flex;align-items:center;justify-content:center;padding:14px}
-    .brand-logo{display:block;margin:0 auto}
-    .brand-logo--header{height:44px}         /* bigger header logo */
-    .brand-logo--footer{height:44px}         /* bigger footer logo */
+    /* ===== White logo bar (fixed height) ===== */
+    .nav{ background:#fff; border-bottom:1px solid var(--stroke); }
+    .nav .wrap{
+      max-width:var(--max);
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:56px;      /* mobile bar height */
+      padding:0 16px;
+    }
     @media (min-width:768px){
-      .brand-logo--header{height:64px}
-      .brand-logo--footer{height:56px}
+      .nav .wrap{ height:72px; }  /* desktop bar height */
+    }
+
+    /* Header logo fills the bar height only in the header */
+    .nav .brand-logo{
+      display:block;
+      height:100%;
+      max-height:100%;
+      width:auto;
+    }
+
+    /* Footer logo has its own controlled size */
+    .brand-logo--footer{
+      display:block;
+      height:36px;
+      width:auto;
+      margin:0 auto 8px;
+    }
+    @media (min-width:768px){
+      .brand-logo--footer{ height:56px; }
     }
 
     /* ===== Hero / poster layout ===== */
@@ -101,7 +123,6 @@
     }
     .btn.primary{background:var(--brand);color:#fff}
     .btn.secondary{background:#eef2f8;color:#173257}
-    .error{color:#b00020;font-size:13px;margin-top:-6px}
     .hidden{display:none !important}
 
     /* ===== Agent block ===== */
@@ -113,46 +134,6 @@
     blockquote{margin:4px 0 0;color:#2b3340}
     blockquote p{margin:0 0 8px}
     blockquote .sig{font-size:13px;color:var(--muted)}
-
-    /* ===== Footer ===== */
-    footer{background:var(--brand);color:#fff;margin-top:24px}
-    footer .wrap{display:grid;gap:12px;padding:18px 12px;text-align:center}
-    footer nav{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-    footer a{color:#fff;text-decoration:underline;text-underline-offset:3px}
-
-    /* ===== Responsive ===== */
-    @media (min-width: 760px){
-      .poster{padding:36px 16px 40px}
-      .card{padding:24px 22px}
-      .agent{grid-template-columns:1fr}
-    }
-    @media (min-width: 1000px){
-      .poster{padding:44px 16px 60px}
-      .card{padding:28px 26px}
-    }
-    
-    /* White logo bar: fixed height so it never grows */
-.nav{ background:#fff; border-bottom:1px solid var(--stroke); }
-.nav .wrap{
-  max-width:var(--max);
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  height:56px;          /* mobile bar height (unchanged visually) */
-  padding:0 16px;       /* horizontal only, no vertical growth */
-}
-@media (min-width:768px){
-  .nav .wrap{ height:72px; }  /* desktop bar height (unchanged visually) */
-}
-
-/* Logo fills the bar height but won't overflow */
-.brand-logo{
-  display:block;
-  height:100%;          /* fill the bar vertically */
-  max-height:100%;
-  width:auto;           /* keep aspect ratio */
-}
   </style>
 
   <!-- (Optional) GTM / GA -->
@@ -165,7 +146,7 @@
   <!-- Logo row -->
   <div class="nav">
     <div class="wrap">
-      <img src="/assets/images/big-blue-logo.png" alt="First National Connect" class="brand-logo brand-logo--header" />
+      <img src="/assets/images/big-blue-logo.png" alt="First National Connect" class="brand-logo" />
     </div>
   </div>
 
@@ -214,7 +195,6 @@
           </div>
 
           <form id="lead-form" name="kim allred leads" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-            <!-- Netlify form bits -->
             <input type="hidden" name="form-name" value="kim allred leads" />
             <input type="hidden" name="agent" value="Kim Allred" />
             <p class="hidden"><label>Don’t fill this out: <input name="bot-field" /></label></p>
@@ -324,13 +304,13 @@
   </section>
 
   <!-- Footer -->
-  <footer>
-    <div class="wrap">
-      <img src="/assets/images/big-white-logo.png" alt="First National Connect" class="brand-logo brand-logo--footer" />
-      <nav>
-        <a href="/#cookies">Cookie Policy</a>
-        <a href="/#privacy">Privacy Policy</a>
-        <a href="/#terms">Terms &amp; Conditions</a>
+  <footer style="background:#00467F;color:#fff;margin-top:24px">
+    <div class="wrap" style="display:grid;gap:12px;padding:18px 12px;text-align:center">
+      <img src="/assets/images/big-white-logo.png" alt="First National Connect" class="brand-logo--footer" />
+      <nav style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a href="/#cookies" style="color:#fff;text-decoration:underline;text-underline-offset:3px">Cookie Policy</a>
+        <a href="/#privacy" style="color:#fff;text-decoration:underline;text-underline-offset:3px">Privacy Policy</a>
+        <a href="/#terms" style="color:#fff;text-decoration:underline;text-underline-offset:3px">Terms &amp; Conditions</a>
       </nav>
       <small>Licensed REAA 2008 t/a FIRST NATIONAL CONNECT</small>
     </div>
@@ -351,7 +331,6 @@
       let current = 0;
       show(current);
 
-      // Button handlers
       form.addEventListener('click', function(e){
         const next = e.target.closest('[data-next]');
         const prev = e.target.closest('[data-prev]');
