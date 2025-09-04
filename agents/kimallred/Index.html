@@ -130,6 +130,29 @@
       .poster{padding:44px 16px 60px}
       .card{padding:28px 26px}
     }
+    
+    /* White logo bar: fixed height so it never grows */
+.nav{ background:#fff; border-bottom:1px solid var(--stroke); }
+.nav .wrap{
+  max-width:var(--max);
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:56px;          /* mobile bar height (unchanged visually) */
+  padding:0 16px;       /* horizontal only, no vertical growth */
+}
+@media (min-width:768px){
+  .nav .wrap{ height:72px; }  /* desktop bar height (unchanged visually) */
+}
+
+/* Logo fills the bar height but won't overflow */
+.brand-logo{
+  display:block;
+  height:100%;          /* fill the bar vertically */
+  max-height:100%;
+  width:auto;           /* keep aspect ratio */
+}
   </style>
 
   <!-- (Optional) GTM / GA -->
