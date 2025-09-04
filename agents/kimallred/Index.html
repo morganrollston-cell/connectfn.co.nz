@@ -21,13 +21,14 @@
   <style>
     :root{
       --brand:#00467F;
-      --ink:#1e2329;
+      --ink:#0e1621;
       --muted:#5c6470;
       --bg:#f7f8fa;
       --card:#ffffff;
       --stroke:#e8eaf0;
       --max:1100px;
       --shadow:0 10px 30px rgba(0,0,0,.08);
+      --accent:#0A84FF;
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
@@ -43,7 +44,6 @@
       height:56px; padding:0 16px; overflow:hidden;
     }
     @media (min-width:768px){ .nav .wrap{ height:72px; } }
-    /* Header logo fills the bar height; compensate for PNG padding */
     .nav .brand-logo{display:block;height:130%;max-height:none;width:auto;transform:translateY(2px)}
     @media (min-width:768px){ .nav .brand-logo{height:120%;transform:none} }
 
@@ -57,33 +57,61 @@
       background:var(--card);border:1px solid var(--stroke);border-radius:18px;box-shadow:var(--shadow);
       max-width:760px;margin:auto;padding:18px
     }
-    .card h1{font-weight:700;line-height:1.08;margin:4px 0 12px;font-size:clamp(28px,5.5vw,44px);letter-spacing:-.015em}
-    .pill{display:inline-flex;align-items:center;gap:8px;background:#e9f1ff;color:#183b6c;border-radius:999px;padding:6px 10px;font-size:13px;font-weight:600}
+
+    /* --- Hero text refresh --- */
+    .eyebrow{
+      display:inline-flex;gap:8px;align-items:center;
+      font-weight:700;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:#173b6c;
+      background:#e9f1ff;border:1px solid #d5e4ff;border-radius:999px;padding:6px 10px;
+    }
+    .card h1{
+      font-weight:800;line-height:1.05;margin:10px 0 8px;
+      font-size:clamp(30px,6vw,48px);letter-spacing:-.02em;
+    }
+    .card h1 .highlight{
+      background:linear-gradient(180deg, rgba(10,132,255,.18) 0%, rgba(10,132,255,.18) 100%);
+      border-radius:6px; box-decoration-break:clone; padding:0 .15em;
+    }
+    .lede{
+      margin:4px 0 14px; color:#2b3340; font-size:clamp(15px,2.8vw,18px);
+    }
+
     .includes{margin:14px 0 8px}
     .includes .title{display:inline-block;background:var(--brand);color:#fff;padding:8px 12px;border-radius:8px;font-weight:700;font-size:15px}
-    ul.ticks{list-style:none;margin:12px 0 10px;padding:0;display:grid;gap:10px}
+    ul.ticks{list-style:none;margin:12px 0 10px;padding:0;display:grid;gap:12px}
     ul.ticks li{display:flex;gap:10px;align-items:flex-start}
-    .tick{flex:0 0 auto;width:22px;height:22px;border-radius:50%;border:2px solid var(--brand);display:grid;place-items:center}
-    .tick svg{width:12px;height:12px;fill:var(--brand)}
+    .tick{flex:0 0 auto;width:24px;height:24px;border-radius:50%;border:2px solid var(--brand);display:grid;place-items:center}
+    .tick svg{width:13px;height:13px;fill:var(--brand)}
     .fine{color:var(--muted);font-size:13.5px}
 
+    /* --- “Fill out the form” callout --- */
+    .form-intro{
+      display:flex;align-items:center;gap:10px;
+      border:1px dashed #c8d6ec;background:#f4f8ff;border-radius:12px;
+      padding:10px 12px;margin:14px 0 8px;color:#1b2d4a;font-weight:700;
+    }
+    .form-intro .arrow{
+      flex:0 0 auto; width:20px; height:20px;
+      animation:floaty 1.6s ease-in-out infinite;
+    }
+    @keyframes floaty{
+      0%,100%{ transform:translateY(0) }
+      50%{ transform:translateY(3px) }
+    }
+
     /* === Multi-step Form Styling === */
-    .form-shell{margin-top:20px;border-top:1px solid var(--stroke);padding-top:20px}
-    /* Progress bar */
-    .stepbar{display:flex;align-items:center;gap:12px;margin:0 0 20px}
-    .bar{flex:1;height:6px;background:#e1e6ef;border-radius:999px;overflow:hidden}
+    .form-shell{margin-top:12px;border-top:1px solid var(--stroke);padding-top:16px}
+    .stepbar{display:flex;align-items:center;gap:12px;margin:0 0 18px}
+    .bar{flex:1;height:6px;background:#d9e1ee;border-radius:999px;overflow:hidden}
     .bar .fill{height:100%;width:0;background:var(--brand);transition:width .3s ease}
-    .count{font-weight:600;font-size:14px;color:var(--muted)}
-    /* Step cards */
-    .step{background:#fff;border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:0 3px 8px rgba(0,0,0,.06);margin-bottom:16px}
-    /* Fields */
+    .count{font-weight:600;font-size:14px;color:#273347}
+    .step{background:#fff;border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,.08);margin-bottom:16px}
     label{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px;display:block}
     input,select,textarea{width:100%;padding:12px 14px;border:1px solid #cdd5e0;border-radius:10px;font:inherit;background:#fff;transition:border-color .2s, box-shadow .2s}
     input:focus,select:focus,textarea:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(0,70,127,.15);outline:none}
     textarea{min-height:96px;resize:vertical}
     .row{display:grid;gap:12px}
     .row.two{grid-template-columns:1fr 1fr}
-    /* Actions */
     .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
     .btn{appearance:none;border:0;border-radius:10px;padding:14px 18px;font-weight:700;cursor:pointer;transition:background .2s, transform .1s}
     .btn.primary{background:var(--brand);color:#fff}
@@ -100,7 +128,7 @@
     blockquote p{margin:0 0 8px}
     blockquote .sig{font-size:13px;color:var(--muted)}
 
-    /* Footer logo */
+    /* Footer */
     footer{background:#00467F;color:#fff;margin-top:24px}
     footer .wrap{display:grid;gap:12px;padding:18px 12px;text-align:center}
     .brand-logo--footer{display:block;height:36px;width:auto;margin:0 auto 8px}
@@ -124,8 +152,9 @@
   <section class="poster">
     <div class="wrap">
       <div class="card" id="card">
-        <span class="pill">First National Connect • Nelson &amp; Tasman</span>
-        <h1>Find out your<br/> property value</h1>
+        <span class="eyebrow">First National Connect • Nelson &amp; Tasman</span>
+        <h1>Find out your <span class="highlight">property value</span></h1>
+        <p class="lede">Free, fast and local — get comparable sales, your current market value and in-person advice from our team.</p>
 
         <div class="includes">
           <span class="title">Our free report includes</span>
@@ -157,7 +186,15 @@
           </ul>
         </div>
 
-        <!-- === FORM (restored) === -->
+        <!-- Callout that points to the form -->
+        <div class="form-intro">
+          <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4v12m0 0l-5-5m5 5l5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Just fill out the form below — it takes under a minute.
+        </div>
+
+        <!-- === FORM === -->
         <div class="form-shell">
           <div class="stepbar">
             <div class="bar" aria-hidden="true"><div class="fill" id="fill" style="width:0%"></div></div>
@@ -259,7 +296,7 @@
         <!-- Agent block -->
         <div class="agent" aria-labelledby="agent-heading">
           <div class="bio">
-            <img src="/assets/images/Kim-Allred-Headshot.png" alt="Kim Allred" />
+            <img src="/assets/images/Kim-Allred-Headshot.png" alt="Kim Allred" loading="lazy" />
             <div>
               <strong id="agent-heading">Kim Allred</strong><br/>
               Principal/Sales and Marketing<br/>First National Connect
