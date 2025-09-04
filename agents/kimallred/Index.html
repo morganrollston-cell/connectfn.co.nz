@@ -149,6 +149,14 @@
     blockquote p{margin:0 0 8px}
     blockquote .sig{font-size:13px;color:#888}
 
+    /* Minimal testimonials (non-crowded) */
+    .testimonials{background:#f7f8fa;padding:28px 16px;margin-top:18px;border-radius:14px;border:1px solid #e0e4eb}
+    .testimonials h2{font-size:20px;font-weight:800;margin:0 0 14px;text-align:center}
+    .testimonial-grid{display:grid;gap:14px;max-width:700px;margin:auto}
+    @media(min-width:768px){ .testimonial-grid{grid-template-columns:1fr 1fr} }
+    .testimonial{background:#fff;border:1px solid #e0e4eb;border-radius:12px;padding:16px;box-shadow:0 3px 10px rgba(0,0,0,0.04);font-size:15px;line-height:1.45}
+    .testimonial .author{margin-top:10px;font-size:13px;font-weight:700;color:#00467F}
+
     /* Footer */
     footer{background:#00467F;color:#fff;margin-top:0px}
     footer .wrap{display:grid;gap:12px;padding:18px 12px;text-align:center}
@@ -158,13 +166,16 @@
     footer a{color:#fff;text-decoration:underline;text-underline-offset:3px}
     
     .poster {
-  margin-bottom: 0;        /* remove outside gap */
-  padding-bottom: 40px;    /* extend background down behind card */
-}
+      margin-bottom: 0;        /* remove outside gap */
+      padding-bottom: 40px;    /* extend background down behind card */
+    }
 
-.card {
-  margin-bottom: 40px;     /* spacing between card bottom and footer */
-}
+    .card {
+      margin-bottom: 40px;     /* spacing between card bottom and footer */
+    }
+
+    /* Privacy note under stepbar */
+    .privacy-note{margin:-6px 0 10px;font-size:12.5px;color:var(--muted)}
   </style>
 </head>
 <body>
@@ -183,7 +194,7 @@
     <div class="wrap">
       <div class="card" id="card">
         <span class="eyebrow">First National Connect • Nelson &amp; Tasman</span>
-        <h1>Find out your <span class="highlight">property value</span></h1>
+        <h1>Get your Nelson &amp; Tasman <span class="highlight">property value</span> in 48 hours — free, fast &amp; local.</h1>
         <p class="lede">Free, fast and local — get comparable sales, your current market value and in-person advice from our team.</p>
 
         <div class="includes">
@@ -231,6 +242,9 @@
               <div class="bar" aria-hidden="true"><div class="fill" id="fill" style="width:0%"></div></div>
               <span class="count"><span id="stepNum">1</span> of <span id="stepTotal">5</span></span>
             </div>
+
+            <!-- Privacy micro-copy -->
+            <p class="privacy-note">Your details are safe — used only for preparing your appraisal.</p>
 
             <form id="lead-form" name="kim allred leads" method="POST" data-netlify="true" netlify-honeypot="bot-field">
               <input type="hidden" name="form-name" value="kim allred leads" />
@@ -321,6 +335,22 @@
             <div class="sig">Fill out the form to request your free appraisal now! We Put <em>You</em> First.</div>
           </blockquote>
         </div>
+
+        <!-- Minimal Testimonials -->
+        <section class="testimonials">
+          <h2>What clients say</h2>
+          <div class="testimonial-grid">
+            <div class="testimonial">
+              <p>“Kim did exactly what she promised, kept us informed, and brought an offer above expectations after the second open home. We even received an advertising refund. Highly recommend.”</p>
+              <div class="author">— Murray &amp; Diane</div>
+            </div>
+            <div class="testimonial">
+              <p>“Absolutely fantastic — excellent communication and professionalism. The whole process was easy and full of integrity. Her positive, helpful energy made a real difference.”</p>
+              <div class="author">— Seller in Nelson</div>
+            </div>
+          </div>
+        </section>
+
       </div>
     </div>
   </section>
