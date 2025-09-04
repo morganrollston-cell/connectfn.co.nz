@@ -149,13 +149,21 @@
     blockquote p{margin:0 0 8px}
     blockquote .sig{font-size:13px;color:#888}
 
-    /* Minimal testimonials (non-crowded) */
-    .testimonials{background:#f7f8fa;padding:28px 16px;margin-top:18px;border-radius:14px;border:1px solid #e0e4eb}
-    .testimonials h2{font-size:20px;font-weight:800;margin:0 0 14px;text-align:center}
-    .testimonial-grid{display:grid;gap:14px;max-width:700px;margin:auto}
-    @media(min-width:768px){ .testimonial-grid{grid-template-columns:1fr 1fr} }
-    .testimonial{background:#fff;border:1px solid #e0e4eb;border-radius:12px;padding:16px;box-shadow:0 3px 10px rgba(0,0,0,0.04);font-size:15px;line-height:1.45}
-    .testimonial .author{margin-top:10px;font-size:13px;font-weight:700;color:#00467F}
+    /* ====== TESTIMONIALS SLIDER (compact) ====== */
+    .testimonials{background:#f7f8fa;padding:18px 12px;margin-top:18px;border-radius:14px;border:1px solid #e0e4eb;max-width:760px;margin-left:auto;margin-right:auto}
+    .testimonials h2{font-size:18px;font-weight:800;margin:0 0 10px;text-align:center}
+    .t-slider{position:relative;overflow:hidden}
+    .t-track{display:flex;transition:transform .4s ease;will-change:transform}
+    .t-slide{min-width:100%;padding:0 6px}
+    .t-card{background:#fff;border:1px solid #e0e4eb;border-radius:12px;padding:16px;box-shadow:0 3px 10px rgba(0,0,0,.04);font-size:15px;line-height:1.5}
+    .t-author{margin-top:10px;font-size:13px;font-weight:700;color:#00467F}
+    .t-dots{display:flex;gap:6px;justify-content:center;margin-top:10px}
+    .t-dot{width:6px;height:6px;border-radius:50%;background:#c7cfdb;border:0;padding:0}
+    .t-dot[aria-current="true"]{background:#00467F}
+    .t-nav{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:1px solid #dfe5ee;width:32px;height:32px;border-radius:999px;display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+    .t-prev{left:6px}
+    .t-next{right:6px}
+    @media(min-width:768px){ .testimonials{padding:22px 16px} .t-card{padding:18px} }
 
     /* Footer */
     footer{background:#00467F;color:#fff;margin-top:0px}
@@ -165,14 +173,8 @@
     footer nav{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
     footer a{color:#fff;text-decoration:underline;text-underline-offset:3px}
     
-    .poster {
-      margin-bottom: 0;        /* remove outside gap */
-      padding-bottom: 40px;    /* extend background down behind card */
-    }
-
-    .card {
-      margin-bottom: 40px;     /* spacing between card bottom and footer */
-    }
+    .poster { margin-bottom:0; padding-bottom:40px; }
+    .card { margin-bottom:40px; }
 
     /* Privacy note under stepbar */
     .privacy-note{margin:-6px 0 10px;font-size:12.5px;color:var(--muted)}
@@ -336,19 +338,28 @@
           </blockquote>
         </div>
 
-        <!-- Minimal Testimonials -->
-        <section class="testimonials">
+        <!-- ====== Testimonials Slider (compact) ====== -->
+        <section class="testimonials" id="testimonials">
           <h2>What clients say</h2>
-          <div class="testimonial-grid">
-            <div class="testimonial">
-              <p>“Kim did exactly what she promised, kept us informed, and brought an offer above expectations after the second open home. We even received an advertising refund. Highly recommend.”</p>
-              <div class="author">— Murray &amp; Diane</div>
-            </div>
-            <div class="testimonial">
-              <p>“Absolutely fantastic — excellent communication and professionalism. The whole process was easy and full of integrity. Her positive, helpful energy made a real difference.”</p>
-              <div class="author">— Seller in Nelson</div>
+          <div class="t-slider" aria-roledescription="carousel">
+            <button class="t-nav t-prev" aria-label="Previous testimonial">&larr;</button>
+            <button class="t-nav t-next" aria-label="Next testimonial">&rarr;</button>
+            <div class="t-track">
+              <div class="t-slide">
+                <div class="t-card">
+                  <p>“Kim did exactly what she promised, kept us informed, and brought an offer above expectations after the second open home. We even received an advertising refund. Highly recommend.”</p>
+                  <div class="t-author">— Murray &amp; Diane</div>
+                </div>
+              </div>
+              <div class="t-slide">
+                <div class="t-card">
+                  <p>“Absolutely fantastic — excellent communication and professionalism. The whole process was easy and full of integrity. Her positive, helpful energy made a real difference.”</p>
+                  <div class="t-author">— Seller in Nelson</div>
+                </div>
+              </div>
             </div>
           </div>
+          <div class="t-dots" role="tablist" aria-label="Testimonials"></div>
         </section>
 
       </div>
@@ -368,7 +379,7 @@
     </div>
   </footer>
 
-  <!-- Multistep form logic (vanilla JS) -->
+  <!-- Scripts -->
   <script>
     (function(){
       const form = document.getElementById('lead-form');
@@ -441,6 +452,53 @@
           console.error(err);
         }
       });
+    })();
+
+    /* ====== Tiny testimonials carousel ====== */
+    (function(){
+      const root = document.getElementById('testimonials');
+      if(!root) return;
+      const track = root.querySelector('.t-track');
+      const slides = Array.from(track.children);
+      const prev = root.querySelector('.t-prev');
+      const next = root.querySelector('.t-next');
+      const dots = root.querySelector('.t-dots');
+      let index = 0, timer = null, auto = 6000, startX = 0, deltaX = 0;
+
+      // build dots
+      slides.forEach((_, i) => {
+        const b = document.createElement('button');
+        b.className = 't-dot'; b.type = 'button';
+        b.setAttribute('aria-label', `Show testimonial ${i+1}`);
+        b.addEventListener('click', () => { index = i; restart(); update(); });
+        dots.appendChild(b);
+      });
+
+      function update(){
+        track.style.transform = `translateX(-${index*100}%)`;
+        [...dots.children].forEach((d,i)=>d.setAttribute('aria-current', i===index ? 'true' : 'false'));
+      }
+
+      function prevSlide(){ index = (index - 1 + slides.length) % slides.length; update(); }
+      function nextSlide(){ index = (index + 1) % slides.length; update(); }
+
+      prev.addEventListener('click', ()=>{ prevSlide(); restart(); });
+      next.addEventListener('click', ()=>{ nextSlide(); restart(); });
+
+      function play(){ timer = setInterval(nextSlide, auto); }
+      function stop(){ if(timer) clearInterval(timer); timer = null; }
+      function restart(){ stop(); play(); }
+
+      // Pause on hover (desktop)
+      root.addEventListener('mouseenter', stop);
+      root.addEventListener('mouseleave', play);
+
+      // Touch swipe
+      track.addEventListener('touchstart', (e)=>{ startX = e.touches[0].clientX; stop(); }, {passive:true});
+      track.addEventListener('touchmove', (e)=>{ deltaX = e.touches[0].clientX - startX; }, {passive:true});
+      track.addEventListener('touchend', ()=>{ if(Math.abs(deltaX) > 40){ deltaX < 0 ? nextSlide() : prevSlide(); } deltaX = 0; play(); });
+
+      update(); play();
     })();
   </script>
 </body>
