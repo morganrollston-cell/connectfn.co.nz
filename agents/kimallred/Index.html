@@ -315,6 +315,98 @@
             </div>
           </form>
         </div>
+        
+      					/* Form shell */
+		.form-shell {
+  		margin-top: 20px;
+		}
+
+/* Progress bar upgrade */
+.stepbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 20px;
+}
+.bar {
+  flex: 1;
+  height: 6px;
+  background: #e1e6ef;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.bar .fill {
+  height: 100%;
+  width: 0;
+  background: var(--brand);
+  transition: width .3s ease;
+}
+.count {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* Step card */
+.step {
+  background: #fff;
+  border: 1px solid var(--stroke);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+}
+
+/* Labels + inputs */
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+  display: block;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #cdd5e0;
+  border-radius: 10px;
+  font: inherit;
+  transition: border-color .2s, box-shadow .2s;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(0,70,127,0.15);
+  outline: none;
+}
+
+/* Buttons */
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+.btn {
+  flex: 1;
+  border: 0;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s, transform .1s;
+}
+.btn.primary {
+  background: var(--brand);
+  color: #fff;
+}
+.btn.primary:hover {
+  background: #003966;
+}
+.btn.secondary {
+  background: #eef2f8;
+  color: #173257;
+}
+.btn:active {
+  transform: scale(0.98);
+}
 
         <!-- Agent block -->
         <div class="agent" aria-labelledby="agent-heading">
