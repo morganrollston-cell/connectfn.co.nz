@@ -29,7 +29,6 @@
       --max:1100px;
       --shadow:0 10px 30px rgba(0,0,0,.08);
       --accent:#0A84FF;
-      /* <<< set your form background image here >>> */
       --form-bg:url('/assets/images/agents/kim/form-bg.jpg');
     }
     *{box-sizing:border-box}
@@ -74,7 +73,20 @@
       background:linear-gradient(to top, rgba(10,132,255,.18) 0, rgba(10,132,255,.18) .55em, transparent .55em);
       border-radius:4px; padding:0 .04em; box-decoration-break:clone;
     }
-    .lede{ margin:6px 0 12px; color:#2b3340; font-size:clamp(15px,2.8vw,18px); }
+    /* Visual emphasis on "48 hours" */
+    .time-burst{
+      display:inline-block;
+      background:#e9f1ff;
+      border:1px solid #d5e4ff;
+      color:#173b6c;
+      border-radius:6px;
+      padding:0 .3em;
+      font-weight:800;
+    }
+
+    .lede{ margin:6px 0 6px; color:#2b3340; font-size:clamp(15px,2.8vw,18px); }
+    /* Urgency micro-copy */
+    .urgency-note{color:#173b6c;font-weight:700;font-size:13px;margin:0 0 12px}
 
     .includes{margin:14px 0 8px}
     .includes .title{display:inline-block;background:var(--brand);color:#fff;padding:8px 12px;border-radius:8px;font-weight:700;font-size:15px}
@@ -103,20 +115,27 @@
       border-radius:16px;
       overflow:hidden;
       margin-top:12px;
-      /* background image */
       background-image: linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.25)), var(--form-bg);
       background-size:cover;
       background-position:center;
-      /* add subtle border to separate from content above */
       border:1px solid rgba(0,0,0,.06);
     }
-    /* translucent panel for the actual form */
     .form-wrap .form-shell{
       backdrop-filter:saturate(130%) blur(6px);
       background:rgba(255,255,255,.85);
-      border-top:0;             /* our wrapper provides the border */
-      padding:18px 18px 12px;   /* a bit more internal padding */
-      margin:0;                 /* reset previous margin */
+      border-top:0;
+      padding:18px 18px 12px;
+      margin:0;
+    }
+
+    /* === Trust/region badges near form === */
+    .trust-row{
+      display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px
+    }
+    .k-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      background:#f0f5ff;border:1px solid #dfe7f8;color:#183b6c;
+      border-radius:999px;padding:6px 10px;font-size:12px;font-weight:700;
     }
 
     /* === Multi-step Form Styling === */
@@ -178,53 +197,14 @@
 
     /* Privacy note under stepbar */
     .privacy-note{margin:-6px 0 10px;font-size:12.5px;color:var(--muted)}
-    
-    /* === Testimonials Section === */
-.testimonials {
-  margin: 40px auto;
-  text-align: center;
-  max-width: 760px;
-  padding: 0 16px;
-}
 
-.testimonials h2 {
-  font-size: clamp(22px, 4vw, 28px);
-  font-weight: 800;
-  color: var(--ink);
-  margin-bottom: 20px;
-  position: relative;
-  display: inline-block;
-  padding-bottom: 8px;
-}
+    /* Testimonials heading flourish */
+    .testimonials { margin: 40px auto; text-align: center; max-width: 760px; padding: 0 16px; }
+    .testimonials h2 { font-size: clamp(22px, 4vw, 28px); font-weight: 800; color: var(--ink); margin-bottom: 20px; position: relative; display: inline-block; padding-bottom: 8px; }
+    .testimonials h2::after { content: ""; display: block; width: 60%; max-width: 140px; height: 3px; background: var(--brand); border-radius: 2px; margin: 8px auto 0; }
 
-.testimonials h2::after {
-  content: "";
-  display: block;
-  width: 60%;
-  max-width: 140px;
-  height: 3px;
-  background: var(--brand);
-  border-radius: 2px;
-  margin: 8px auto 0;
-}
-
-.agent .badge {
-  display: inline-block;
-  background: var(--brand);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  padding: 3px 8px;
-  border-radius: 999px;
-  margin-top: 4px;
-}
-.agent blockquote {
-  margin: 10px 0 0;
-  color: #2b3340;
-  font-size: 15px;
-  font-weight: 500;
-}
-    
+    .agent .badge { display:inline-block; background:var(--brand); color:#fff; font-size:13px; font-weight:600; padding:3px 8px; border-radius:999px; margin-top:4px; }
+    .agent blockquote { margin:10px 0 0; color:#2b3340; font-size:15px; font-weight:500; }
   </style>
 </head>
 <body>
@@ -243,32 +223,33 @@
     <div class="wrap">
       <div class="card" id="card">
         <span class="eyebrow">First National Connect • Nelson &amp; Tasman</span>
-        <h1>Find out your <span class="highlight">property's true value</span> in 48 hours — Free &amp; Local.</h1>
-        <p class="lede">Get expert advice, comparable sales, and your personalised property report - all within 2 days</p>
+        <h1>Find out your <span class="highlight">property's true value</span> in <span class="time-burst">48 hours</span> — Free &amp; Local.</h1>
+        <p class="lede">Get expert advice, comparable sales, and your personalised property report — all within 2 days.</p>
+        <p class="urgency-note">Limited spots this month.</p>
 
         <div class="includes">
-         <span class="title">Our free report includes</span>
-<ul class="ticks">
-  <li>
-    <span class="tick" aria-hidden="true">
-      <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
-    </span>
-    In-person report summary and consultation on how to maximise your sale price.
-  </li>
-  <li>
-    <span class="tick" aria-hidden="true">
-      <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
-    </span>
-    Comparable local sales &amp; your current market value.
-  </li>
-  <li>
-    <span class="tick" aria-hidden="true">
-      <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
-    </span>
-    Chance to win up to <strong>$5,000</strong> <span class="fine">— limited-time promotion (T&amp;Cs apply)</span>.
-  </li>
-</ul>
-</div>
+          <span class="title">Our free report includes</span>
+          <ul class="ticks">
+            <li>
+              <span class="tick" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
+              </span>
+              In-person report summary and consultation on how to maximise your sale price.
+            </li>
+            <li>
+              <span class="tick" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
+              </span>
+              Comparable local sales &amp; your current market value.
+            </li>
+            <li>
+              <span class="tick" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
+              </span>
+              Chance to win up to <strong>$5,000</strong> <span class="fine">— limited-time promotion (T&amp;Cs apply)</span>.
+            </li>
+          </ul>
+        </div>
 
         <!-- Callout that points to the form -->
         <div class="form-intro">
@@ -281,6 +262,13 @@
         <!-- === FORM (with background image) === -->
         <div class="form-wrap">
           <div class="form-shell">
+
+            <!-- NEW: trust/region badges near the form -->
+            <div class="trust-row">
+              <span class="k-badge">Nelson &amp; Tasman homeowners only</span>
+              <span class="k-badge">Licensed under REAA 2008</span>
+            </div>
+
             <div class="stepbar">
               <div class="bar" aria-hidden="true"><div class="fill" id="fill" style="width:0%"></div></div>
               <span class="count"><span id="stepNum">1</span> of <span id="stepTotal">5</span></span>
@@ -365,18 +353,18 @@
         <!-- === /FORM === -->
 
         <!-- Agent block -->
-<div class="agent" aria-labelledby="agent-heading">
-  <div class="bio">
-    <img src="/assets/images/Kim-Allred-Headshot.png" alt="Kim Allred" loading="lazy" />
-    <div>
-      <strong id="agent-heading">Kim Allred</strong><br/>
-      <span class="badge">Nelson/Tasman Local Expert</span>
-    </div>
-  </div>
-  <blockquote>
-    <p>Kim Allred — helping homeowners sell smarter.</p>
-  </blockquote>
-</div>
+        <div class="agent" aria-labelledby="agent-heading">
+          <div class="bio">
+            <img src="/assets/images/Kim-Allred-Headshot.png" alt="Kim Allred" loading="lazy" />
+            <div>
+              <strong id="agent-heading">Kim Allred</strong><br/>
+              <span class="badge">Nelson/Tasman Local Expert</span>
+            </div>
+          </div>
+          <blockquote>
+            <p>Kim Allred — helping homeowners sell smarter.</p>
+          </blockquote>
+        </div>
 
         <!-- ====== Testimonials Slider (compact) ====== -->
         <section class="testimonials" id="testimonials">
@@ -505,7 +493,6 @@
       const dots = root.querySelector('.t-dots');
       let index = 0, timer = null, auto = 6000, startX = 0, deltaX = 0;
 
-      // build dots
       slides.forEach((_, i) => {
         const b = document.createElement('button');
         b.className = 't-dot'; b.type = 'button';
@@ -529,11 +516,9 @@
       function stop(){ if(timer) clearInterval(timer); timer = null; }
       function restart(){ stop(); play(); }
 
-      // Pause on hover (desktop)
       root.addEventListener('mouseenter', stop);
       root.addEventListener('mouseleave', play);
 
-      // Touch swipe
       track.addEventListener('touchstart', (e)=>{ startX = e.touches[0].clientX; stop(); }, {passive:true});
       track.addEventListener('touchmove', (e)=>{ deltaX = e.touches[0].clientX - startX; }, {passive:true});
       track.addEventListener('touchend', ()=>{ if(Math.abs(deltaX) > 40){ deltaX < 0 ? nextSlide() : prevSlide(); } deltaX = 0; play(); });
