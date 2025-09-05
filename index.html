@@ -2193,7 +2193,7 @@ function initAddressAutocomplete(){
     const vh = window.innerHeight || document.documentElement.clientHeight;
 
     // Consider a bottom buffer so we hide *before* the real button overlaps the sticky CTA
-    const bottomBuffer = Math.round(vh * 0.35); // 35% of viewport from bottom
+    const bottomBuffer = Math.round(vh * 0.6); // 35% of viewport from bottom
 
     return submitBtns.some(btn => {
       const r = btn.getBoundingClientRect();
