@@ -2175,7 +2175,7 @@ function initAddressAutocomplete(){
   }
 })();
 
-/* Hide the floating CTA once the Email field is reached (mobile only) */
+/* Show sticky CTA only when the real submit button is NOT in view (mobile only) */
 (function(){
   const isMobile = window.matchMedia('(max-width:900px)');
   if (!isMobile.matches) return;
@@ -2183,33 +2183,28 @@ function initAddressAutocomplete(){
   const cta = document.querySelector('.cta-sticky');
   if (!cta) return;
 
-  // Email inputs in both forms
-  const emailTargets = [
-    document.querySelector('#leadFormDesktop input[name="email"]'),
-    document.querySelector('#leadFormMobile  input[name="email"]')
-  ].filter(Boolean);
-
-  if (emailTargets.length === 0) return;
+  // Watch both mobile + desktop submit buttons
+  const submitBtns = Array.from(document.querySelectorAll('form button[type="submit"]'));
+  if (submitBtns.length === 0) return;
 
   let ticking = false;
 
-  function pastEmail(){
+  function submitVisible(){
     const vh = window.innerHeight || document.documentElement.clientHeight;
 
-    // Where in the viewport should we hide?
-    // 0.65 means "once the email field's top crosses 65% of the viewport height"
-    // (increase to hide earlier, e.g. 0.75 or 0.8)
-    const triggerLine = vh * 0.65;
+    // 10% from the bottom of viewport = threshold zone
+    const threshold = vh * 0.10;
 
-    return emailTargets.some(el => {
-      const r = el.getBoundingClientRect();
-      return r.top < triggerLine; // email is in/above the trigger zone
+    return submitBtns.some(btn => {
+      const r = btn.getBoundingClientRect();
+      // Check if the button's top is within the bottom 10% of the screen
+      return r.top < (vh - threshold) && r.bottom > 0;
     });
   }
 
   function update(){
-    const hide = pastEmail();
-    cta.classList.toggle('is-hidden', hide);
+    const hideSticky = submitVisible();
+    cta.classList.toggle('is-hidden', hideSticky);
     ticking = false;
   }
 
@@ -2220,12 +2215,10 @@ function initAddressAutocomplete(){
     }
   }
 
-  // Run now and on changes
-  update();
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
-  window.addEventListener('orientationchange', onScroll);
-  window.addEventListener('load', () => setTimeout(update, 100));
+  update(); // run once on load
+  window.addEventListener('scroll', onScroll, { passive:true });
+  window.addEventListener('resize', update);
+  window.addEventListener('orientationchange', update);
 })();
 </script>
 </body>
