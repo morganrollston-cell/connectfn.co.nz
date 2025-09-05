@@ -2007,46 +2007,6 @@ document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
   restart();
 })();
 
-/* Hide floating CTA when a real submit button is visible */
-(function(){
-  // Only run on mobile
-  if (!window.matchMedia('(max-width:900px)').matches) return;
-
-  const cta = document.querySelector('.cta-sticky');
-  if (!cta) return;
-
-  // Observe ALL submit buttons (desktop + mobile forms)
-  const submitBtns = Array.from(document.querySelectorAll('form button[type="submit"]'));
-  if (submitBtns.length === 0) return;
-
-  // Track which observed targets are currently visible
-  const visibleSet = new Set();
-
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      const id = entry.target.dataset.obsId;
-      if (entry.isIntersecting) visibleSet.add(id);
-      else visibleSet.delete(id);
-    });
-
-    // If ANY submit button is in view, hide the floating CTA
-    if (visibleSet.size > 0) {
-      cta.classList.add('is-hidden');
-    } else {
-      cta.classList.remove('is-hidden');
-    }
-  }, {
-    // Start hiding a little before the button reaches the very bottom of the viewport
-    rootMargin: '0px 0px -35% 0px',
-    threshold: [0, 0.05, 0.5]
-  });
-
-  submitBtns.forEach((btn, i) => {
-    btn.dataset.obsId = String(i);
-    io.observe(btn);
-  });
-})();
-
 // === Netlify form handler ===
 (function () {
   function getUTMParams() {
@@ -2213,6 +2173,58 @@ function initAddressAutocomplete(){
       setTimeout(()=>target?.querySelector('input,select')?.focus(),400);
     });
   }
+})();
+
+/* Hide the floating CTA when any real submit button is on-screen (mobile only) */
+(function(){
+  const isMobile = window.matchMedia('(max-width:900px)');
+  if (!isMobile.matches) return;
+
+  const cta = document.querySelector('.cta-sticky');
+  if (!cta) return;
+
+  // Watch all submit buttons (desktop + mobile forms)
+  const submitBtns = Array.from(document.querySelectorAll('form button[type="submit"]'));
+  if (submitBtns.length === 0) return;
+
+  let ticking = false;
+
+  function anySubmitVisible(){
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+
+    // Consider a bottom buffer so we hide *before* the real button overlaps the sticky CTA
+    const bottomBuffer = Math.round(vh * 0.35); // 35% of viewport from bottom
+
+    return submitBtns.some(btn => {
+      const r = btn.getBoundingClientRect();
+      // Visible if any part is within viewport, but we shrink the effective bottom by bottomBuffer
+      const topInView    = r.top   < (vh - bottomBuffer);
+      const bottomInView = r.bottom > 0;
+      return topInView && bottomInView;
+    });
+  }
+
+  function update(){
+    const showSticky = !anySubmitVisible();
+    cta.classList.toggle('is-hidden', !showSticky);
+    ticking = false;
+  }
+
+  function onScroll(){
+    if (!ticking){
+      window.requestAnimationFrame(update);
+      ticking = true;
+    }
+  }
+
+  // Run once now; then on events
+  update();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  window.addEventListener('orientationchange', onScroll);
+
+  // If fonts/images/layout shift after load, re-check once more
+  window.addEventListener('load', () => setTimeout(update, 100));
 })();
 </script>
 </body>
