@@ -2175,7 +2175,7 @@ function initAddressAutocomplete(){
   }
 })();
 
-/* Hide the floating CTA when any real submit button is on-screen (mobile only) */
+/* Hide the floating CTA once the Email field is reached (mobile only) */
 (function(){
   const isMobile = window.matchMedia('(max-width:900px)');
   if (!isMobile.matches) return;
@@ -2183,30 +2183,33 @@ function initAddressAutocomplete(){
   const cta = document.querySelector('.cta-sticky');
   if (!cta) return;
 
-  // Watch all submit buttons (desktop + mobile forms)
-  const submitBtns = Array.from(document.querySelectorAll('form button[type="submit"]'));
-  if (submitBtns.length === 0) return;
+  // Email inputs in both forms
+  const emailTargets = [
+    document.querySelector('#leadFormDesktop input[name="email"]'),
+    document.querySelector('#leadFormMobile  input[name="email"]')
+  ].filter(Boolean);
+
+  if (emailTargets.length === 0) return;
 
   let ticking = false;
 
-  function anySubmitVisible(){
+  function pastEmail(){
     const vh = window.innerHeight || document.documentElement.clientHeight;
 
-    // Consider a bottom buffer so we hide *before* the real button overlaps the sticky CTA
-    const bottomBuffer = Math.round(vh * 0.8); // 35% of viewport from bottom
+    // Where in the viewport should we hide?
+    // 0.65 means "once the email field's top crosses 65% of the viewport height"
+    // (increase to hide earlier, e.g. 0.75 or 0.8)
+    const triggerLine = vh * 0.65;
 
-    return submitBtns.some(btn => {
-      const r = btn.getBoundingClientRect();
-      // Visible if any part is within viewport, but we shrink the effective bottom by bottomBuffer
-      const topInView    = r.top   < (vh - bottomBuffer);
-      const bottomInView = r.bottom > 0;
-      return topInView && bottomInView;
+    return emailTargets.some(el => {
+      const r = el.getBoundingClientRect();
+      return r.top < triggerLine; // email is in/above the trigger zone
     });
   }
 
   function update(){
-    const showSticky = !anySubmitVisible();
-    cta.classList.toggle('is-hidden', !showSticky);
+    const hide = pastEmail();
+    cta.classList.toggle('is-hidden', hide);
     ticking = false;
   }
 
@@ -2217,13 +2220,11 @@ function initAddressAutocomplete(){
     }
   }
 
-  // Run once now; then on events
+  // Run now and on changes
   update();
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
   window.addEventListener('orientationchange', onScroll);
-
-  // If fonts/images/layout shift after load, re-check once more
   window.addEventListener('load', () => setTimeout(update, 100));
 })();
 </script>
