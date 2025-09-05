@@ -1106,6 +1106,20 @@ main > section.ljt{
   }
   body{ padding-bottom:80px; }
 
+/* Hide/show animation for the floating CTA */
+@media (max-width: 900px){
+  .cta-sticky.is-hidden{
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(24px);
+    pointer-events: none;
+    transition: opacity .18s ease, transform .18s ease, visibility 0s .18s;
+  }
+  .cta-sticky{
+    transition: opacity .18s ease, transform .18s ease;
+  }
+}
+
   /* Timeframe dropdown → pill buttons */
   #leadFormMobile select[name="timeframe"]{ display:none !important; }
   #leadFormMobile .timeframe-pills{
@@ -1991,6 +2005,46 @@ document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
   stage?.addEventListener('mouseenter', ()=>clearInterval(timer));
   stage?.addEventListener('mouseleave', restart);
   restart();
+})();
+
+/* Hide floating CTA when a real submit button is visible */
+(function(){
+  // Only run on mobile
+  if (!window.matchMedia('(max-width:900px)').matches) return;
+
+  const cta = document.querySelector('.cta-sticky');
+  if (!cta) return;
+
+  // Observe ALL submit buttons (desktop + mobile forms)
+  const submitBtns = Array.from(document.querySelectorAll('form button[type="submit"]'));
+  if (submitBtns.length === 0) return;
+
+  // Track which observed targets are currently visible
+  const visibleSet = new Set();
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const id = entry.target.dataset.obsId;
+      if (entry.isIntersecting) visibleSet.add(id);
+      else visibleSet.delete(id);
+    });
+
+    // If ANY submit button is in view, hide the floating CTA
+    if (visibleSet.size > 0) {
+      cta.classList.add('is-hidden');
+    } else {
+      cta.classList.remove('is-hidden');
+    }
+  }, {
+    // Start hiding a little before the button reaches the very bottom of the viewport
+    rootMargin: '0px 0px -35% 0px',
+    threshold: [0, 0.05, 0.5]
+  });
+
+  submitBtns.forEach((btn, i) => {
+    btn.dataset.obsId = String(i);
+    io.observe(btn);
+  });
 })();
 
 // === Netlify form handler ===
