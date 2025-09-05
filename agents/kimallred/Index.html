@@ -207,6 +207,23 @@
   border-radius: 2px;
   margin: 8px auto 0;
 }
+
+.agent .badge {
+  display: inline-block;
+  background: var(--brand);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  margin-top: 4px;
+}
+.agent blockquote {
+  margin: 10px 0 0;
+  color: #2b3340;
+  font-size: 15px;
+  font-weight: 500;
+}
     
   </style>
 </head>
@@ -348,19 +365,18 @@
         <!-- === /FORM === -->
 
         <!-- Agent block -->
-        <div class="agent" aria-labelledby="agent-heading">
-          <div class="bio">
-            <img src="/assets/images/Kim-Allred-Headshot.png" alt="Kim Allred" loading="lazy" />
-            <div>
-              <strong id="agent-heading">Kim Allred</strong><br/>
-              Sales Consultant Nelson/Tasman<br/>
-            </div>
-          </div>
-          <blockquote>
-            <p>“Whether you're planning to sell soon or just want to stay informed, our local expertise gives you a clear picture of your home's current value and what’s really happening in your neighbourhood market.”</p>
-            <div class="sig">Fill out the form to request your free appraisal now! We Put <em>You</em> First.</div>
-          </blockquote>
-        </div>
+<div class="agent" aria-labelledby="agent-heading">
+  <div class="bio">
+    <img src="/assets/images/Kim-Allred-Headshot.png" alt="Kim Allred" loading="lazy" />
+    <div>
+      <strong id="agent-heading">Kim Allred</strong><br/>
+      <span class="badge">Nelson/Tasman Local Expert</span>
+    </div>
+  </div>
+  <blockquote>
+    <p>Kim Allred — helping homeowners sell smarter.</p>
+  </blockquote>
+</div>
 
         <!-- ====== Testimonials Slider (compact) ====== -->
         <section class="testimonials" id="testimonials">
