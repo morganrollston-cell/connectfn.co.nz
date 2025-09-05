@@ -28,7 +28,7 @@
       --stroke:#e8eaf0;
       --max:1100px;
       --shadow:0 10px 30px rgba(0,0,0,.08);
-      --accent:#0A84FF;
+      --accent:#0A84FF; /* bright blue for CTA */
       --form-bg:url('/assets/images/agents/kim/form-bg.jpg');
     }
     *{box-sizing:border-box}
@@ -59,7 +59,6 @@
       max-width:760px;margin:auto;padding:18px
     }
 
-    /* --- Hero text (refined) --- */
     .eyebrow{
       display:inline-flex;gap:8px;align-items:center;
       font-weight:700;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:#173b6c;
@@ -74,14 +73,6 @@
       border-radius:4px; padding:0 .04em; box-decoration-break:clone;
     }
     .lede{ margin:6px 0 6px; color:#2b3340; font-size:clamp(15px,2.8vw,18px); }
-
-    /* Sticky CTA (sits just under subheadline, stays visible as you scroll the hero) */
-    .sticky-cta{
-      position:sticky; top:8px; z-index:2; display:inline-block;
-      margin:10px 0 6px; padding:12px 16px; border-radius:12px; font-weight:800;
-      background:#109e6e; color:#fff;
-    }
-    .sticky-cta:hover{ filter:brightness(.95) }
 
     /* Urgency micro-copy */
     .urgency-note{color:#173b6c;font-weight:700;font-size:13px;margin:0 0 12px}
@@ -175,7 +166,6 @@
     .t-card{background:#fff;border:1px solid #e0e4eb;border-radius:12px;padding:16px;box-shadow:0 3px 10px rgba(0,0,0,.04);font-size:15px;line-height:1.5}
     .t-author{margin-top:10px;font-size:13px;font-weight:700;color:#00467F}
     .t-dots{display:flex;gap:6px;justify-content:center;margin-top:10px}
-    .t-dot{width:6px;height:6px;border-radius:50%;background:#c7cfdb;border:0;padding:0}
     .t-dot[aria-current="true"]{background:#00467F}
     .t-nav{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:1px solid #dfe5ee;width:32px;height:32px;border-radius:999px;display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
     .t-prev{left:6px}
@@ -210,6 +200,26 @@
     .nowrap { white-space: nowrap; }
     .ticks li.prize { align-items: center; }
     .ticks li.prize .fine { margin-left:6px; }
+
+    /* NEW: Floating CTA */
+    .floating-cta{
+      position:fixed;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:14px;
+      z-index:1000;
+      background:var(--accent);
+      color:#fff;
+      font-weight:800;
+      padding:14px 18px;
+      border-radius:14px;
+      box-shadow:0 10px 24px rgba(10,132,255,.35);
+      text-decoration:none;
+    }
+    .floating-cta.hide{
+      opacity:0; pointer-events:none; transform:translateX(-50%) translateY(8px);
+      transition:opacity .25s ease, transform .25s ease;
+    }
   </style>
 </head>
 <body>
@@ -230,10 +240,6 @@
         <span class="eyebrow">First National Connect • Nelson &amp; Tasman</span>
         <h1>Find out your <span class="highlight">Nelson &amp; Tasman</span> property value in <span class="highlight">48 hours</span> — Free &amp; Local.</h1>
         <p class="lede">Get expert advice, comparable sales, and a personalised property report — fast.</p>
-
-        <!-- Sticky CTA above the fold -->
-        <a href="#address" class="sticky-cta">Check My Property Value →</a>
-
         <p class="urgency-note">Limited spots this month.</p>
 
         <div class="includes">
@@ -253,14 +259,11 @@
             </li>
             <li class="prize">
               <span class="icon" aria-hidden="true">
-                <!-- Gift / present icon -->
                 <svg viewBox="0 0 24 24">
                   <path d="M20 7h-2.18A3.5 3.5 0 0 0 12 4.5 3.5 3.5 0 0 0 6.18 7H4a1 1 0 0 0-1 1v3h9V8h2v3h9V8a1 1 0 0 0-1-1ZM9.5 6a1.5 1.5 0 1 1 0 3H7.2A1.5 1.5 0 1 1 9.5 6Zm5 0a1.5 1.5 0 1 1 2.3 3H14.5a1.5 1.5 0 0 1 0-3ZM3 13v7a2 2 0 0 0 2 2h6v-9H3Zm10 0v9h6a2 2 0 0 0 2-2v-7h-8z"/>
                 </svg>
               </span>
-              <span>
-                Chance to win <span class="nowrap"><strong>$5,000</strong></span> — limited-time offer.
-              </span>
+              <span>Chance to win <strong>$5,000</strong> — limited-time offer.</span>
             </li>
           </ul>
         </div>
@@ -277,7 +280,7 @@
         <div class="form-wrap">
           <div class="form-shell">
 
-            <!-- NEW: trust/region badges near the form -->
+            <!-- trust/region badges near the form -->
             <div class="trust-row">
               <span class="k-badge">Nelson &amp; Tasman homeowners only</span>
               <span class="k-badge">Licensed under REAA 2008</span>
@@ -289,7 +292,6 @@
               <span class="count"><span id="stepNum">1</span> of <span id="stepTotal">5</span></span>
             </div>
 
-            <!-- Privacy micro-copy -->
             <p class="privacy-note">Your details are safe — used only for preparing your appraisal.</p>
 
             <form id="lead-form" name="kim allred leads" method="POST" data-netlify="true" netlify-honeypot="bot-field">
@@ -408,6 +410,9 @@
       </div>
     </div>
   </section>
+
+  <!-- Floating CTA (outside the card) -->
+  <a href="#address" class="floating-cta" id="floating-cta">Check My Property Value →</a>
 
   <!-- Footer -->
   <footer>
@@ -539,6 +544,22 @@
       track.addEventListener('touchend', ()=>{ if(Math.abs(deltaX) > 40){ deltaX < 0 ? nextSlide() : prevSlide(); } deltaX = 0; play(); });
 
       update(); play();
+    })();
+
+    /* ====== Hide floating CTA when the form is visible ====== */
+    (function(){
+      const cta = document.getElementById('floating-cta');
+      const formWrap = document.querySelector('.form-wrap');
+      if(!cta || !formWrap || !('IntersectionObserver' in window)) return;
+
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){ cta.classList.add('hide'); }
+          else{ cta.classList.remove('hide'); }
+        });
+      }, { threshold: 0.4 });
+
+      io.observe(formWrap);
     })();
   </script>
 </body>
