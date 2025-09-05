@@ -2166,11 +2166,28 @@ function initAddressAutocomplete(){
 (function(){
   if (window.matchMedia('(max-width:900px)').matches) {
     const cta = document.querySelector('.cta-sticky');
-    cta?.addEventListener('click', e=>{
+    if (!cta) return;
+
+    cta.addEventListener('click', e => {
       e.preventDefault();
-      const target=document.getElementById('appraisal-form');
-      target?.scrollIntoView({behavior:'smooth', block:'start'});
-      setTimeout(()=>target?.querySelector('input,select')?.focus(),400);
+      const form = document.getElementById('appraisal-form')?.querySelector('form');
+      if (!form) return;
+
+      // Find the first empty required field
+      const requiredFields = Array.from(form.querySelectorAll('[required]'));
+      const firstEmpty = requiredFields.find(f => !f.value.trim());
+
+      if (firstEmpty) {
+        firstEmpty.focus();
+        form.reportValidity(); // Trigger native "Please fill out this field"
+      } else {
+        // If all required fields are filled, focus the submit button
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn?.focus();
+      }
+
+      // Smooth scroll the form into view
+      form.scrollIntoView({ behavior:'smooth', block:'start' });
     });
   }
 })();
