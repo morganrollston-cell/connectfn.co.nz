@@ -73,18 +73,16 @@
       background:linear-gradient(to top, rgba(10,132,255,.18) 0, rgba(10,132,255,.18) .55em, transparent .55em);
       border-radius:4px; padding:0 .04em; box-decoration-break:clone;
     }
-    /* Visual emphasis on "48 hours" */
-    .time-burst{
-      display:inline-block;
-      background:#e9f1ff;
-      border:1px solid #d5e4ff;
-      color:#173b6c;
-      border-radius:6px;
-      padding:0 .3em;
-      font-weight:800;
-    }
-
     .lede{ margin:6px 0 6px; color:#2b3340; font-size:clamp(15px,2.8vw,18px); }
+
+    /* Sticky CTA (sits just under subheadline, stays visible as you scroll the hero) */
+    .sticky-cta{
+      position:sticky; top:8px; z-index:2; display:inline-block;
+      margin:10px 0 6px; padding:12px 16px; border-radius:12px; font-weight:800;
+      background:#109e6e; color:#fff;
+    }
+    .sticky-cta:hover{ filter:brightness(.95) }
+
     /* Urgency micro-copy */
     .urgency-note{color:#173b6c;font-weight:700;font-size:13px;margin:0 0 12px}
 
@@ -206,14 +204,12 @@
     .agent .badge { display:inline-block; background:var(--brand); color:#fff; font-size:13px; font-weight:600; padding:3px 8px; border-radius:999px; margin-top:4px; }
     .agent blockquote { margin:10px 0 0; color:#2b3340; font-size:15px; font-weight:500; }
     
-    /* Gift icon + keep amount on one line */
-.icon { flex:0 0 auto; width:24px; height:24px; color:var(--brand); display:inline-grid; place-items:center; }
-.icon svg { width:100%; height:100%; fill:currentColor; }
-.nowrap { white-space: nowrap; }
-
-/* Slightly tighter layout for the prize row */
-.ticks li.prize { align-items: center; }
-.ticks li.prize .fine { margin-left:6px; }
+    /* Gift icon + keep amount on one line (for the prize bullet) */
+    .icon { flex:0 0 auto; width:24px; height:24px; color:var(--brand); display:inline-grid; place-items:center; }
+    .icon svg { width:100%; height:100%; fill:currentColor; }
+    .nowrap { white-space: nowrap; }
+    .ticks li.prize { align-items: center; }
+    .ticks li.prize .fine { margin-left:6px; }
   </style>
 </head>
 <body>
@@ -232,8 +228,12 @@
     <div class="wrap">
       <div class="card" id="card">
         <span class="eyebrow">First National Connect • Nelson &amp; Tasman</span>
-        <h1>Find out your <span class="highlight">property's true value</span> in <span class="highlight">48 hours</span> — Free &amp; Local.</h1>
-        <p class="lede">Get expert advice, comparable sales, and your personalised property report — all within 2 days.</p>
+        <h1>Find out your <span class="highlight">Nelson &amp; Tasman</span> property value in <span class="highlight">48 hours</span> — Free &amp; Local.</h1>
+        <p class="lede">Get expert advice, comparable sales, and a personalised property report — fast.</p>
+
+        <!-- Sticky CTA above the fold -->
+        <a href="#address" class="sticky-cta">Check My Property Value →</a>
+
         <p class="urgency-note">Limited spots this month.</p>
 
         <div class="includes">
@@ -243,26 +243,25 @@
               <span class="tick" aria-hidden="true">
                 <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
               </span>
-              In-person report summary and consultation on how to maximise your sale price.
+              Personalised advice to maximise your sale price.
             </li>
             <li>
               <span class="tick" aria-hidden="true">
                 <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
               </span>
-              Comparable local sales &amp; your current market value.
+              Comparable local sales + your current market value.
             </li>
             <li class="prize">
-  <span class="icon" aria-hidden="true">
-    <!-- Gift / present icon -->
-    <svg viewBox="0 0 24 24">
-      <path d="M20 7h-2.18A3.5 3.5 0 0 0 12 4.5 3.5 3.5 0 0 0 6.18 7H4a1 1 0 0 0-1 1v3h9V8h2v3h9V8a1 1 0 0 0-1-1ZM9.5 6a1.5 1.5 0 1 1 0 3H7.2A1.5 1.5 0 1 1 9.5 6Zm5 0a1.5 1.5 0 1 1 2.3 3H14.5a1.5 1.5 0 0 1 0-3ZM3 13v7a2 2 0 0 0 2 2h6v-9H3Zm10 0v9h6a2 2 0 0 0 2-2v-7h-8z"/>
-    </svg>
-  </span>
-  <span>
-    Chance to win up to <span class="nowrap"><strong>$5,000</strong></span>
-    <span class="fine">— limited-time promotion (T&amp;Cs apply)</span>
-  </span>
-</li>
+              <span class="icon" aria-hidden="true">
+                <!-- Gift / present icon -->
+                <svg viewBox="0 0 24 24">
+                  <path d="M20 7h-2.18A3.5 3.5 0 0 0 12 4.5 3.5 3.5 0 0 0 6.18 7H4a1 1 0 0 0-1 1v3h9V8h2v3h9V8a1 1 0 0 0-1-1ZM9.5 6a1.5 1.5 0 1 1 0 3H7.2A1.5 1.5 0 1 1 9.5 6Zm5 0a1.5 1.5 0 1 1 2.3 3H14.5a1.5 1.5 0 0 1 0-3ZM3 13v7a2 2 0 0 0 2 2h6v-9H3Zm10 0v9h6a2 2 0 0 0 2-2v-7h-8z"/>
+                </svg>
+              </span>
+              <span>
+                Chance to win <span class="nowrap"><strong>$5,000</strong></span> — limited-time offer.
+              </span>
+            </li>
           </ul>
         </div>
 
@@ -282,6 +281,7 @@
             <div class="trust-row">
               <span class="k-badge">Nelson &amp; Tasman homeowners only</span>
               <span class="k-badge">Licensed under REAA 2008</span>
+              <span class="k-badge">100% private</span>
             </div>
 
             <div class="stepbar">
@@ -359,7 +359,7 @@
                 <p class="fine">By submitting, you agree to the <a href="/#terms">Terms &amp; Conditions</a> and <a href="/#privacy">Privacy Policy</a>.</p>
                 <div class="actions">
                   <button class="btn secondary" data-prev>Back</button>
-                  <button class="btn primary" type="submit">Request my free appraisal</button>
+                  <button class="btn primary" type="submit">See My Free Report →</button>
                 </div>
               </div>
             </form>
@@ -377,7 +377,7 @@
             </div>
           </div>
           <blockquote>
-            <p>Kim Allred — helping homeowners sell smarter.</p>
+            <p>Helping homeowners sell smarter for 15+ years.</p>
           </blockquote>
         </div>
 
