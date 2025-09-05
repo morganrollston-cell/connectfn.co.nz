@@ -178,6 +178,36 @@
 
     /* Privacy note under stepbar */
     .privacy-note{margin:-6px 0 10px;font-size:12.5px;color:var(--muted)}
+    
+    /* === Testimonials Section === */
+.testimonials {
+  margin: 40px auto;
+  text-align: center;
+  max-width: 760px;
+  padding: 0 16px;
+}
+
+.testimonials h2 {
+  font-size: clamp(22px, 4vw, 28px);
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 8px;
+}
+
+.testimonials h2::after {
+  content: "";
+  display: block;
+  width: 60%;
+  max-width: 140px;
+  height: 3px;
+  background: var(--brand);
+  border-radius: 2px;
+  margin: 8px auto 0;
+}
+    
   </style>
 </head>
 <body>
@@ -196,38 +226,32 @@
     <div class="wrap">
       <div class="card" id="card">
         <span class="eyebrow">First National Connect • Nelson &amp; Tasman</span>
-        <h1>Get your Nelson &amp; Tasman <span class="highlight">property value</span> in 48 hours — free, fast &amp; local.</h1>
-        <p class="lede">Free, fast and local — get comparable sales, your current market value and in-person advice from our team.</p>
+        <h1>Find out your <span class="highlight">property's true value</span> in 48 hours — Free &amp; Local.</h1>
+        <p class="lede">Get expert advice, comparable sales, and your personalised property report - all within 2 days</p>
 
         <div class="includes">
-          <span class="title">Our free report includes</span>
-          <ul class="ticks">
-            <li>
-              <span class="tick" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
-              </span>
-              Sales information for comparable sold properties in your area.
-            </li>
-            <li>
-              <span class="tick" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
-              </span>
-              Approximate current market value for your property.
-            </li>
-            <li>
-              <span class="tick" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
-              </span>
-              In-person report summary and consultation on how to maximise your sale price.
-            </li>
-            <li>
-              <span class="tick" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
-              </span>
-              Plus go in the draw to win up to <strong>$5,000</strong>. <span class="fine">(T&amp;Cs apply)</span>
-            </li>
-          </ul>
-        </div>
+         <span class="title">Our free report includes</span>
+<ul class="ticks">
+  <li>
+    <span class="tick" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
+    </span>
+    In-person report summary and consultation on how to maximise your sale price.
+  </li>
+  <li>
+    <span class="tick" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
+    </span>
+    Comparable local sales &amp; your current market value.
+  </li>
+  <li>
+    <span class="tick" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M20.285 6.708a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.242-4.242a1 1 0 1 0-1.414 1.414l5 5a1 1 0 0 0 1.414 0l10.848-10.85z"/></svg>
+    </span>
+    Chance to win up to <strong>$5,000</strong> <span class="fine">— limited-time promotion (T&amp;Cs apply)</span>.
+  </li>
+</ul>
+</div>
 
         <!-- Callout that points to the form -->
         <div class="form-intro">
@@ -340,7 +364,7 @@
 
         <!-- ====== Testimonials Slider (compact) ====== -->
         <section class="testimonials" id="testimonials">
-          <h2>What clients say</h2>
+          <h2>Trusted by Nelson &amp; Tasman Homeowners</h2>
           <div class="t-slider" aria-roledescription="carousel">
             <button class="t-nav t-prev" aria-label="Previous testimonial">&larr;</button>
             <button class="t-nav t-next" aria-label="Next testimonial">&rarr;</button>
