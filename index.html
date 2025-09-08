@@ -2390,8 +2390,8 @@ function initAddressAutocomplete(){
   const cta = document.querySelector('.cta-sticky');
   if (!cta) return;
 
-  // Watch both mobile + desktop submit buttons
-  const submitBtns = Array.from(document.querySelectorAll('form button[type="submit"]'));
+// Watch both mobile + desktop submit + Next buttons
+const submitBtns = Array.from(document.querySelectorAll('form button[type="submit"], form .mf-next'));
   if (submitBtns.length === 0) return;
 
   let ticking = false;
