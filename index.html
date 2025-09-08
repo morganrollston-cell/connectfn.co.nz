@@ -1340,6 +1340,16 @@ main > section.ljt{
 @media (max-width:900px){
   #leadFormMobile .mf-back{ display:none !important; }
 }
+
+/* Mobile stepper visibility guardrails */
+@media (max-width:900px){
+  /* default: act like step 1 until JS flips class */
+  body:not(.mf-step-2) #leadFormMobile .mf-submit { display:none !important; }
+  body:not(.mf-step-1) #leadFormMobile .mf-next   { display:none !important; }
+
+  /* back button never shown */
+  #leadFormMobile .mf-back { display:none !important; }
+}
   </style>
   
 <!-- Favicon -->
@@ -1610,7 +1620,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <blockquote class="ljt-quote">
       Penelope sold our second property after 8 years with the same <strong>positive, no-nonsense approach</strong>.
       Her <strong>marketing skill, clear communication, and professional style</strong> made the process seamless.
-    </block quote>
+    </blockquote>
     <figcaption class="ljt-author">Appraisal &amp; sale, 2024</figcaption>
   </figure>
 </article>
@@ -2072,7 +2082,7 @@ document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
   restart();
 })();
 
-// ===== Mobile stepper (only Next on step 1; only Submit on step 2; no Back) =====
+// ===== Mobile stepper (robust) =====
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('leadFormMobile');
   if (!form) return;
@@ -2080,31 +2090,41 @@ document.addEventListener('DOMContentLoaded', function () {
   const step1 = form.querySelector('.mf-step[data-step="1"]');
   const step2 = form.querySelector('.mf-step[data-step="2"]');
   const nextBtn   = form.querySelector('.mf-next');
-  const backBtn   = form.querySelector('.mf-back');   // we’ll force-hide this
+  const backBtn   = form.querySelector('.mf-back');
   const submitBtn = form.querySelector('.mf-submit');
+  const stepLabel = document.getElementById('mf-step-label');
 
-  // Make sure Back is always hidden (defensive in case CSS doesn’t catch)
-  if (backBtn) backBtn.hidden = true;
+  // 1) Kill the Back button entirely (can’t reappear via CSS)
+  if (backBtn) backBtn.remove();
 
-  function showStep(n){
+  // 2) Helpers
+  function setStep(n){
     const onStep1 = n === 1;
-    if (step1) step1.hidden = !onStep1;
-    if (step2) step2.hidden = onStep1;
 
-    // Buttons: only Next on step 1, only Submit on step 2
+    // Toggle panels
+    if (step1) step1.hidden = !onStep1;
+    if (step2) step2.hidden =  onStep1;
+
+    // Toggle buttons (JS)
     if (nextBtn)   nextBtn.hidden   = !onStep1;
     if (submitBtn) submitBtn.hidden =  onStep1;
 
-    // Ensure Places binds when address field (step 1) becomes visible
+    // Add a body flag for CSS safety (belt + braces)
+    document.body.classList.toggle('mf-step-1', onStep1);
+    document.body.classList.toggle('mf-step-2', !onStep1);
+
+    // Update label
+    if (stepLabel) stepLabel.textContent = `Step ${onStep1 ? 1 : 2} of 2`;
+
+    // Ensure Places binds when step 1 is visible
     if (onStep1 && typeof window.ensureMobilePlaces === 'function'){
       window.ensureMobilePlaces();
     }
   }
 
-  // Step 1 basic validation before advancing
   function canAdvanceFromStep1(){
     const required = step1 ? Array.from(step1.querySelectorAll('[required]')) : [];
-    const firstEmpty = required.find(i => !i.value.trim());
+    const firstEmpty = required.find(i => !String(i.value || '').trim());
     if (firstEmpty){
       firstEmpty.focus();
       form.reportValidity();
@@ -2115,13 +2135,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   nextBtn?.addEventListener('click', (e) => {
     e.preventDefault();
-    if (canAdvanceFromStep1()) showStep(2);
+    if (canAdvanceFromStep1()) setStep(2);
   });
 
-  // Initialize
-  showStep(1);
+  // Init on step 1
+  setStep(1);
 });
-
 /* Bind Google Places to the mobile address input on demand */
 function ensureMobilePlaces(){
   const input = document.getElementById('addressMobile');
