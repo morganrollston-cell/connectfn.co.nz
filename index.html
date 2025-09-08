@@ -2068,15 +2068,23 @@ document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
   restart();
 })();
 
-/* MOBILE STEP FORM (works on mobile only) */
+/* MOBILE STEP FORM — hide Back always; show Submit only on step 2 */
 (function(){
   const form = document.getElementById('leadFormMobile');
   if (!form) return;
 
-  const steps     = Array.from(form.querySelectorAll('.mf-step'));
-  const nextBtn   = form.querySelector('.mf-next');
-  const submitBtn = form.querySelector('.mf-submit');
-  const stepLabel = document.getElementById('mf-step-label');
+  const steps      = Array.from(form.querySelectorAll('.mf-step'));
+  const nextBtn    = form.querySelector('.mf-next');
+  const submitBtn  = form.querySelector('.mf-submit');
+  const stepLabel  = document.getElementById('mf-step-label');
+  const backBtn    = form.querySelector('.mf-back'); // ensure back is gone
+
+  // nuke any Back button, even if HTML/CSS changes later
+  if (backBtn) { backBtn.hidden = true; backBtn.style.display = 'none'; }
+  // belt & braces: hide anything else that might be treated as "back"
+  form.querySelectorAll('[data-step="back"], .step-back').forEach(el => {
+    el.hidden = true; el.style.display = 'none';
+  });
 
   let step = 1;
 
@@ -2085,11 +2093,12 @@ document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
     steps.forEach(s => s.hidden = (s.dataset.step !== String(n)));
     if (stepLabel) stepLabel.textContent = `Step ${n} of 2`;
 
-    // only show submit on last step
-    submitBtn.hidden = (n !== 2);
-    nextBtn.hidden   = (n === 2);
+    // only show submit on last step; Never show Back
+    if (submitBtn) submitBtn.hidden = (n !== 2);
+    if (nextBtn)   nextBtn.hidden   = (n === 2);
+    if (backBtn) { backBtn.hidden = true; backBtn.style.display = 'none'; }
 
-    // (re)bind Places when the address field is visible
+    // (re)bind Places when address field is visible
     if (n === 1 && typeof ensureMobilePlaces === 'function') ensureMobilePlaces();
   }
 
@@ -2107,7 +2116,7 @@ document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
     showStep(2);
   });
 
-  // init
+  // init on step 1 (submit hidden)
   showStep(1);
 })();
 
