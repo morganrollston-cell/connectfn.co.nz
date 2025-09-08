@@ -1336,6 +1336,10 @@ main > section.ljt{
   }
 }
 
+/* Mobile stepper: remove Back button (correct class) */
+@media (max-width:900px){
+  #leadFormMobile .mf-back{ display:none !important; }
+}
   </style>
   
 <!-- Favicon -->
@@ -2068,57 +2072,55 @@ document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
   restart();
 })();
 
-/* MOBILE STEP FORM — hide Back always; show Submit only on step 2 */
-(function(){
+// ===== Mobile stepper (only Next on step 1; only Submit on step 2; no Back) =====
+document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('leadFormMobile');
   if (!form) return;
 
-  const steps      = Array.from(form.querySelectorAll('.mf-step'));
-  const nextBtn    = form.querySelector('.mf-next');
-  const submitBtn  = form.querySelector('.mf-submit');
-  const stepLabel  = document.getElementById('mf-step-label');
-  const backBtn    = form.querySelector('.mf-back'); // ensure back is gone
+  const step1 = form.querySelector('.mf-step[data-step="1"]');
+  const step2 = form.querySelector('.mf-step[data-step="2"]');
+  const nextBtn   = form.querySelector('.mf-next');
+  const backBtn   = form.querySelector('.mf-back');   // we’ll force-hide this
+  const submitBtn = form.querySelector('.mf-submit');
 
-  // nuke any Back button, even if HTML/CSS changes later
-  if (backBtn) { backBtn.hidden = true; backBtn.style.display = 'none'; }
-  // belt & braces: hide anything else that might be treated as "back"
-  form.querySelectorAll('[data-step="back"], .step-back').forEach(el => {
-    el.hidden = true; el.style.display = 'none';
-  });
-
-  let step = 1;
+  // Make sure Back is always hidden (defensive in case CSS doesn’t catch)
+  if (backBtn) backBtn.hidden = true;
 
   function showStep(n){
-    step = n;
-    steps.forEach(s => s.hidden = (s.dataset.step !== String(n)));
-    if (stepLabel) stepLabel.textContent = `Step ${n} of 2`;
+    const onStep1 = n === 1;
+    if (step1) step1.hidden = !onStep1;
+    if (step2) step2.hidden = onStep1;
 
-    // only show submit on last step; Never show Back
-    if (submitBtn) submitBtn.hidden = (n !== 2);
-    if (nextBtn)   nextBtn.hidden   = (n === 2);
-    if (backBtn) { backBtn.hidden = true; backBtn.style.display = 'none'; }
+    // Buttons: only Next on step 1, only Submit on step 2
+    if (nextBtn)   nextBtn.hidden   = !onStep1;
+    if (submitBtn) submitBtn.hidden =  onStep1;
 
-    // (re)bind Places when address field is visible
-    if (n === 1 && typeof ensureMobilePlaces === 'function') ensureMobilePlaces();
+    // Ensure Places binds when address field (step 1) becomes visible
+    if (onStep1 && typeof window.ensureMobilePlaces === 'function'){
+      window.ensureMobilePlaces();
+    }
+  }
+
+  // Step 1 basic validation before advancing
+  function canAdvanceFromStep1(){
+    const required = step1 ? Array.from(step1.querySelectorAll('[required]')) : [];
+    const firstEmpty = required.find(i => !i.value.trim());
+    if (firstEmpty){
+      firstEmpty.focus();
+      form.reportValidity();
+      return false;
+    }
+    return true;
   }
 
   nextBtn?.addEventListener('click', (e) => {
     e.preventDefault();
-    // validate required fields in step 1 before advancing
-    const required = steps[0].querySelectorAll('[required]');
-    for (const el of required){
-      if (!el.value.trim()){
-        el.focus();
-        form.reportValidity();
-        return;
-      }
-    }
-    showStep(2);
+    if (canAdvanceFromStep1()) showStep(2);
   });
 
-  // init on step 1 (submit hidden)
+  // Initialize
   showStep(1);
-})();
+});
 
 /* Bind Google Places to the mobile address input on demand */
 function ensureMobilePlaces(){
