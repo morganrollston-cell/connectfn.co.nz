@@ -1350,6 +1350,37 @@ main > section.ljt{
   /* back button never shown */
   #leadFormMobile .mf-back { display:none !important; }
 }
+
+/* Make the Next button match the full-width Submit button */
+#leadFormMobile .mf-next {
+  display: block;
+  width: 100% !important;
+  padding: 14px 24px;  /* same as .btn.block */
+  font-size: 18px;
+  font-weight: 600;
+}
+@media (max-width: 768px) {
+  #leadFormMobile .mf-next {
+    font-size: 20px;
+    padding: 16px 28px;
+  }
+}
+
+#leadFormMobile .mf-next,
+#leadFormMobile .mf-submit {
+  display: block;
+  width: 100% !important;
+  padding: 14px 24px;
+  font-size: 18px;
+  font-weight: 600;
+}
+@media (max-width: 768px) {
+  #leadFormMobile .mf-next,
+  #leadFormMobile .mf-submit {
+    font-size: 20px;
+    padding: 16px 28px;
+  }
+}
   </style>
   
 <!-- Favicon -->
