@@ -1304,6 +1304,14 @@ main > section.ljt{
   .site-header img{ max-height: none !important; }
 }
 
+/* Fix agent names truncating inside mobile form */
+.agent-mini__name {
+  white-space: normal !important;   /* allow wrapping */
+  overflow: visible !important;
+  text-overflow: unset !important;
+  line-height: 1.2;
+}
+
   </style>
   
 <!-- Favicon -->
