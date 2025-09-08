@@ -1,4 +1,4 @@
-<!doctype html>
+  <!doctype html>
 <html lang="en">
 <head>
   <!-- Google Tag Manager -->
@@ -2068,59 +2068,66 @@ document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
   restart();
 })();
 
-function
+/* MOBILE STEP FORM (works on mobile only) */
+(function(){
   const form = document.getElementById('leadFormMobile');
   if (!form) return;
 
-  const nextBtn   = form.querySelector('[data-step="next"]');
-  const submitBtn = form.querySelector('button[type="submit"]');
+  const steps     = Array.from(form.querySelectorAll('.mf-step'));
+  const nextBtn   = form.querySelector('.mf-next');
+  const submitBtn = form.querySelector('.mf-submit');
+  const stepLabel = document.getElementById('mf-step-label');
 
-  // start on step 1
   let step = 1;
-  submitBtn.hidden = true;                // hide submit initially
-
-  function els(stepNum){
-    return Array.from(form.querySelectorAll('[data-step="' + stepNum + '"]'));
-  }
 
   function showStep(n){
     step = n;
-    els(1).forEach(el => el.style.display = (n === 1 ? '' : 'none'));
-    els(2).forEach(el => el.style.display = (n === 2 ? '' : 'none'));
-    submitBtn.hidden = (n !== 2);         // only show on last step
-    if (n === 1) ensureMobilePlaces();    // make sure Places binds when address is visible
+    steps.forEach(s => s.hidden = (s.dataset.step !== String(n)));
+    if (stepLabel) stepLabel.textContent = `Step ${n} of 2`;
+
+    // only show submit on last step
+    submitBtn.hidden = (n !== 2);
+    nextBtn.hidden   = (n === 2);
+
+    // (re)bind Places when the address field is visible
+    if (n === 1 && typeof ensureMobilePlaces === 'function') ensureMobilePlaces();
   }
 
-  nextBtn?.addEventListener('click', function(e){
+  nextBtn?.addEventListener('click', (e) => {
     e.preventDefault();
-    // basic validation for step 1 fields before advancing
-    const requiredStep1 = els(1).flatMap(el => Array.from(el.querySelectorAll('[required]')));
-    const firstEmpty = requiredStep1.find(i => !i.value.trim());
-    if (firstEmpty){ firstEmpty.focus(); form.reportValidity(); return; }
+    // validate required fields in step 1 before advancing
+    const required = steps[0].querySelectorAll('[required]');
+    for (const el of required){
+      if (!el.value.trim()){
+        el.focus();
+        form.reportValidity();
+        return;
+      }
+    }
     showStep(2);
   });
 
-  // initialize default view
+  // init
   showStep(1);
-
-  /* ---- Google Places fix (re-bind when the step is shown) ---- */
-  window.ensureMobilePlaces = function ensureMobilePlaces(){
-    const input = document.getElementById('addressMobile');
-    if (!input || input.dataset.placesBound) return;
-    if (!window.google || !google.maps || !google.maps.places) return; // script not ready (callback will call again)
-
-    const ac = new google.maps.places.Autocomplete(input, {
-      fields: ['formatted_address','address_components','geometry'],
-      types: ['address'],
-      componentRestrictions: { country: ['nz'] }
-    });
-    ac.addListener('place_changed', () => {
-      const p = ac.getPlace();
-      if (p && p.formatted_address) input.value = p.formatted_address;
-    });
-    input.dataset.placesBound = '1';
-  };
 })();
+
+/* Bind Google Places to the mobile address input on demand */
+function ensureMobilePlaces(){
+  const input = document.getElementById('addressMobile');
+  if (!input || input.dataset.placesBound) return;
+  if (!(window.google && google.maps && google.maps.places)) return;
+
+  const ac = new google.maps.places.Autocomplete(input, {
+    fields: ['formatted_address','address_components','geometry'],
+    types: ['address'],
+    componentRestrictions: { country: ['nz'] }
+  });
+  ac.addListener('place_changed', () => {
+    const p = ac.getPlace();
+    if (p && p.formatted_address) input.value = p.formatted_address;
+  });
+  input.dataset.placesBound = '1';
+}
 
 // === Netlify form handler ===
 (function () {
