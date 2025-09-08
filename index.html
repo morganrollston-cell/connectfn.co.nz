@@ -1281,6 +1281,21 @@ main > section.ljt{
   }
 }
 
+/* Mobile only adjustments */
+@media (max-width: 768px) {
+  .site-header img {
+    display: block;
+    margin: 0 auto; /* centers horizontally */
+    max-height: 45px; /* make it taller (adjust as needed) */
+    width: auto; /* keeps proportions */
+  }
+
+  .site-header {
+    text-align: center; /* makes sure the container aligns center */
+    padding: 8px 0; /* keeps bar slim */
+  }
+}
+
   </style>
   
 <!-- Favicon -->
