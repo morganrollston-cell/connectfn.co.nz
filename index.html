@@ -1281,6 +1281,40 @@ main > section.ljt{
   }
 }
 
+/* === Fix: center + enlarge header logo on mobile only === */
+@media (max-width: 768px){
+  /* keep the bar slim */
+  .site-header__inner{
+    justify-content: center !important;
+    position: relative;
+    padding-block: 6px !important;
+  }
+
+  /* absolute-place the action buttons so the logo can sit perfectly centered */
+  .site-header__actions{
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* center + enlarge the logo but don't grow the bar */
+  .site-header__logo img{
+    height: 48px !important;     /* tweak 44–52px to taste */
+    width: auto;
+    display: block;
+    margin: -2px auto 0;          /* tiny overhang so bar height stays the same */
+  }
+
+  /* undo earlier mobile rules that shrink the logo */
+  .site-header img{ max-height: none !important; }
+}
+
+/* for very small phones */
+@media (max-width: 520px){
+  .site-header__logo img{ height: 44px !important; }
+}
+
   </style>
   
 <!-- Favicon -->
