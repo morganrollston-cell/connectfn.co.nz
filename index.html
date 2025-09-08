@@ -1328,6 +1328,14 @@ main > section.ljt{
   #leadFormMobile .mf-nav .mf-back{ display:none !important; }
 }
 
+/* Mobile stepper: remove Back button */
+@media (max-width:900px){
+  #leadFormMobile [data-step="back"],
+  #leadFormMobile .step-back{
+    display:none !important;
+  }
+}
+
   </style>
   
 <!-- Favicon -->
@@ -2060,6 +2068,60 @@ document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
   restart();
 })();
 
+function
+  const form = document.getElementById('leadFormMobile');
+  if (!form) return;
+
+  const nextBtn   = form.querySelector('[data-step="next"]');
+  const submitBtn = form.querySelector('button[type="submit"]');
+
+  // start on step 1
+  let step = 1;
+  submitBtn.hidden = true;                // hide submit initially
+
+  function els(stepNum){
+    return Array.from(form.querySelectorAll('[data-step="' + stepNum + '"]'));
+  }
+
+  function showStep(n){
+    step = n;
+    els(1).forEach(el => el.style.display = (n === 1 ? '' : 'none'));
+    els(2).forEach(el => el.style.display = (n === 2 ? '' : 'none'));
+    submitBtn.hidden = (n !== 2);         // only show on last step
+    if (n === 1) ensureMobilePlaces();    // make sure Places binds when address is visible
+  }
+
+  nextBtn?.addEventListener('click', function(e){
+    e.preventDefault();
+    // basic validation for step 1 fields before advancing
+    const requiredStep1 = els(1).flatMap(el => Array.from(el.querySelectorAll('[required]')));
+    const firstEmpty = requiredStep1.find(i => !i.value.trim());
+    if (firstEmpty){ firstEmpty.focus(); form.reportValidity(); return; }
+    showStep(2);
+  });
+
+  // initialize default view
+  showStep(1);
+
+  /* ---- Google Places fix (re-bind when the step is shown) ---- */
+  window.ensureMobilePlaces = function ensureMobilePlaces(){
+    const input = document.getElementById('addressMobile');
+    if (!input || input.dataset.placesBound) return;
+    if (!window.google || !google.maps || !google.maps.places) return; // script not ready (callback will call again)
+
+    const ac = new google.maps.places.Autocomplete(input, {
+      fields: ['formatted_address','address_components','geometry'],
+      types: ['address'],
+      componentRestrictions: { country: ['nz'] }
+    });
+    ac.addListener('place_changed', () => {
+      const p = ac.getPlace();
+      if (p && p.formatted_address) input.value = p.formatted_address;
+    });
+    input.dataset.placesBound = '1';
+  };
+})();
+
 // === Netlify form handler ===
 (function () {
   function getUTMParams() {
@@ -2208,73 +2270,6 @@ function initAddressAutocomplete(){
     });
   });
 }
-
-(function
-  const isMobile = window.matchMedia('(max-width:900px)').matches;
-  if (!isMobile) return; // desktop form unchanged
-
-  const form = document.getElementById('leadFormMobile');
-  if (!form) return;
-
-  const steps = Array.from(form.querySelectorAll('.mf-step'));
-  const nextBtn = form.querySelector('.mf-next');
-  const backBtn = form.querySelector('.mf-back');
-  const submitBtn = form.querySelector('.mf-submit');
-  const stepLabel = form.querySelector('#mf-step-label');
-
-  let i = 0; // current step index (0-based)
-
-  function showStep(n){
-    i = Math.max(0, Math.min(n, steps.length-1));
-    steps.forEach((s, idx) => {
-      const isCurrent = idx === i;
-      s.hidden = !isCurrent;
-      s.setAttribute('aria-hidden', (!isCurrent).toString());
-    });
-    // nav state
-    backBtn.hidden = (i === 0);
-    nextBtn.hidden = (i === steps.length - 1);
-    submitBtn.hidden = !(i === steps.length - 1);
-    // label
-    if (stepLabel) stepLabel.textContent = `Step ${i+1} of ${steps.length}`;
-  }
-
-  function stepValid(n){
-    const current = steps[n];
-    if (!current) return true;
-    // only validate fields inside this step
-    const required = Array.from(current.querySelectorAll('[required]'));
-    for (const el of required){
-      if (el.type === 'radio'){
-        const group = current.querySelectorAll(`input[name="${el.name}"]`);
-        const anyChecked = Array.from(group).some(r => r.checked);
-        if (!anyChecked){ el.focus(); return false; }
-      } else if (!el.value.trim()){
-        el.focus();
-        if (form.reportValidity) form.reportValidity();
-        return false;
-      }
-    }
-    return true;
-  }
-
-  nextBtn?.addEventListener('click', () => {
-    if (!stepValid(i)) return;
-    showStep(i+1);
-    // focus first input of next step for smoothness
-    const first = steps[i].querySelector('input,select,button');
-    first?.focus();
-  });
-
-  backBtn?.addEventListener('click', () => {
-    showStep(i-1);
-    const first = steps[i].querySelector('input,select,button');
-    first?.focus();
-  });
-
-  // init
-  showStep(0);
-})();
 // (Maps script calls initAddressAutocomplete via &callback=)
 </script>
 <!-- Keep this Maps script include (ensure your real API key is present) -->
