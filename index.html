@@ -1312,6 +1312,22 @@ main > section.ljt{
   line-height: 1.2;
 }
 
+/* Mobile-only step form */
+@media (max-width: 900px){
+  #leadFormMobile .mf-nav{
+    display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:4px;
+  }
+  #leadFormMobile .mf-submit{ grid-column: 1 / -1; } /* submit spans full width */
+  #leadFormMobile .btn.mf-next, 
+  #leadFormMobile .btn.mf-back{ min-height:48px; }
+}
+
+/* Keep desktop unaffected */
+@media (min-width: 901px){
+  #leadFormMobile .mf-nav .mf-next,
+  #leadFormMobile .mf-nav .mf-back{ display:none !important; }
+}
+
   </style>
   
 <!-- Favicon -->
@@ -1470,41 +1486,52 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 <div class="form-intro">
-  <div class="step">Step 1 of 2</div>
+  <div class="step" id="mf-step-label">Step 1 of 2</div>
   <h3>Book Your Free Appraisal in 60 Seconds</h3>
   <p>Just fill out the form below to get your property’s value, local sales insights, and secure your entry into the $5,000 giveaway.</p>
 </div>
 
-<label for="addressMobile">Property address for appraisal 
-  <input id="addressMobile" type="text" name="address" 
-         placeholder="e.g., 10 Example St, Richmond"
-         autocomplete="street-address" required>
-</label>
+<!-- STEP 1 -->
+<div class="mf-step" data-step="1" aria-labelledby="mf-step-label">
+  <label for="addressMobile">Property address for appraisal
+    <input id="addressMobile" type="text" name="address"
+           placeholder="e.g., 10 Example St, Richmond"
+           autocomplete="street-address" required>
+  </label>
 
-<div class="row2">
-  <label>Your full name
-    <input type="text" name="full_name" autocomplete="name" required>
-  </label>
-  <label>Best contact number 
-    <input type="tel" name="phone" autocomplete="tel" required>
-  </label>
+  <div class="row2">
+    <label>Your full name
+      <input type="text" name="full_name" autocomplete="name" required>
+    </label>
+    <label>Best contact number 
+      <input type="tel" name="phone" autocomplete="tel" required>
+    </label>
+  </div>
 </div>
 
-<label>Email for your free report
-  <input type="email" name="email" autocomplete="email" required>
-</label>
+<!-- STEP 2 -->
+<div class="mf-step" data-step="2" hidden aria-labelledby="mf-step-label">
+  <label>Email for your free report
+    <input type="email" name="email" autocomplete="email" required>
+  </label>
 
-<!-- ✅ Pills only, no dropdown -->
-<p class="pill-heading">When are you planning to sell?</p>
-<div class="timeframe-pills">
-  <label><input type="radio" name="timeframe" value="Now" required><span>Now</span></label>
-  <label><input type="radio" name="timeframe" value="1–3 months"><span>1–3 months</span></label>
-  <label><input type="radio" name="timeframe" value="3–6 months"><span>3–6 months</span></label>
-  <label><input type="radio" name="timeframe" value="Just curious"><span>Just curious</span></label>
+  <p class="pill-heading">When are you planning to sell?</p>
+  <div class="timeframe-pills">
+    <label><input type="radio" name="timeframe" value="Now" required><span>Now</span></label>
+    <label><input type="radio" name="timeframe" value="1–3 months"><span>1–3 months</span></label>
+    <label><input type="radio" name="timeframe" value="3–6 months"><span>3–6 months</span></label>
+    <label><input type="radio" name="timeframe" value="Just curious"><span>Just curious</span></label>
+  </div>
 </div>
 
-  <button class="btn block" type="submit">Book Your Free Appraisal</button>
-  <p class="fine">By submitting, you agree to our T&Cs and Privacy Policy.</p>
+<!-- Step nav (mobile only) -->
+<div class="mf-nav">
+  <button type="button" class="btn secondary mf-back" hidden>Back</button>
+  <button type="button" class="btn mf-next">Next</button>
+  <button class="btn block mf-submit" type="submit" hidden>Book Your Free Appraisal</button>
+</div>
+
+<p class="fine">By submitting, you agree to our T&Cs and Privacy Policy.</p>
 </form>
       </div>
     </section>
@@ -2181,6 +2208,73 @@ function initAddressAutocomplete(){
     });
   });
 }
+
+(function
+  const isMobile = window.matchMedia('(max-width:900px)').matches;
+  if (!isMobile) return; // desktop form unchanged
+
+  const form = document.getElementById('leadFormMobile');
+  if (!form) return;
+
+  const steps = Array.from(form.querySelectorAll('.mf-step'));
+  const nextBtn = form.querySelector('.mf-next');
+  const backBtn = form.querySelector('.mf-back');
+  const submitBtn = form.querySelector('.mf-submit');
+  const stepLabel = form.querySelector('#mf-step-label');
+
+  let i = 0; // current step index (0-based)
+
+  function showStep(n){
+    i = Math.max(0, Math.min(n, steps.length-1));
+    steps.forEach((s, idx) => {
+      const isCurrent = idx === i;
+      s.hidden = !isCurrent;
+      s.setAttribute('aria-hidden', (!isCurrent).toString());
+    });
+    // nav state
+    backBtn.hidden = (i === 0);
+    nextBtn.hidden = (i === steps.length - 1);
+    submitBtn.hidden = !(i === steps.length - 1);
+    // label
+    if (stepLabel) stepLabel.textContent = `Step ${i+1} of ${steps.length}`;
+  }
+
+  function stepValid(n){
+    const current = steps[n];
+    if (!current) return true;
+    // only validate fields inside this step
+    const required = Array.from(current.querySelectorAll('[required]'));
+    for (const el of required){
+      if (el.type === 'radio'){
+        const group = current.querySelectorAll(`input[name="${el.name}"]`);
+        const anyChecked = Array.from(group).some(r => r.checked);
+        if (!anyChecked){ el.focus(); return false; }
+      } else if (!el.value.trim()){
+        el.focus();
+        if (form.reportValidity) form.reportValidity();
+        return false;
+      }
+    }
+    return true;
+  }
+
+  nextBtn?.addEventListener('click', () => {
+    if (!stepValid(i)) return;
+    showStep(i+1);
+    // focus first input of next step for smoothness
+    const first = steps[i].querySelector('input,select,button');
+    first?.focus();
+  });
+
+  backBtn?.addEventListener('click', () => {
+    showStep(i-1);
+    const first = steps[i].querySelector('input,select,button');
+    first?.focus();
+  });
+
+  // init
+  showStep(0);
+})();
 // (Maps script calls initAddressAutocomplete via &callback=)
 </script>
 <!-- Keep this Maps script include (ensure your real API key is present) -->
