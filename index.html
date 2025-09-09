@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- Variant tag for analytics -->
+  <!-- Identify this branch/variant for analytics -->
   <script>window.__variant="B";</script>
 
   <!-- Google Tag Manager -->
@@ -12,13 +12,13 @@
   })(window,document,'script','dataLayer','GTM-NJ76GXDB');</script>
   <!-- End Google Tag Manager -->
 
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#00467F" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#00467F">
   <title>Free Property Appraisal — First National Connect</title>
-  <meta name="description" content="Free expert appraisal with insight into your home’s value, the current Nelson/Tasman market, and a strategy to maximise your sale price." />
+  <meta name="description" content="Free expert appraisal with insight into your home’s value, the current Nelson/Tasman market, and a strategy to maximise your sale price.">
 
-  <!-- Favicon -->
+  <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon.PNG">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.PNG">
   <link rel="shortcut icon" href="assets/images/favicon.PNG">
@@ -26,298 +26,389 @@
   <meta name="msapplication-TileImage" content="assets/images/favicon.PNG">
 
   <style>
-    /* ====== Tokens / base ====== */
+    /* ===== Base / tokens ===== */
     *,*::before,*::after{box-sizing:border-box}
-    html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.5;color:#122033;background:#ffffff;font-size:clamp(15px,1.6vw,17px)}
-    img{max-width:100%;display:block}
+    html{-webkit-text-size-adjust:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height:1.5; color:#0b1e37; background:#000; /* will be covered by bg */
+      font-size: clamp(15px,1.6vw,17px);
+    }
     a{color:#00467F;text-decoration:none}
     :root{
-      --brand:#00467F; --accent:#0A84FF; --ink:#0b1e37; --muted:#64748b;
-      --border:#e6edf5; --radius:14px; --shadow-1:0 10px 28px rgba(0,0,0,.08);
+      --brand:#00467F; --accent:#0A84FF;
+      --border:#e6edf5; --muted:#64748b;
+      --radius:16px; --shadow:0 18px 48px rgba(0,0,0,.28);
     }
-    .container{width:min(1120px,92vw);margin-inline:auto;padding-inline:clamp(12px,3vw,28px)}
 
-    /* ====== Header ====== */
-    .site-header{position:sticky;top:0;z-index:80;background:rgba(255,255,255,.98);border-bottom:1px solid var(--border);backdrop-filter:saturate(1.1) blur(2px);box-shadow:0 2px 12px rgba(0,0,0,.06)}
-    .site-header__inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:7px clamp(16px,4vw,28px)}
-    .site-header__logo img{height:clamp(50px,6vw,110px);width:auto;display:block}
-    .site-header__actions{display:flex;align-items:center;gap:12px}
-    .btn{display:inline-block;background:var(--accent);color:#fff;border:0;border-radius:12px;padding:12px 18px;font-weight:800;letter-spacing:.2px;min-height:44px;box-shadow:0 6px 18px rgba(10,132,255,.22);cursor:pointer;white-space:nowrap}
-    .btn.secondary{background:#ebf3fb;color:var(--brand)}
-    @media (max-width:520px){ .site-header__actions .btn:not(.secondary){display:none} .site-header__logo img{height:55px} }
-
-    /* ====== Above-the-fold hero ====== */
-    .hero{position:relative}
-    .hero-media{
-      height:clamp(420px,62vw,760px);
+    /* ===== Full-bleed background image (entire page) ===== */
+    .page-bg{
+      position:fixed; inset:0; z-index:-2;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.46), rgba(0,0,0,.22)),
+        linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.25)),
         url('assets/images/Header-image.jpg') center/cover no-repeat;
     }
-    .overlay{position:absolute;inset:0;display:grid;align-items:end}
-    .overlay .inner{color:#fff;padding:clamp(18px,4vw,32px)}
-    .promo-badge{display:inline-block;background:#00467F;color:#fff;padding:6px 10px;border-radius:999px;font-size:.85rem;font-weight:700;letter-spacing:.2px;margin-bottom:10px}
-    .overlay h1{margin:0 0 8px;font-size:clamp(28px,5vw,44px);line-height:1.12;text-shadow:0 3px 18px rgba(0,0,0,.38)}
-    .overlay .lede{margin:0 0 10px;color:#e7eef6;max-width:60ch}
-    .hero-bullets{margin:6px 0 0;padding-left:1.1rem;color:#fff}
-    .hero-bullets li{margin:.25rem 0;line-height:1.45}
 
-    /* Split grid (copy + form) on ≥900px; stacked on mobile */
-    .hero-grid{display:block}
-    @media (min-width:900px){
-      .overlay .inner{padding:clamp(60px,8vw,90px) clamp(16px,4vw,32px) clamp(200px,16vw,260px)}
-      .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(26px,4.5vw,42px);align-items:start}
+    /* ===== Header: centered logo only ===== */
+    .site-header{
+      position:sticky; top:0; z-index:10;
+      background: rgba(255,255,255,.98);
+      border-bottom:1px solid var(--border);
+      box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    }
+    .site-header__inner{
+      display:flex; justify-content:center; align-items:center;
+      padding: 8px 16px;
+    }
+    .site-header__logo img{ height: clamp(52px,6vw,80px); width:auto; display:block; }
+
+    /* ===== Footer (simple legal bar) ===== */
+    .legal{
+      background:#0b1e37; color:#cfe0f3; border-top:1px solid rgba(255,255,255,.10);
+    }
+    .legal .inner{
+      display:grid; gap:10px; align-items:center;
+      padding:14px 16px; max-width:1120px; margin:0 auto;
+    }
+    @media(min-width:720px){ .legal .inner{ grid-template-columns:1fr auto } }
+    .legal a{ color:#69c2ff }
+
+    /* ===== Centered card with headline + bullets + stepper form ===== */
+    main{
+      min-height: calc(100svh - 56px - 56px); /* header+footer approx; fits small phones */
+      display:grid; place-items:center; padding: clamp(14px,3vw,28px);
+    }
+    .card{
+      width: 100%; max-width: 520px;
+      background:#fff; border:1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card__body{ padding: clamp(18px,3.4vw,28px); }
+
+    .eyebrow{
+      display:inline-block; background:#00467F; color:#fff;
+      padding:6px 10px; border-radius:999px; font-weight:800; font-size:.85rem;
+      letter-spacing:.2px; margin-bottom:10px;
+    }
+    h1{
+      margin:.2rem 0 .35rem;
+      font-size: clamp(22px,3.6vw,30px);
+      line-height:1.15; color:#0b1e37; font-weight:900;
+    }
+    .lede{ margin:0 0 10px; color:#344861 }
+    .bullets{ margin:8px 0 12px; padding-left:1.1rem; color:#223046 }
+    .bullets li{ margin: .25rem 0 }
+
+    /* Form */
+    form{ display:grid; gap:14px; margin-top:8px }
+    label{ display:grid; gap:6px; font-weight:700; color:#0b1e37 }
+    input{ background:#fff; border:1px solid #dfe7f0; border-radius:12px; padding:12px; font-size:16px; min-height:44px; }
+    input:focus{ border-color:#7cc4ff; outline:0; box-shadow:0 0 0 4px rgba(124,196,255,.25); }
+
+    .timeframe-pills{
+      display:flex; flex-wrap:wrap; gap:8px; margin:2px 0 4px;
+    }
+    .timeframe-pills input{ display:none }
+    .timeframe-pills label{
+      border:1px solid #dbe3ef; border-radius:999px; cursor:pointer; font-weight:600;
+    }
+    .timeframe-pills label span{ display:block; padding:10px 14px; border-radius:999px; }
+    .timeframe-pills input:checked + span{
+      background:#0A84FF; color:#fff; border-color:#0A84FF;
+      box-shadow:0 4px 12px rgba(10,132,255,.26);
     }
 
-    /* ====== Card form ====== */
-    .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-1)}
-    .form-holder{max-width:760px;margin-inline:auto}
-    form{display:grid;gap:14px;padding:16px}
-    label{display:grid;gap:6px;font-size:1em;color:#0b1e37;font-weight:700}
-    input,select{background:#fff;border:1px solid #dfe7f0;border-radius:12px;padding:12px;font-size:16px;min-height:44px;transition:border-color .15s ease,box-shadow .15s ease}
-    input:focus,select:focus{border-color:#7cc4ff;box-shadow:0 0 0 4px rgba(124,196,255,.25);outline:0}
-    .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    @media (max-width:640px){.row2{grid-template-columns:1fr}}
-    .btn.block{width:100%;padding-block:14px}
-    .fine{margin:2px 0 0;font-size:12px;color:var(--muted)}
-    .form-intro{padding:10px 14px;border-bottom:1px solid rgba(16,34,58,.06)}
-    .form-intro .step{color:#f5a300;font-weight:800;font-size:.95rem;margin:0 0 6px}
-    .form-intro h3{margin:0 0 4px;font-size:clamp(18px,2.1vw,22px)}
-
-    /* ====== Tiny footer ====== */
-    footer{border-top:1px solid var(--border);margin-top:24px}
-    .legal{color:#9fb4cc;background:#0b1e37}
-    .legal .container{display:grid;gap:10px;align-items:center;padding:14px 16px}
-    @media(min-width:720px){.legal .container{grid-template-columns:1fr auto}}
-    .legal a{color:#69c2ff}
-
-    /* Keep everything tight for “one-screen” feel on phones */
-    @media (max-width:640px){
-      .hero-media{height:520px}
-      .overlay .inner{padding:18px 16px 160px}
-      .overlay h1{font-size:1.6rem}
-      .overlay .lede{font-size:1rem}
+    .btn{ display:inline-block; border:0; border-radius:12px; padding:14px 20px;
+      font-weight:800; letter-spacing:.2px; cursor:pointer; min-height:48px;
     }
-    
-    .site-header__inner {
-  justify-content: center !important;
-}
+    .btn.primary{ background:var(--accent); color:#fff; box-shadow:0 10px 28px rgba(10,132,255,.28) }
+    .btn[disabled]{ opacity:.6; cursor:not-allowed }
 
-.site-header__actions {
-  display: none !important;
-}
+    .fine{ margin:2px 0 0; font-size:12px; color:var(--muted) }
+
+    /* Stepper bits */
+    .progress{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin: 6px 0 10px; }
+    .progress .label{ font-weight:800; color:#f5a300; }
+    .steps{ display:grid; gap:14px }
+    .step[hidden]{ display:none !important; }
+
+    /* Make sure it still feels centered on short viewports */
+    @media (max-width:480px){
+      .card{ max-width: 94vw }
+    }
   </style>
 </head>
 <body>
+  <!-- BG image -->
+  <div class="page-bg" aria-hidden="true"></div>
+
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ76GXDB"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+  <!-- End GTM (noscript) -->
 
-  <!-- Header -->
-<header class="site-header">
-  <div class="site-header__inner" style="justify-content:center;">
-    <a class="site-header__logo" href="#">
-      <img src="assets/images/big-blue-logo.png" alt="First National Connect">
-    </a>
-  </div>
-</header>
+  <!-- Header (centered logo, no buttons) -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__logo" href="#">
+        <img src="assets/images/big-blue-logo.png" alt="First National Connect">
+      </a>
+    </div>
+  </header>
 
-  <!-- HERO: headline + compact bullets + single form -->
-  <section class="hero" id="top">
-    <div class="hero-media"></div>
-    <div class="overlay">
-      <div class="inner container hero-grid">
-        <!-- Copy -->
-        <div class="hero-copy">
-          <span class="promo-badge">Spring promo</span>
-          <h1>Get Your Free Property Appraisal & go in the draw to win up to $5,000</h1>
-          <p class="lede">Fast, expert valuation of your Nelson/Tasman property with clear next steps to maximise your result.</p>
-          <ul class="hero-bullets">
-            <li>✅ 60-second booking</li>
-            <li>🏡 Local specialists</li>
-            <li>📊 Clear valuation + plan</li>
-          </ul>
-        </div>
+  <main>
+    <div class="card">
+      <div class="card__body">
+        <!-- Headline + bullets INSIDE the card -->
+        <span class="eyebrow">Spring promo</span>
+        <h1>Get your Free Property Appraisal & go in the draw to win up to $5,000</h1>
+        <p class="lede">Fast, expert valuation of your Nelson/Tasman property with clear next steps to maximise your result.</p>
+        <ul class="bullets">
+          <li>✅ 60-second booking</li>
+          <li>🏡 Local specialists</li>
+          <li>📊 Clear valuation + plan</li>
+        </ul>
 
-        <!-- Form -->
-        <div class="hero-form">
-          <div class="form-holder card" id="appraisal-form" aria-labelledby="form-heading">
-            <form id="leadForm"
-                  name="Leads Spring Promo"
-                  method="POST"
-                  data-netlify="true"
-                  netlify-honeypot="bot-field"
-                  novalidate>
-              <input type="hidden" name="form-name" value="Leads Spring Promo">
-              <p class="nf-hide"><label>Don’t fill this out: <input name="bot-field"></label></p>
+        <!-- Stepper status -->
+        <div class="progress"><div class="label" id="stepLabel">Step 1 of 5</div></div>
 
-              <div class="form-intro">
-                <div class="step">Step 1 of 1</div>
-                <h3 id="form-heading">Book your free appraisal (takes 60 seconds)</h3>
+        <!-- Form (5 steps) -->
+        <form id="leadForm"
+              name="Leads Spring Promo"
+              method="POST"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+              novalidate>
+          <input type="hidden" name="form-name" value="Leads Spring Promo">
+          <p class="nf-hide"><label>Don’t fill this out: <input name="bot-field"></label></p>
+
+          <!-- analytics helpers -->
+          <input type="hidden" name="variant" value="B">
+          <input type="hidden" name="page_url" value="">
+          <input type="hidden" name="submitted_at" value="">
+          <input type="hidden" name="utm_source" value="">
+          <input type="hidden" name="utm_medium" value="">
+          <input type="hidden" name="utm_campaign" value="">
+
+          <div class="steps">
+            <!-- 1: Address -->
+            <div class="step" data-step="1">
+              <label for="address">Property address for appraisal
+                <input id="address" type="text" name="address"
+                       placeholder="e.g., 10 Example St, Richmond"
+                       autocomplete="street-address" inputmode="text" required>
+              </label>
+            </div>
+
+            <!-- 2: Name -->
+            <div class="step" data-step="2" hidden>
+              <label for="full_name">Your full name
+                <input id="full_name" type="text" name="full_name"
+                       autocomplete="name" inputmode="text" minlength="2" required>
+              </label>
+            </div>
+
+            <!-- 3: Email -->
+            <div class="step" data-step="3" hidden>
+              <label for="email">Email for your free report
+                <input id="email" type="email" name="email"
+                       autocomplete="email" inputmode="email" required>
+              </label>
+            </div>
+
+            <!-- 4: Phone -->
+            <div class="step" data-step="4" hidden>
+              <label for="phone">Best contact number
+                <input id="phone" type="tel" name="phone"
+                       autocomplete="tel" inputmode="tel"
+                       pattern="^[0-9+ ()-]{7,}$"
+                       placeholder="e.g., 027 123 4567" required>
+              </label>
+              <p class="fine">Mobile or landline. Numbers only.</p>
+            </div>
+
+            <!-- 5: Timeframe -->
+            <div class="step" data-step="5" hidden>
+              <label>When are you planning to sell?</label>
+              <div class="timeframe-pills">
+                <label><input type="radio" name="timeframe" value="Now" required><span>Now</span></label>
+                <label><input type="radio" name="timeframe" value="1–3 months"><span>1–3 months</span></label>
+                <label><input type="radio" name="timeframe" value="3–6 months"><span>3–6 months</span></label>
+                <label><input type="radio" name="timeframe" value="Just curious"><span>Just curious</span></label>
               </div>
-
-              <div class="form-group">
-                <label for="address">Property address for appraisal</label>
-                <input id="address" type="text" name="address" placeholder="e.g., 10 Example St, Richmond" autocomplete="street-address" required>
-              </div>
-
-              <div class="row2">
-                <div class="form-group">
-                  <label for="full_name">Your full name</label>
-                  <input id="full_name" type="text" name="full_name" autocomplete="name" required>
-                </div>
-                <div class="form-group">
-                  <label for="phone">Best contact number</label>
-                  <input id="phone" type="tel" name="phone" autocomplete="tel" required>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="email">Email for your free report</label>
-                <input id="email" type="email" name="email" autocomplete="email" required>
-              </div>
-
-              <div class="form-group">
-                <label for="timeframe">When are you planning to sell?</label>
-                <select id="timeframe" name="timeframe" required>
-                  <option value="" disabled selected>Select timeframe</option>
-                  <option>Now</option>
-                  <option>1–3 months</option>
-                  <option>3–6 months</option>
-                  <option>Just curious</option>
-                </select>
-              </div>
-
-              <button class="btn block" type="submit">Book Your Free Appraisal</button>
-              <p class="fine">By submitting, you agree to our T&Cs and Privacy Policy.</p>
-            </form>
+            </div>
           </div>
-        </div>
 
+          <!-- Nav: Continue only (no Back as requested) -->
+          <button type="button" class="btn primary" id="nextBtn" data-loading-text="Submitting…">Continue</button>
+          <button type="submit" class="btn primary" id="submitBtn" hidden>Submit</button>
+
+          <p class="fine">By submitting, you agree to our T&Cs and Privacy Policy.</p>
+        </form>
       </div>
     </div>
-  </section>
+  </main>
 
-  <!-- Tiny footer / legal strip -->
-  <footer>
-    <div class="legal">
-      <div class="container">
-        <div>
-          © 2025 First National Connect •
-          <a href="https://fnconnect.co.nz/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a> •
-          <a href="https://fnconnect.co.nz/disclaimer/" target="_blank" rel="noopener">Disclaimer</a> •
-          Licensed REAA 2008
-        </div>
-        <div>Website by <a href="#" rel="noopener">Rollston Scaling</a></div>
+  <!-- Footer -->
+  <footer class="legal">
+    <div class="inner">
+      <div>
+        © 2025 First National Connect •
+        <a href="https://fnconnect.co.nz/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a> •
+        <a href="https://fnconnect.co.nz/disclaimer/" target="_blank" rel="noopener">Disclaimer</a> •
+        Licensed REAA 2008
       </div>
+      <div>Website by <a href="#" rel="noopener">Rollston Scaling</a></div>
     </div>
   </footer>
 
-  <!-- Netlify submit handler + GTM conversion push (kept) -->
+  <!-- Stepper + Netlify submit + GTM push -->
   <script>
-    (function () {
-      function getUTMParams() {
-        const u = new URL(window.location.href);
-        return {
-          page: u.origin + u.pathname,
-          utm_source:   u.searchParams.get('utm_source')   || '',
-          utm_medium:   u.searchParams.get('utm_medium')   || '',
-          utm_campaign: u.searchParams.get('utm_campaign') || '',
-          user_agent: navigator.userAgent,
-          variant: (window.__variant || 'B')
-        };
+  (function(){
+    function hydrateHiddenFields(form){
+      const u = new URL(window.location.href);
+      form.querySelector('input[name="page_url"]').value     = u.origin + u.pathname;
+      form.querySelector('input[name="submitted_at"]').value = new Date().toISOString();
+      form.querySelector('input[name="utm_source"]').value   = u.searchParams.get('utm_source')   || '';
+      form.querySelector('input[name="utm_medium"]').value   = u.searchParams.get('utm_medium')   || '';
+      form.querySelector('input[name="utm_campaign"]').value = u.searchParams.get('utm_campaign') || '';
+    }
+
+    function thankYouHTML(firstName){
+      const first = (firstName||'Thanks').toString().trim().split(' ')[0];
+      return `
+        <div class="card__body" style="text-align:center">
+          <h3 style="margin:0 0 6px;color:#0b1e37;">${first}, we’ve got your request ✅</h3>
+          <p style="margin:0;color:#344861;">We’ll be in touch shortly to confirm a time that suits.</p>
+        </div>
+      `;
+    }
+
+    function firstInvalid(el){ return el.querySelector(':invalid'); }
+
+    document.addEventListener('DOMContentLoaded', function(){
+      const form = document.getElementById('leadForm');
+      const holder = form.closest('.card');
+      const steps = Array.from(form.querySelectorAll('.step'));
+      const stepLabel = document.getElementById('stepLabel');
+      const nextBtn = document.getElementById('nextBtn');
+      const submitBtn = document.getElementById('submitBtn');
+
+      let i = 0; // current step index (0..4)
+      function showStep(n){
+        i = Math.max(0, Math.min(n, steps.length-1));
+        steps.forEach((s, idx)=> s.hidden = idx !== i);
+        stepLabel.textContent = `Step ${i+1} of ${steps.length}`;
+        nextBtn.hidden   = (i === steps.length-1);
+        submitBtn.hidden = (i !== steps.length-1);
+        // focus first input in visible step
+        const inp = steps[i].querySelector('input,select,textarea,button');
+        inp && inp.focus({preventScroll:true});
       }
 
-      function thankYouHTML(fullName) {
-        const first = (fullName || 'Thanks').toString().trim().split(' ')[0];
-        return `
-          <div class="card" style="padding:22px;">
-            <h3 style="margin:0 0 6px;color:#0b1e37;">${first}, we’ve got your request ✅</h3>
-            <p style="margin:0;color:#344861;">We’ll be in touch shortly to confirm a time that suits.</p>
-          </div>
-        `;
+      function canAdvance(){
+        const cur = steps[i];
+        // if any required field in this step invalid, focus it
+        const bad = firstInvalid(cur) || [...cur.querySelectorAll('[required]')].find(el => !String(el.value||'').trim());
+        if (bad){
+          bad.focus();
+          form.reportValidity();
+          cur.scrollIntoView({behavior:'smooth', block:'center'});
+          return false;
+        }
+        return true;
       }
 
-      function wire(formId) {
-        const form = document.getElementById(formId);
-        if (!form) return;
-        const holder = form.closest('.form-holder');
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          if (!form.checkValidity()) { form.reportValidity(); return; }
-          const btn = form.querySelector('button[type="submit"]');
-          const orig = btn ? btn.textContent : '';
-          if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
+      nextBtn.addEventListener('click', ()=>{
+        if (!canAdvance()) return;
+        showStep(i+1);
+      });
 
+      // prevent Enter from submitting early
+      form.addEventListener('keydown', e=>{
+        if (e.key === 'Enter' && e.target.type !== 'submit'){ e.preventDefault(); }
+      });
+
+      hydrateHiddenFields(form);
+      showStep(0);
+
+      // submit handler (AJAX to Netlify)
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        if (!form.checkValidity()){
+          const bad = firstInvalid(form);
+          bad?.focus(); form.reportValidity();
+          return;
+        }
+        const orig = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = submitBtn.dataset.loadingText || 'Submitting…';
+
+        try{
           const fd = new FormData(form);
           if (!fd.get('form-name')) fd.set('form-name', form.getAttribute('name') || 'appraisal');
-          Object.entries(getUTMParams()).forEach(([k, v]) => fd.append(k, v));
 
-          try {
-            const obj = {}; fd.forEach((v,k)=>obj[k]=v);
-            const encoded = Object.keys(obj).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(obj[k])).join('&');
+          const obj = {}; fd.forEach((v,k)=>obj[k]=v);
+          const encoded = Object.keys(obj).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(obj[k])).join('&');
 
-            const res = await fetch('/', {
-              method:'POST',
-              headers:{'Content-Type':'application/x-www-form-urlencoded'},
-              body: encoded
+          const res = await fetch('/', {
+            method:'POST',
+            headers:{'Content-Type':'application/x-www-form-urlencoded'},
+            body: encoded
+          });
+          if (!res.ok) throw new Error('Netlify '+res.status);
+
+          // GTM event
+          try{
+            const full = (fd.get('full_name')||'').toString().trim();
+            const [first_name, ...rest] = full.split(' ');
+            const last_name = rest.join(' ') || '';
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event:'lead_submit_success',
+              variant: window.__variant || 'B',
+              form_name: form.getAttribute('name') || 'Leads Spring Promo',
+              enhanced_conversion_data:{
+                email:(fd.get('email')||'').toString().trim().toLowerCase(),
+                phone_number:(fd.get('phone')||'').toString().trim(),
+                first_name,last_name,
+                home_address:{street:(fd.get('address')||'').toString(), country:'NZ'}
+              }
             });
+          }catch(e){ console.warn('GTM push failed', e); }
 
-            if (!res.ok) throw new Error('Netlify error '+res.status);
-
-            // Push conversion to GTM
-            try {
-              const full = (fd.get('full_name')||'').toString().trim();
-              const [first_name, ...rest] = full.split(' ');
-              const last_name = rest.join(' ') || '';
-              window.dataLayer = window.dataLayer || [];
-              window.dataLayer.push({
-                event:'lead_submit_success',
-                variant: window.__variant || 'B',
-                form_name: form.getAttribute('name') || 'Leads Spring Promo',
-                enhanced_conversion_data:{
-                  email:(fd.get('email')||'').toString().trim().toLowerCase(),
-                  phone_number:(fd.get('phone')||'').toString().trim(),
-                  first_name,last_name,
-                  home_address:{street:(fd.get('address')||'').toString(),country:'NZ'}
-                }
-              });
-            } catch(e){ console.warn('GTM push failed', e); }
-
-            // Thank-you
-            if (holder) holder.innerHTML = thankYouHTML(fd.get('full_name'));
-          } catch (err) {
-            console.error(err);
-            alert('Sorry, something went wrong. Please try again.');
-            if (btn){ btn.disabled=false; btn.textContent=orig; }
-          }
-        });
-      }
-      document.addEventListener('DOMContentLoaded', ()=> wire('leadForm'));
-    })();
+          holder.innerHTML = thankYouHTML(fd.get('full_name'));
+        }catch(err){
+          alert('Sorry, something went wrong. Please try again.');
+          console.error(err);
+          submitBtn.disabled = false; submitBtn.textContent = orig;
+        }
+      });
+    });
+  })();
   </script>
 
-  <!-- Google Places (kept) -->
+  <!-- Google Places (binds to #address) -->
   <script>
     function initAddressAutocomplete(){
       const options = {
-        fields:['formatted_address','address_components','geometry'],
-        types:['address'],
-        componentRestrictions:{ country:['nz'] }
+        fields: ['formatted_address','address_components','geometry'],
+        types: ['address'],
+        componentRestrictions: { country: ['nz'] }
       };
       const input = document.getElementById('address');
       if (!input) return;
       const ac = new google.maps.places.Autocomplete(input, options);
       ac.addListener('place_changed', ()=>{
-        const place = ac.getPlace();
-        if (place && place.formatted_address) input.value = place.formatted_address;
+        const p = ac.getPlace();
+        if (p && p.formatted_address) input.value = p.formatted_address;
       });
-      input.addEventListener('keydown', e=>{
-        if (e.key==='Enter'){
+      input.addEventListener('keydown', (e)=>{
+        if (e.key === 'Enter'){
           const dd = document.querySelector('.pac-container');
-          const open = dd && getComputedStyle(dd).display!=='none';
+          const open = dd && getComputedStyle(dd).display !== 'none';
           if (open) e.preventDefault();
         }
       });
