@@ -10,7 +10,6 @@
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-NJ76GXDB');</script>
-  <!-- End Google Tag Manager -->
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -71,7 +70,7 @@
 
     /* ===== Centered card ===== */
     main{
-      min-height: calc(100svh - 56px - 56px); /* header+footer approx */
+      min-height: calc(100svh - 56px - 56px);
       display:grid; place-items:center; padding: clamp(14px,3vw,28px);
     }
     .card{
@@ -92,17 +91,24 @@
     .bullets{ margin:8px 0 12px; padding-left:1.1rem; color:#223046 }
     .bullets li{ margin: .25rem 0 }
 
-    /* Agent mini row */
+    /* ===== Agent mini row ===== */
     .agent-mini{ margin: 10px 0 6px; }
     .agent-mini__title{ margin: 0 0 8px; font-weight:800; font-size:.95rem; color:#0b1e37; text-align:center; }
     .agent-mini__row{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .agent-mini__item{ display:grid; grid-template-columns:auto 1fr; align-items:center; gap:8px; min-width:0; }
     .agent-mini__item img{ width:42px; height:42px; border-radius:50%; object-fit:cover; box-shadow:0 2px 6px rgba(0,0,0,.08); }
     .agent-mini__meta{ display:grid; min-width:0; line-height:1.15; }
-    .agent-mini__name{ font-weight:800; font-size:.92rem; color:#0b1e37; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .agent-mini__name{
+      font-weight:800; font-size:.92rem; color:#0b1e37;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
     .agent-mini__role{ font-size:.75rem; color:#64748b; }
+    /* Wrap names on small phones */
+    @media (max-width: 480px){
+      .agent-mini__name{ white-space: normal; overflow: visible; text-overflow: unset; }
+    }
 
-    /* Form */
+    /* ===== Form ===== */
     form{ display:grid; gap:14px; margin-top:8px }
     label{ display:grid; gap:6px; font-weight:700; color:#0b1e37 }
     input{ background:#fff; border:1px solid #dfe7f0; border-radius:12px; padding:12px; font-size:16px; min-height:44px; }
@@ -119,18 +125,38 @@
     .btn{ display:inline-block; border:0; border-radius:12px; padding:14px 20px; font-weight:800; letter-spacing:.2px; cursor:pointer; min-height:48px; }
     .btn.primary{ background:var(--accent); color:#fff; box-shadow:0 10px 28px rgba(10,132,255,.28) }
     .btn[disabled]{ opacity:.6; cursor:not-allowed }
-
     .fine{ margin:2px 0 0; font-size:12px; color:var(--muted) }
 
-    /* Stepper */
-    .progress{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin: 8px 0 10px; }
-    .progress .label{ font-weight:800; color:#f5a300; }
+    /* ===== Stepper + progress bar ===== */
+    .progress{ margin:10px 0 12px; }
+    .progress-title{
+      font-weight:800; color:#0b1e37; font-size:.95rem;
+      margin-bottom:6px;
+    }
+    .progress-row{
+      display:grid; grid-template-columns:1fr auto; align-items:center; gap:10px;
+    }
+    .progress-bar{
+      position:relative; height:10px; border-radius:999px; overflow:hidden;
+      background:#edf2f7; border:1px solid #e6edf5;
+    }
+    .progress-fill{
+      position:absolute; inset:0 auto 0 0; width:20%;
+      background: linear-gradient(90deg, #0A84FF, #7c3aed 60%, #14b8a6);
+      border-right: 1px solid rgba(255,255,255,.6);
+      transition: width .25s ease;
+    }
+    .progress-label{ font-weight:800; color:#f5a300; white-space:nowrap; }
+    @media (max-width:420px){
+      .progress-row{ grid-template-columns:1fr; gap:6px; }
+      .progress-label{ justify-self:end; }
+    }
+
     .steps{ display:grid; gap:14px }
     .step[hidden]{ display:none !important; }
 
     /* Make sure it still feels centered on short viewports */
     @media (max-width:480px){ .card{ max-width: 94vw } }
-
     /* Guarantee hidden attribute hides elements */
     [hidden]{ display:none !important; }
   </style>
@@ -143,7 +169,7 @@
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ76GXDB"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-  <!-- Header (centered logo, no buttons) -->
+  <!-- Header -->
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__logo" href="#">
@@ -186,8 +212,21 @@
           </div>
         </section>
 
-        <!-- Stepper status -->
-        <div class="progress"><div class="label" id="stepLabel">Step 1 of 5</div></div>
+        <!-- Progress header -->
+        <div class="progress">
+          <div class="progress-title">Complete the quick form below</div>
+          <div class="progress-row">
+            <div class="progress-bar"
+                 role="progressbar"
+                 aria-valuemin="1"
+                 aria-valuemax="5"
+                 aria-valuenow="1"
+                 aria-label="Form progress">
+              <span class="progress-fill" style="width:20%"></span>
+            </div>
+            <div class="progress-label"><span id="stepLabel">Step 1 of 5</span></div>
+          </div>
+        </div>
 
         <!-- Form (5 steps) -->
         <form id="leadForm"
@@ -280,7 +319,7 @@
     </div>
   </footer>
 
-  <!-- Stepper + Netlify submit + GTM push (single script) -->
+  <!-- Stepper + Netlify submit + GTM push -->
   <script>
   (function(){
     function hydrateHiddenFields(form){
@@ -312,16 +351,31 @@
       const nextBtn = document.getElementById('nextBtn');
       const submitBtn = document.getElementById('submitBtn');
 
+      const bar  = document.querySelector('.progress-bar');
+      const fill = document.querySelector('.progress-fill');
+
       let i = 0; // current step index
 
       function showStep(n){
         i = Math.max(0, Math.min(n, steps.length-1));
         steps.forEach((s, idx)=> s.hidden = idx !== i);
+
+        // label
         if (stepLabel) stepLabel.textContent = `Step ${i+1} of ${steps.length}`;
+
         // buttons
         const last = (i === steps.length-1);
         nextBtn.hidden   =  last;
         submitBtn.hidden = !last;
+
+        // progress bar
+        const pct = ((i+1)/steps.length)*100;
+        if (fill) fill.style.width = pct + '%';
+        if (bar){
+          bar.setAttribute('aria-valuenow', String(i+1));
+          bar.setAttribute('aria-valuetext', `Step ${i+1} of ${steps.length}`);
+        }
+
         // focus first field
         const inp = steps[i].querySelector('input,select,textarea,button');
         inp && inp.focus({preventScroll:true});
