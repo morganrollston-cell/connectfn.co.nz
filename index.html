@@ -127,36 +127,36 @@
     .btn[disabled]{ opacity:.6; cursor:not-allowed }
     .fine{ margin:2px 0 0; font-size:12px; color:var(--muted) }
 
+   
     /* ===== Stepper + progress bar ===== */
-    .progress{ margin:10px 0 12px; }
-    .progress-title{
-      font-weight:800; color:#0b1e37; font-size:.95rem;
-      margin-bottom:6px;
-    }
-    .progress-row{
-      display:grid; grid-template-columns:1fr auto; align-items:center; gap:10px;
-    }
-    .progress-bar{
-      position:relative; height:10px; border-radius:999px; overflow:hidden;
-      background:#edf2f7; border:1px solid #e6edf5;
-    }
-    .progress-fill{
-      position:absolute; inset:0 auto 0 0; width:20%;
-      background: linear-gradient(90deg, #0A84FF, #7c3aed 60%, #14b8a6);
-      border-right: 1px solid rgba(255,255,255,.6);
-      transition: width .25s ease;
-    }
-    .progress-label{ font-weight:800; color:#f5a300; white-space:nowrap; }
-    @media (max-width:420px){
-      .progress-row{ grid-template-columns:1fr; gap:6px; }
-      .progress-label{ justify-self:end; }
-    }
+.progress{ margin:10px 0 12px; }
+.progress-title{
+  font-weight:800; color:#0b1e37; font-size:.95rem;
+  margin-bottom:6px;
+}
+/* label on the left, bar on the right */
+.progress-row{
+  display:grid;
+  grid-template-columns:auto 1fr; /* label | bar */
+  align-items:center;
+  gap:10px;
+}
+.progress-label{ font-weight:800; color:#f5a300; white-space:nowrap; }
 
-    .steps{ display:grid; gap:14px }
-    .step[hidden]{ display:none !important; }
-
-    /* Make sure it still feels centered on short viewports */
-    @media (max-width:480px){ .card{ max-width: 94vw } }
+.progress-bar{
+  position:relative; height:10px; border-radius:999px; overflow:hidden;
+  background:#edf2f7; border:1px solid #e6edf5;
+}
+.progress-fill{
+  position:absolute; inset:0 auto 0 0;
+  width:0%;                    /* <-- start empty on step 1 */
+  background: linear-gradient(90deg, #0A84FF, #7c3aed 60%, #14b8a6);
+  border-right: 1px solid rgba(255,255,255,.6);
+  transition: width .25s ease;
+}
+@media (max-width:420px){
+  .progress-row{ grid-template-columns:auto 1fr; gap:8px; }
+}
     /* Guarantee hidden attribute hides elements */
     [hidden]{ display:none !important; }
   </style>
@@ -214,19 +214,19 @@
 
         <!-- Progress header -->
         <div class="progress">
-          <div class="progress-title">Complete the quick form below</div>
-          <div class="progress-row">
-            <div class="progress-bar"
-                 role="progressbar"
-                 aria-valuemin="1"
-                 aria-valuemax="5"
-                 aria-valuenow="1"
-                 aria-label="Form progress">
-              <span class="progress-fill" style="width:20%"></span>
-            </div>
-            <div class="progress-label"><span id="stepLabel">Step 1 of 5</span></div>
-          </div>
-        </div>
+  <div class="progress-title">Complete the quick form below</div>
+  <div class="progress-row">
+    <div class="progress-label"><span id="stepLabel">Step 1 of 5</span></div>
+    <div class="progress-bar"
+         role="progressbar"
+         aria-valuemin="0"
+         aria-valuemax="5"
+         aria-valuenow="0"
+         aria-label="Form progress">
+      <span class="progress-fill" style="width:0%"></span>
+    </div>
+  </div>
+</div>
 
         <!-- Form (5 steps) -->
         <form id="leadForm"
@@ -356,30 +356,31 @@
 
       let i = 0; // current step index
 
-      function showStep(n){
-        i = Math.max(0, Math.min(n, steps.length-1));
-        steps.forEach((s, idx)=> s.hidden = idx !== i);
+  function showStep(n){
+  i = Math.max(0, Math.min(n, steps.length-1));
+  steps.forEach((s, idx)=> s.hidden = idx !== i);
 
-        // label
-        if (stepLabel) stepLabel.textContent = `Step ${i+1} of ${steps.length}`;
+  // Left label shows the current step number the user is ON
+  if (stepLabel) stepLabel.textContent = `Step ${i+1} of ${steps.length}`;
 
-        // buttons
-        const last = (i === steps.length-1);
-        nextBtn.hidden   =  last;
-        submitBtn.hidden = !last;
+  // Buttons
+  const last = (i === steps.length-1);
+  nextBtn.hidden   =  last;
+  submitBtn.hidden = !last;
 
-        // progress bar
-        const pct = ((i+1)/steps.length)*100;
-        if (fill) fill.style.width = pct + '%';
-        if (bar){
-          bar.setAttribute('aria-valuenow', String(i+1));
-          bar.setAttribute('aria-valuetext', `Step ${i+1} of ${steps.length}`);
-        }
+  // Progress bar: shows how many steps are COMPLETED.
+  // Step 1 (i=0) => 0%, Step 2 (i=1) => 20%, ... Step 5 (i=4) => 80%, then submit.
+  const pct = (i / steps.length) * 100;
+  if (fill) fill.style.width = pct + '%';
+  if (bar){
+    bar.setAttribute('aria-valuenow', String(i));
+    bar.setAttribute('aria-valuetext', `Completed ${i} of ${steps.length}`);
+  }
 
-        // focus first field
-        const inp = steps[i].querySelector('input,select,textarea,button');
-        inp && inp.focus({preventScroll:true});
-      }
+  // focus first field in current step
+  const inp = steps[i].querySelector('input,select,textarea,button');
+  inp && inp.focus({preventScroll:true});
+}
 
       function canAdvance(){
         const cur = steps[i];
