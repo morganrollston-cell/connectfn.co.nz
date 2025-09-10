@@ -433,7 +433,7 @@
             window.dataLayer.push({
               event:'lead_submit_success',
               variant: window.__variant || 'B',
-              form_name: form.getAttribute('name') || 'Leads Spring Promo',
+              form_name: form.getAttribute('name') || 'Leads Spring Promo (Split Test)',
               enhanced_conversion_data:{
                 email:(fd.get('email')||'').toString().trim().toLowerCase(),
                 phone_number:(fd.get('phone')||'').toString().trim(),
