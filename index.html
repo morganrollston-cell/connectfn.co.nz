@@ -32,7 +32,7 @@
     body{
       margin:0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      line-height:1.5; color:#0b1e37; background:#000; /* will be covered by bg */
+      line-height:1.5; color:#0b1e37; background:#000; /* covered by bg */
       font-size: clamp(15px,1.6vw,17px);
     }
     a{color:#00467F;text-decoration:none}
@@ -42,7 +42,7 @@
       --radius:16px; --shadow:0 18px 48px rgba(0,0,0,.28);
     }
 
-    /* ===== Full-bleed background image (entire page) ===== */
+    /* ===== Full-bleed background image ===== */
     .page-bg{
       position:fixed; inset:0; z-index:-2;
       background:
@@ -64,19 +64,14 @@
     .site-header__logo img{ height: clamp(52px,6vw,80px); width:auto; display:block; }
 
     /* ===== Footer (simple legal bar) ===== */
-    .legal{
-      background:#0b1e37; color:#cfe0f3; border-top:1px solid rgba(255,255,255,.10);
-    }
-    .legal .inner{
-      display:grid; gap:10px; align-items:center;
-      padding:14px 16px; max-width:1120px; margin:0 auto;
-    }
+    .legal{ background:#0b1e37; color:#cfe0f3; border-top:1px solid rgba(255,255,255,.10); }
+    .legal .inner{ display:grid; gap:10px; align-items:center; padding:14px 16px; max-width:1120px; margin:0 auto; }
     @media(min-width:720px){ .legal .inner{ grid-template-columns:1fr auto } }
     .legal a{ color:#69c2ff }
 
-    /* ===== Centered card with headline + bullets + stepper form ===== */
+    /* ===== Centered card ===== */
     main{
-      min-height: calc(100svh - 56px - 56px); /* header+footer approx; fits small phones */
+      min-height: calc(100svh - 56px - 56px); /* header+footer approx */
       display:grid; place-items:center; padding: clamp(14px,3vw,28px);
     }
     .card{
@@ -92,14 +87,20 @@
       padding:6px 10px; border-radius:999px; font-weight:800; font-size:.85rem;
       letter-spacing:.2px; margin-bottom:10px;
     }
-    h1{
-      margin:.2rem 0 .35rem;
-      font-size: clamp(22px,3.6vw,30px);
-      line-height:1.15; color:#0b1e37; font-weight:900;
-    }
+    h1{ margin:.2rem 0 .35rem; font-size: clamp(22px,3.6vw,30px); line-height:1.15; color:#0b1e37; font-weight:900; }
     .lede{ margin:0 0 10px; color:#344861 }
     .bullets{ margin:8px 0 12px; padding-left:1.1rem; color:#223046 }
     .bullets li{ margin: .25rem 0 }
+
+    /* Agent mini row */
+    .agent-mini{ margin: 10px 0 6px; }
+    .agent-mini__title{ margin: 0 0 8px; font-weight:800; font-size:.95rem; color:#0b1e37; text-align:center; }
+    .agent-mini__row{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .agent-mini__item{ display:grid; grid-template-columns:auto 1fr; align-items:center; gap:8px; min-width:0; }
+    .agent-mini__item img{ width:42px; height:42px; border-radius:50%; object-fit:cover; box-shadow:0 2px 6px rgba(0,0,0,.08); }
+    .agent-mini__meta{ display:grid; min-width:0; line-height:1.15; }
+    .agent-mini__name{ font-weight:800; font-size:.92rem; color:#0b1e37; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .agent-mini__role{ font-size:.75rem; color:#64748b; }
 
     /* Form */
     form{ display:grid; gap:14px; margin-top:8px }
@@ -107,96 +108,40 @@
     input{ background:#fff; border:1px solid #dfe7f0; border-radius:12px; padding:12px; font-size:16px; min-height:44px; }
     input:focus{ border-color:#7cc4ff; outline:0; box-shadow:0 0 0 4px rgba(124,196,255,.25); }
 
-    .timeframe-pills{
-      display:flex; flex-wrap:wrap; gap:8px; margin:2px 0 4px;
-    }
+    .timeframe-pills{ display:flex; flex-wrap:wrap; gap:8px; margin:2px 0 4px; }
     .timeframe-pills input{ display:none }
-    .timeframe-pills label{
-      border:1px solid #dbe3ef; border-radius:999px; cursor:pointer; font-weight:600;
-    }
+    .timeframe-pills label{ border:1px solid #dbe3ef; border-radius:999px; cursor:pointer; font-weight:600; }
     .timeframe-pills label span{ display:block; padding:10px 14px; border-radius:999px; }
     .timeframe-pills input:checked + span{
-      background:#0A84FF; color:#fff; border-color:#0A84FF;
-      box-shadow:0 4px 12px rgba(10,132,255,.26);
+      background:#0A84FF; color:#fff; border-color:#0A84FF; box-shadow:0 4px 12px rgba(10,132,255,.26);
     }
 
-    .btn{ display:inline-block; border:0; border-radius:12px; padding:14px 20px;
-      font-weight:800; letter-spacing:.2px; cursor:pointer; min-height:48px;
-    }
+    .btn{ display:inline-block; border:0; border-radius:12px; padding:14px 20px; font-weight:800; letter-spacing:.2px; cursor:pointer; min-height:48px; }
     .btn.primary{ background:var(--accent); color:#fff; box-shadow:0 10px 28px rgba(10,132,255,.28) }
     .btn[disabled]{ opacity:.6; cursor:not-allowed }
 
     .fine{ margin:2px 0 0; font-size:12px; color:var(--muted) }
 
-    /* Stepper bits */
-    .progress{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin: 6px 0 10px; }
+    /* Stepper */
+    .progress{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin: 8px 0 10px; }
     .progress .label{ font-weight:800; color:#f5a300; }
     .steps{ display:grid; gap:14px }
     .step[hidden]{ display:none !important; }
 
     /* Make sure it still feels centered on short viewports */
-    @media (max-width:480px){
-      .card{ max-width: 94vw }
-    }
-    
-    /* Ensure anything with the hidden attribute is truly hidden */
-[hidden] { display: none !important; }
+    @media (max-width:480px){ .card{ max-width: 94vw } }
 
-/* ===== Mini agent row INSIDE the mobile form ===== */
-.agent-mini__title{
-  margin: 0 0 8px;
-  font-weight: 800;
-  font-size: .95rem;
-  color: #0b1e37;
-  text-align: center;
-}
-
-.agent-mini__row{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.agent-mini__item{
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-}
-
-.agent-mini__item img{
-  width: 42px; height: 42px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 2px 6px rgba(0,0,0,.08);
-}
-
-.agent-mini__meta{
-  display: grid; min-width: 0; line-height: 1.15;
-}
-
-.agent-mini__name{
-  font-weight: 800;
-  font-size: .92rem;
-  color: #0b1e37;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-
-.agent-mini__role{
-  font-size: .75rem;
-  color: #64748b;
-}
+    /* Guarantee hidden attribute hides elements */
+    [hidden]{ display:none !important; }
   </style>
 </head>
 <body>
   <!-- BG image -->
   <div class="page-bg" aria-hidden="true"></div>
 
-  <!-- Google Tag Manager (noscript) -->
+  <!-- GTM (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ76GXDB"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End GTM (noscript) -->
 
   <!-- Header (centered logo, no buttons) -->
   <header class="site-header">
@@ -210,7 +155,7 @@
   <main>
     <div class="card">
       <div class="card__body">
-        <!-- Headline + bullets INSIDE the card -->
+        <!-- Headline + bullets -->
         <span class="eyebrow">Spring promo</span>
         <h1>Get your Free Property Appraisal & go in the draw to win up to $5,000</h1>
         <p class="lede">Fast, expert valuation of your Nelson/Tasman property with clear next steps to maximise your result.</p>
@@ -220,105 +165,104 @@
           <li>📊 Clear valuation + plan</li>
         </ul>
 
-  <!-- MINI AGENT ROW (mobile, lives inside the form card) -->
-<div class="agent-mini">
-  <p class="agent-mini__title">Your local Nelson/Tasman agents</p>
-
-  <div class="agent-mini__row">
-    <div class="agent-mini__item">
-      <img src="assets/images/Principle-Headshot.png" alt="Penelope Rollston">
-      <div class="agent-mini__meta">
-        <span class="agent-mini__name">Penelope Rollston</span>
-        <span class="agent-mini__role">Principal Broker</span>
-      </div>
-    </div>
-
-    <div class="agent-mini__item">
-      <img src="assets/images/Kim-Allred-Headshot.png" alt="Kim Allred">
-      <div class="agent-mini__meta">
-        <span class="agent-mini__name">Kim Allred</span>
-        <span class="agent-mini__role">Sales Consultant</span>
-      </div>
+        <!-- Agent mini (outside the form) -->
+        <section class="agent-mini" aria-label="Your local Nelson/Tasman agents">
+          <p class="agent-mini__title">Your local Nelson/Tasman agents</p>
+          <div class="agent-mini__row">
+            <div class="agent-mini__item">
+              <img src="assets/images/Principle-Headshot.png" alt="Penelope Rollston">
+              <div class="agent-mini__meta">
+                <span class="agent-mini__name">Penelope Rollston</span>
+                <span class="agent-mini__role">Principal Broker</span>
+              </div>
+            </div>
+            <div class="agent-mini__item">
+              <img src="assets/images/Kim-Allred-Headshot.png" alt="Kim Allred">
+              <div class="agent-mini__meta">
+                <span class="agent-mini__name">Kim Allred</span>
+                <span class="agent-mini__role">Sales Consultant</span>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <!-- Stepper status -->
         <div class="progress"><div class="label" id="stepLabel">Step 1 of 5</div></div>
 
         <!-- Form (5 steps) -->
-      <form id="leadForm"
-      name="Leads Spring Promo"
-      method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      novalidate>
-  <input type="hidden" name="form-name" value="Leads Spring Promo">
+        <form id="leadForm"
+              name="Leads Spring Promo"
+              method="POST"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+              novalidate>
+          <input type="hidden" name="form-name" value="Leads Spring Promo">
 
-  <!-- Keep honeypot but hide it -->
-  <p style="display:none;">
-    <label>Don’t fill this out: <input name="bot-field"></label>
-  </p>
+          <!-- Honeypot (hidden) -->
+          <p style="display:none;"><label>Don’t fill this out: <input name="bot-field"></label></p>
 
-  <!-- analytics helpers -->
-  <input type="hidden" name="variant" value="B">
-  <input type="hidden" name="page_url" value="">
-  <input type="hidden" name="submitted_at" value="">
-  <input type="hidden" name="utm_source" value="">
-  <input type="hidden" name="utm_medium" value="">
-  <input type="hidden" name="utm_campaign" value="">
+          <!-- analytics helpers -->
+          <input type="hidden" name="variant" value="B">
+          <input type="hidden" name="page_url" value="">
+          <input type="hidden" name="submitted_at" value="">
+          <input type="hidden" name="utm_source" value="">
+          <input type="hidden" name="utm_medium" value="">
+          <input type="hidden" name="utm_campaign" value="">
 
-  <div class="steps">
-    <!-- 1: Address -->
-    <div class="step" data-step="1">
-      <label for="address">Property address for appraisal
-        <input id="address" type="text" name="address"
-               placeholder="e.g., 10 Example St, Richmond"
-               autocomplete="street-address" inputmode="text" required>
-      </label>
-    </div>
+          <div class="steps">
+            <!-- 1: Address -->
+            <div class="step" data-step="1">
+              <label for="address">Property address for appraisal
+                <input id="address" type="text" name="address"
+                       placeholder="e.g., 10 Example St, Richmond"
+                       autocomplete="street-address" inputmode="text" required>
+              </label>
+            </div>
 
-    <!-- 2: Name -->
-    <div class="step" data-step="2" hidden>
-      <label for="full_name">Your full name
-        <input id="full_name" type="text" name="full_name"
-               autocomplete="name" inputmode="text" minlength="2" required>
-      </label>
-    </div>
+            <!-- 2: Name -->
+            <div class="step" data-step="2" hidden>
+              <label for="full_name">Your full name
+                <input id="full_name" type="text" name="full_name"
+                       autocomplete="name" inputmode="text" minlength="2" required>
+              </label>
+            </div>
 
-    <!-- 3: Email -->
-    <div class="step" data-step="3" hidden>
-      <label for="email">Email for your free report
-        <input id="email" type="email" name="email"
-               autocomplete="email" inputmode="email" required>
-      </label>
-    </div>
+            <!-- 3: Email -->
+            <div class="step" data-step="3" hidden>
+              <label for="email">Email for your free report
+                <input id="email" type="email" name="email"
+                       autocomplete="email" inputmode="email" required>
+              </label>
+            </div>
 
-    <!-- 4: Phone -->
-    <div class="step" data-step="4" hidden>
-      <label for="phone">Best contact number
-        <input id="phone" type="tel" name="phone"
-               autocomplete="tel" inputmode="tel"
-               pattern="^[0-9+ ()-]{7,}$"
-               placeholder="e.g., 027 123 4567" required>
-      </label>
-    </div>
+            <!-- 4: Phone -->
+            <div class="step" data-step="4" hidden>
+              <label for="phone">Best contact number
+                <input id="phone" type="tel" name="phone"
+                       autocomplete="tel" inputmode="tel"
+                       pattern="^[0-9+ ()-]{7,}$"
+                       placeholder="e.g., 027 123 4567" required>
+              </label>
+            </div>
 
-    <!-- 5: Timeframe -->
-    <div class="step" data-step="5" hidden>
-      <label>When are you planning to sell?</label>
-      <div class="timeframe-pills">
-        <label><input type="radio" name="timeframe" value="Now" required><span>Now</span></label>
-        <label><input type="radio" name="timeframe" value="1–3 months"><span>1–3 months</span></label>
-        <label><input type="radio" name="timeframe" value="3–6 months"><span>3–6 months</span></label>
-        <label><input type="radio" name="timeframe" value="Just curious"><span>Just curious</span></label>
-      </div>
-    </div>
-  </div>
+            <!-- 5: Timeframe -->
+            <div class="step" data-step="5" hidden>
+              <label>When are you planning to sell?</label>
+              <div class="timeframe-pills">
+                <label><input type="radio" name="timeframe" value="Now" required><span>Now</span></label>
+                <label><input type="radio" name="timeframe" value="1–3 months"><span>1–3 months</span></label>
+                <label><input type="radio" name="timeframe" value="3–6 months"><span>3–6 months</span></label>
+                <label><input type="radio" name="timeframe" value="Just curious"><span>Just curious</span></label>
+              </div>
+            </div>
+          </div>
 
-  <!-- Only one button shows at a time -->
-  <button type="button" class="btn primary" id="nextBtn">Continue</button>
-  <button type="submit" class="btn primary" id="submitBtn" hidden>Submit</button>
+          <!-- Only one button shows at a time -->
+          <button type="button" class="btn primary" id="nextBtn">Continue</button>
+          <button type="submit" class="btn primary" id="submitBtn" hidden>Submit</button>
 
-  <p class="fine">By submitting, you agree to our T&Cs and Privacy Policy.</p>
-</form>
+          <p class="fine">By submitting, you agree to our T&Cs and Privacy Policy.</p>
+        </form>
       </div>
     </div>
   </main>
@@ -336,7 +280,7 @@
     </div>
   </footer>
 
-  <!-- Stepper + Netlify submit + GTM push -->
+  <!-- Stepper + Netlify submit + GTM push (single script) -->
   <script>
   (function(){
     function hydrateHiddenFields(form){
@@ -368,35 +312,33 @@
       const nextBtn = document.getElementById('nextBtn');
       const submitBtn = document.getElementById('submitBtn');
 
-      let i = 0; // current step index (0..4)
+      let i = 0; // current step index
+
       function showStep(n){
         i = Math.max(0, Math.min(n, steps.length-1));
         steps.forEach((s, idx)=> s.hidden = idx !== i);
-        stepLabel.textContent = `Step ${i+1} of ${steps.length}`;
-        nextBtn.hidden   = (i === steps.length-1);
-        submitBtn.hidden = (i !== steps.length-1);
-        // focus first input in visible step
+        if (stepLabel) stepLabel.textContent = `Step ${i+1} of ${steps.length}`;
+        // buttons
+        const last = (i === steps.length-1);
+        nextBtn.hidden   =  last;
+        submitBtn.hidden = !last;
+        // focus first field
         const inp = steps[i].querySelector('input,select,textarea,button');
         inp && inp.focus({preventScroll:true});
       }
 
       function canAdvance(){
         const cur = steps[i];
-        // if any required field in this step invalid, focus it
         const bad = firstInvalid(cur) || [...cur.querySelectorAll('[required]')].find(el => !String(el.value||'').trim());
         if (bad){
-          bad.focus();
-          form.reportValidity();
+          bad.focus(); form.reportValidity();
           cur.scrollIntoView({behavior:'smooth', block:'center'});
           return false;
         }
         return true;
       }
 
-      nextBtn.addEventListener('click', ()=>{
-        if (!canAdvance()) return;
-        showStep(i+1);
-      });
+      nextBtn.addEventListener('click', ()=>{ if (canAdvance()) showStep(i+1); });
 
       // prevent Enter from submitting early
       form.addEventListener('keydown', e=>{
@@ -405,66 +347,12 @@
 
       hydrateHiddenFields(form);
       showStep(0);
-      
-      <script>
-(function () {
-  document.addEventListener('DOMContentLoaded', function () {
-    const form      = document.getElementById('leadForm');
-    const steps     = Array.from(form.querySelectorAll('.step'));
-    const stepLabel = document.getElementById('stepLabel');
-    const nextBtn   = document.getElementById('nextBtn');                 // Continue
-    const submitBtn = form.querySelector('button[type="submit"]');        // Submit
-
-    let i = 0; // current step index
-
-    function showStep(n){
-      i = Math.max(0, Math.min(n, steps.length - 1));
-      steps.forEach((s, idx) => s.hidden = idx !== i);
-
-      // toggle buttons
-      const last = (i === steps.length - 1);
-      nextBtn.hidden   =  last;       // hide Continue on last step
-      submitBtn.hidden = !last;       // show Submit only on last step
-
-      // update label
-      if (stepLabel) stepLabel.textContent = `Step ${i+1} of ${steps.length}`;
-
-      // focus first input on the current step
-      const inp = steps[i].querySelector('input,select,textarea,button');
-      inp && inp.focus({ preventScroll: true });
-    }
-
-    function canAdvance(){
-      const cur = steps[i];
-      const bad = cur.querySelector(':invalid') ||
-                  [...cur.querySelectorAll('[required]')].find(el => !String(el.value||'').trim());
-      if (bad){
-        bad.focus(); form.reportValidity();
-        cur.scrollIntoView({ behavior:'smooth', block:'center' });
-        return false;
-      }
-      return true;
-    }
-
-    nextBtn.addEventListener('click', () => { if (canAdvance()) showStep(i+1); });
-
-    // prevent Enter from submitting early
-    form.addEventListener('keydown', e => {
-      if (e.key === 'Enter' && e.target.type !== 'submit') e.preventDefault();
-    });
-
-    // initial state
-    showStep(0);
-  });
-})();
-</script>
 
       // submit handler (AJAX to Netlify)
       form.addEventListener('submit', async (e)=>{
         e.preventDefault();
         if (!form.checkValidity()){
-          const bad = firstInvalid(form);
-          bad?.focus(); form.reportValidity();
+          const bad = firstInvalid(form); bad?.focus(); form.reportValidity();
           return;
         }
         const orig = submitBtn.textContent;
@@ -478,11 +366,7 @@
           const obj = {}; fd.forEach((v,k)=>obj[k]=v);
           const encoded = Object.keys(obj).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(obj[k])).join('&');
 
-          const res = await fetch('/', {
-            method:'POST',
-            headers:{'Content-Type':'application/x-www-form-urlencoded'},
-            body: encoded
-          });
+          const res = await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: encoded });
           if (!res.ok) throw new Error('Netlify '+res.status);
 
           // GTM event
