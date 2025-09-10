@@ -138,6 +138,55 @@
     @media (max-width:480px){
       .card{ max-width: 94vw }
     }
+    
+    /* Ensure anything with the hidden attribute is truly hidden */
+[hidden] { display: none !important; }
+
+/* ===== Mini agent row INSIDE the mobile form ===== */
+.agent-mini__title{
+  margin: 0 0 8px;
+  font-weight: 800;
+  font-size: .95rem;
+  color: #0b1e37;
+  text-align: center;
+}
+
+.agent-mini__row{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.agent-mini__item{
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.agent-mini__item img{
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+
+.agent-mini__meta{
+  display: grid; min-width: 0; line-height: 1.15;
+}
+
+.agent-mini__name{
+  font-weight: 800;
+  font-size: .92rem;
+  color: #0b1e37;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.agent-mini__role{
+  font-size: .75rem;
+  color: #64748b;
+}
   </style>
 </head>
 <body>
@@ -336,6 +385,59 @@
 
       hydrateHiddenFields(form);
       showStep(0);
+      
+      <script>
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+    const form      = document.getElementById('leadForm');
+    const steps     = Array.from(form.querySelectorAll('.step'));
+    const stepLabel = document.getElementById('stepLabel');
+    const nextBtn   = document.getElementById('nextBtn');                 // Continue
+    const submitBtn = form.querySelector('button[type="submit"]');        // Submit
+
+    let i = 0; // current step index
+
+    function showStep(n){
+      i = Math.max(0, Math.min(n, steps.length - 1));
+      steps.forEach((s, idx) => s.hidden = idx !== i);
+
+      // toggle buttons
+      const last = (i === steps.length - 1);
+      nextBtn.hidden   =  last;       // hide Continue on last step
+      submitBtn.hidden = !last;       // show Submit only on last step
+
+      // update label
+      if (stepLabel) stepLabel.textContent = `Step ${i+1} of ${steps.length}`;
+
+      // focus first input on the current step
+      const inp = steps[i].querySelector('input,select,textarea,button');
+      inp && inp.focus({ preventScroll: true });
+    }
+
+    function canAdvance(){
+      const cur = steps[i];
+      const bad = cur.querySelector(':invalid') ||
+                  [...cur.querySelectorAll('[required]')].find(el => !String(el.value||'').trim());
+      if (bad){
+        bad.focus(); form.reportValidity();
+        cur.scrollIntoView({ behavior:'smooth', block:'center' });
+        return false;
+      }
+      return true;
+    }
+
+    nextBtn.addEventListener('click', () => { if (canAdvance()) showStep(i+1); });
+
+    // prevent Enter from submitting early
+    form.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && e.target.type !== 'submit') e.preventDefault();
+    });
+
+    // initial state
+    showStep(0);
+  });
+})();
+</script>
 
       // submit handler (AJAX to Netlify)
       form.addEventListener('submit', async (e)=>{
