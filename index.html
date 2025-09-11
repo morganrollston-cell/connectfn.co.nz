@@ -94,36 +94,6 @@
     .progress-bar{ position:relative; height:10px; border-radius:999px; overflow:hidden; background:#edf2f7; border:1px solid #e6edf5; }
     .progress-fill{ position:absolute; inset:0 auto 0 0; width:0%; background: linear-gradient(90deg,#0A84FF,#7c3aed 60%,#14b8a6); border-right:1px solid rgba(255,255,255,.6); transition: width .25s ease; }
 
-    /* NEW: Arrow anchored to the first input */
-.input-arrow{
-  position:absolute;
-  z-index:3;
-  left:-80px;   /* desktop: tail off card edge */
-  top:260px;    /* vertical position so tip points into input */
-  width:120px;
-  height:auto;
-  transform: rotate(-22deg);
-  pointer-events:none;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,.18));
-  animation: breathe 1.6s ease-in-out infinite;
-}
-@keyframes breathe{
-  0%   { transform: rotate(-22deg) scale(0.96); opacity:.85 }
-  50%  { transform: rotate(-22deg) scale(1.08); opacity:1 }
-  100% { transform: rotate(-22deg) scale(0.96); opacity:.85 }
-}
-/* Tablet */
-@media (max-width:640px){
-  .input-arrow{ left:-50px; top:240px; width:100px; }
-}
-/* Phones */
-@media (max-width:420px){
-  .input-arrow{ left:-36px; top:230px; width:86px; }
-}
-/* Very small phones */
-@media (max-width:360px){
-  .input-arrow{ left:-28px; top:220px; width:80px; }
-}
 
     /* Footer (full) */
     .footer{ background:#0b4a7a; color:#e7f1fb; margin-top:40px; }
@@ -192,9 +162,6 @@
     <div class="progress-bar"><span class="progress-fill" style="width:0%"></span></div>
   </div>
 </div>
-
-<!-- Arrow now lives here -->
-<img class="input-arrow" src="assets/images/arrow.png" alt="">
 
         <!-- Form (5 steps) -->
         <form id="leadForm" name="Leads Spring Promo (Split Test)" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
@@ -406,45 +373,7 @@
     });
   })();
   </script>
-
-  <!-- Precise arrow placement (TIP aligned just outside input) -->
-  <script>
-    function placeArrowToInputTip() {
-      const arrow = document.getElementById('hintArrow');
-      const input = document.getElementById('address');
-      const card  = document.querySelector('.card');
-      if (!arrow || !input || !card) return;
-
-      const inputRect = input.getBoundingClientRect();
-      const cardRect  = card.getBoundingClientRect();
-
-      // Distance the arrow TIP should sit OUTSIDE the input's left edge
-      const outside = 8; // px
-
-      // Desired tip coordinates (relative to the card)
-      const targetX = (inputRect.left - cardRect.left) - outside;
-      const targetY = (inputRect.top  - cardRect.top) + inputRect.height * 0.55;
-
-      // Where is the "tip" inside the PNG? (fractions of image size)
-      const tipFracX = 0.14;
-      const tipFracY = 0.20;
-
-      const natW = arrow.naturalWidth  || arrow.width;
-      const natH = arrow.naturalHeight || arrow.height;
-      const dispW = arrow.getBoundingClientRect().width || natW;
-      const scale = natW ? dispW / natW : 1;
-      const dispH = natH * scale;
-
-      const offsetX = dispW * tipFracX;
-      const offsetY = dispH * tipFracY;
-      arrow.style.left = (targetX - offsetX) + 'px';
-      arrow.style.top  = (targetY - offsetY) + 'px';
-    }
-    window.addEventListener('load', placeArrowToInputTip);
-    window.addEventListener('resize', placeArrowToInputTip);
-    document.addEventListener('DOMContentLoaded', () => setTimeout(placeArrowToInputTip, 60));
-  </script>
-
+  
   <!-- Google Places -->
   <script>
     function initAddressAutocomplete(){
