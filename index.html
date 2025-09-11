@@ -43,11 +43,11 @@
     /* Centered card */
     main{ min-height: calc(100svh - 56px - 56px); display:grid; place-items:center; padding: clamp(14px,3vw,28px); }
     .card{
-      position: relative;      /* anchor for precise arrow placement */
+      position: relative;      /* anchor (kept harmlessly) */
       width:100%; max-width:520px;
       background:#fff; border:1px solid var(--border);
       border-radius: var(--radius); box-shadow: var(--shadow);
-      overflow: visible;        /* allow arrow to hang out */
+      overflow: visible;
     }
     .card__body{ padding: clamp(18px,3.4vw,28px); }
 
@@ -93,7 +93,6 @@
     .progress-label{ font-weight:800; color:#f5a300; white-space:nowrap; }
     .progress-bar{ position:relative; height:10px; border-radius:999px; overflow:hidden; background:#edf2f7; border:1px solid #e6edf5; }
     .progress-fill{ position:absolute; inset:0 auto 0 0; width:0%; background: linear-gradient(90deg,#0A84FF,#7c3aed 60%,#14b8a6); border-right:1px solid rgba(255,255,255,.6); transition: width .25s ease; }
-
 
     /* Footer (full) */
     .footer{ background:#0b4a7a; color:#e7f1fb; margin-top:40px; }
@@ -156,12 +155,14 @@
         </section>
 
         <div class="progress">
-  <div class="progress-title">Complete the quick form below</div>
-  <div class="progress-row">
-    <div class="progress-label"><span id="stepLabel">Step 1 of 5</span></div>
-    <div class="progress-bar"><span class="progress-fill" style="width:0%"></span></div>
-  </div>
-</div>
+          <div class="progress-title">Complete the quick form below</div>
+          <div class="progress-row">
+            <div class="progress-label"><span id="stepLabel">Step 1 of 5</span></div>
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-label="Form progress">
+              <span class="progress-fill" style="width:0%"></span>
+            </div>
+          </div>
+        </div>
 
         <!-- Form (5 steps) -->
         <form id="leadForm" name="Leads Spring Promo (Split Test)" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
@@ -176,11 +177,9 @@
           <input type="hidden" name="utm_campaign" value="">
 
           <div class="steps">
-            <!-- 1: Address (ARROW LIVES HERE) -->
+            <!-- 1: Address -->
             <div class="step" data-step="1">
               <label for="address">Property address for appraisal
-                <!-- precise-positioned arrow -->
-                <img id="hintArrow" class="input-arrow" src="assets/images/arrow.png" alt="">
                 <input id="address" type="text" name="address" placeholder="e.g., 10 Example St, Richmond"
                        autocomplete="street-address" inputmode="text" required>
               </label>
@@ -373,7 +372,7 @@
     });
   })();
   </script>
-  
+
   <!-- Google Places -->
   <script>
     function initAddressAutocomplete(){
@@ -388,8 +387,6 @@
       ac.addListener('place_changed', ()=>{
         const p = ac.getPlace();
         if (p && p.formatted_address) input.value = p.formatted_address;
-        // after autocomplete selection, layout may shift slightly
-        setTimeout(placeArrowToInputTip, 0);
       });
       input.addEventListener('keydown', (e)=>{
         if (e.key === 'Enter'){
