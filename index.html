@@ -58,7 +58,8 @@
       display:flex; justify-content:center; align-items:center;
       padding: 8px 16px;
     }
-    .site-header__logo img{ height: clamp(52px,6vw,80px); width:auto; display:block; }
+    /* Bigger header logo */
+    .site-header__logo img{ height: clamp(72px,8vw,120px); width:auto; display:block; }
 
     /* ===== Footer ===== */
     .legal{ background:#0b1e37; color:#cfe0f3; border-top:1px solid rgba(255,255,255,.10); }
@@ -130,6 +131,7 @@
       font-weight:800; color:#0b1e37; font-size:.95rem;
       margin-bottom:6px; text-align:center;
       position:relative; /* anchor the arrow */
+      overflow:visible;  /* allow arrow to hang out */
     }
     .progress-row{
       display:grid;
@@ -150,103 +152,94 @@
       transition: width .25s ease;
     }
 
-  /* ===== Breathing arrow (SVG) ===== */
-.arrow-hint{ position:relative; display:inline-block; }
-.arrow-hint img{
-  position:absolute;
-  z-index:3;
-  /* desktop defaults */
-  left:-110px;            /* sits outside the card but still visible */
-  top:28px;
-  width:110px;
-  height:auto;
-  transform: rotate(22deg);
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,.18));
-  animation: breathe 1.6s ease-in-out infinite;
-  pointer-events:none;
-}
-@keyframes breathe{
-  0%   { transform: rotate(22deg) scale(0.96); opacity:.85 }
-  50%  { transform: rotate(22deg) scale(1.08); opacity:1 }
-  100% { transform: rotate(22deg) scale(0.96); opacity:.85 }
-}
+    /* ===== Breathing arrow (PNG/SVG) ===== */
+    .arrow-hint{ position:relative; display:inline-block; }
+    .arrow-hint img{
+      position:absolute;
+      z-index:3;
+      /* Desktop defaults: just left of title, below it, pointing into input */
+      top: calc(100% - 6px);
+      left: -72px;
+      width: 96px;
+      height:auto;
+      transform: rotate(-22deg);
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,.18));
+      animation: breathe 1.6s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes breathe{
+      0%   { transform: rotate(-22deg) scale(0.96); opacity:.85 }
+      50%  { transform: rotate(-22deg) scale(1.08); opacity:1 }
+      100% { transform: rotate(-22deg) scale(0.96); opacity:.85 }
+    }
+    /* Tablet */
+    @media (max-width: 640px){
+      .arrow-hint img{
+        top: calc(100% - 4px);
+        left:-40px;
+        width:84px;
+      }
+    }
+    /* Phones */
+    @media (max-width: 420px){
+      .arrow-hint img{
+        top: calc(100% - 2px);
+        left:-16px;
+        width:76px;
+      }
+    }
+    /* Very small phones */
+    @media (max-width: 360px){
+      .arrow-hint img{
+        left:-8px;
+        width:70px;
+      }
+    }
 
-/* Tablet */
-@media (max-width: 640px){
-  .arrow-hint img{
-    left:-60px;     /* bring it closer so it doesn’t fall off-screen */
-    top:22px;
-    width:92px;
-  }
-}
+    /* ===== Footer (full) ===== */
+    .footer{
+      background:#0b4a7a;
+      color:#e7f1fb;
+      margin-top:40px;
+    }
+    .footer a{ color:#e7f1fb; text-decoration:none }
+    .footer a:hover{ text-decoration:underline }
 
-/* Phones */
-@media (max-width: 420px){
-  .arrow-hint img{
-    left:-28px;     /* inside the gutter */
-    top:18px;
-    width:78px;     /* still obvious but not huge */
-  }
-}
+    .footer__top{
+      max-width:1120px;
+      margin:0 auto;
+      padding:48px 16px 36px;
+      text-align:center;
+    }
+    /* Bigger footer logo */
+    .footer__logo{
+      height:60px; width:auto; display:block; margin:0 auto 22px;
+      filter: brightness(0) invert(1); /* remove if you use a white-on-transparent SVG */
+    }
+    .footer__contact{
+      list-style:none; padding:0; margin:0 0 24px;
+      display:grid; gap:8px; justify-items:center;
+      font-size: clamp(16px, 1.8vw, 18px);
+    }
+    .footer__nav{
+      display:flex; gap:40px; justify-content:center; flex-wrap:wrap;
+      letter-spacing:.08em; font-weight:600;
+      margin-top:10px; text-transform:uppercase;
+    }
+    .footer__bottom{
+      background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.12));
+      border-top:1px solid rgba(255,255,255,.15);
+      text-align:center;
+      padding:18px 16px 26px;
+      font-size:14px; color:#cfe0f3;
+    }
+    .footer__bottom p{ margin:6px 0 }
+    .footer__bottom a{ color:#cfe0f3 }
 
-/* Very small phones */
-@media (max-width: 360px){
-  .arrow-hint img{
-    left:-18px;
-    top:16px;
-    width:70px;
-  }
-}
-
-/* ===== Footer (full) ===== */
-.footer{
-  background:#0b4a7a;              /* rich blue like screenshot */
-  color:#e7f1fb;
-  margin-top:40px;
-}
-.footer a{ color:#e7f1fb; text-decoration:none }
-.footer a:hover{ text-decoration:underline }
-
-/* Top block */
-.footer__top{
-  max-width:1120px;
-  margin:0 auto;
-  padding:48px 16px 36px;
-  text-align:center;
-}
-.footer__logo{
-  height:44px; width:auto; display:block; margin:0 auto 22px;
-  /* If your SVG is blue on white, invert to white on blue: */
-  filter: brightness(0) invert(1);    /* remove this if you have a white logo file */
-}
-.footer__contact{
-  list-style:none; padding:0; margin:0 0 24px;
-  display:grid; gap:8px; justify-items:center;
-  font-size: clamp(16px, 1.8vw, 18px);
-}
-.footer__nav{
-  display:flex; gap:40px; justify-content:center; flex-wrap:wrap;
-  letter-spacing:.08em; font-weight:600;
-  margin-top:10px;
-}
-.footer__nav a{ text-transform:uppercase }
-
-/* Bottom legal strip */
-.footer__bottom{
-  background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.12));
-  border-top:1px solid rgba(255,255,255,.15);
-  text-align:center;
-  padding:18px 16px 26px;
-  font-size:14px; color:#cfe0f3;
-}
-.footer__bottom p{ margin:6px 0 }
-.footer__bottom a{ color:#cfe0f3 }
-
-/* Small screens */
-@media (max-width:640px){
-  .footer__logo{ height:38px }
-  .footer__nav{ gap:22px }
-}
+    @media (max-width:640px){
+      .footer__logo{ height:46px }
+      .footer__nav{ gap:22px }
+    }
 
     /* Guarantee hidden attribute hides elements */
     [hidden]{ display:none !important; }
@@ -261,18 +254,17 @@
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- Header -->
-<header class="site-header">
-  <div class="site-header__inner">
-    <a class="site-header__logo" href="#">
-      <img src="assets/images/Full-logo-blue.svg" alt="First National Connect Logo">
-    </a>
-  </div>
-</header>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__logo" href="#">
+        <img src="assets/images/Full-logo-blue.svg" alt="First National Connect Logo">
+      </a>
+    </div>
+  </header>
 
   <main>
     <div class="card">
       <div class="card__body">
-        <!-- Headline + bullets -->
         <span class="eyebrow">Spring promo</span>
         <h1>Get your Free Property Appraisal & go in the draw to win up to $5,000</h1>
         <p class="lede">Fast, expert valuation of your Nelson/Tasman property with clear next steps to maximise your result.</p>
@@ -282,7 +274,6 @@
           <li>📊 Clear valuation + plan</li>
         </ul>
 
-        <!-- Agent mini (outside the form) -->
         <section class="agent-mini" aria-label="Your local Nelson/Tasman agents">
           <p class="agent-mini__title">Your local Nelson/Tasman agents</p>
           <div class="agent-mini__row">
@@ -307,7 +298,6 @@
         <div class="progress">
           <div class="progress-title arrow-hint">
             Complete the quick form below
-            <!-- IMPORTANT: relative path, no leading slash -->
             <img src="assets/images/arrow.png" alt="">
           </div>
           <div class="progress-row">
@@ -330,13 +320,9 @@
               data-netlify="true"
               netlify-honeypot="bot-field"
               novalidate>
-          <!-- Ensure Netlify captures under Split Test form -->
           <input type="hidden" name="form-name" value="Leads Spring Promo (Split Test)">
-
-          <!-- Honeypot (hidden) -->
           <p style="display:none;"><label>Don’t fill this out: <input name="bot-field"></label></p>
 
-          <!-- analytics helpers -->
           <input type="hidden" name="variant" value="B">
           <input type="hidden" name="page_url" value="">
           <input type="hidden" name="submitted_at" value="">
@@ -345,7 +331,6 @@
           <input type="hidden" name="utm_campaign" value="">
 
           <div class="steps">
-            <!-- 1: Address -->
             <div class="step" data-step="1">
               <label for="address">Property address for appraisal
                 <input id="address" type="text" name="address"
@@ -354,7 +339,6 @@
               </label>
             </div>
 
-            <!-- 2: Name -->
             <div class="step" data-step="2" hidden>
               <label for="full_name">Your full name
                 <input id="full_name" type="text" name="full_name"
@@ -362,7 +346,6 @@
               </label>
             </div>
 
-            <!-- 3: Email -->
             <div class="step" data-step="3" hidden>
               <label for="email">Email for your free report
                 <input id="email" type="email" name="email"
@@ -370,7 +353,6 @@
               </label>
             </div>
 
-            <!-- 4: Phone -->
             <div class="step" data-step="4" hidden>
               <label for="phone">Best contact number
                 <input id="phone" type="tel" name="phone"
@@ -380,7 +362,6 @@
               </label>
             </div>
 
-            <!-- 5: Timeframe -->
             <div class="step" data-step="5" hidden>
               <label>When are you planning to sell?</label>
               <div class="timeframe-pills">
@@ -392,7 +373,6 @@
             </div>
           </div>
 
-          <!-- Only one button shows at a time -->
           <button type="button" class="btn primary" id="nextBtn">Continue</button>
           <button type="submit" class="btn primary" id="submitBtn" hidden>Submit</button>
 
@@ -403,31 +383,31 @@
   </main>
 
   <footer class="footer">
-  <div class="footer__top">
-    <img class="footer__logo" src="assets/images/Full-logo-blue.svg" alt="First National Connect">
-    <ul class="footer__contact">
-      <li><a href="tel:0273594558">027 359 4558</a></li>
-      <li><a href="mailto:penelope@fnconnect.co.nz">penelope@fnconnect.co.nz</a></li>
-      <li>Collingwood Street Nelson 7010</li>
-    </ul>
+    <div class="footer__top">
+      <img class="footer__logo" src="assets/images/Full-logo-blue.svg" alt="First National Connect">
+      <ul class="footer__contact">
+        <li><a href="tel:0273594558">027 359 4558</a></li>
+        <li><a href="mailto:penelope@fnconnect.co.nz">penelope@fnconnect.co.nz</a></li>
+        <li>Collingwood Street Nelson 7010</li>
+      </ul>
 
-    <nav class="footer__nav" aria-label="Footer">
-      <a href="/spring-campaign">SPRING CAMPAIGN INFO</a>
-      <a href="https://facebook.com/firstnationalconnect" target="_blank" rel="noopener">FACEBOOK</a>
-      <a href="https://instagram.com/firstnationalconnect" target="_blank" rel="noopener">INSTAGRAM</a>
-    </nav>
-  </div>
+      <nav class="footer__nav" aria-label="Footer">
+        <a href="/spring-campaign">SPRING CAMPAIGN INFO</a>
+        <a href="https://facebook.com/firstnationalconnect" target="_blank" rel="noopener">FACEBOOK</a>
+        <a href="https://instagram.com/firstnationalconnect" target="_blank" rel="noopener">INSTAGRAM</a>
+      </nav>
+    </div>
 
-  <div class="footer__bottom">
-    <p>Copyright © 2025. First National Connect Licensed REA 2008, All rights reserved.</p>
-    <p>Powered by Phoenix Software.</p>
-    <p>
-      <a href="/complaints-process">Complaints Process</a> |
-      <a href="/privacy-policy">Privacy Policy</a> |
-      <a href="/sitemap">Sitemap</a>
-    </p>
-  </div>
-</footer>
+    <div class="footer__bottom">
+      <p>Copyright © 2025. First National Connect Licensed REA 2008, All rights reserved.</p>
+      <p>Powered by Phoenix Software.</p>
+      <p>
+        <a href="/complaints-process">Complaints Process</a> |
+        <a href="/privacy-policy">Privacy Policy</a> |
+        <a href="/sitemap">Sitemap</a>
+      </p>
+    </div>
+  </footer>
 
   <!-- Stepper + Netlify submit + GTM push -->
   <script>
