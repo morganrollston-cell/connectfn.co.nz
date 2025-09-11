@@ -38,19 +38,17 @@
     .site-header{ position:sticky; top:0; z-index:10; background: rgba(255,255,255,.98);
       border-bottom:1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,.06); }
     .site-header__inner{ display:flex; justify-content:center; align-items:center; padding: 8px 16px; }
-    /* Bigger header logo */
     .site-header__logo img{ height: clamp(72px,8vw,120px); width:auto; display:block; }
-
-    /* Footer (simple legal – kept from before) */
-    .legal{ background:#0b1e37; color:#cfe0f3; border-top:1px solid rgba(255,255,255,.10); }
-    .legal .inner{ display:grid; gap:10px; align-items:center; padding:14px 16px; max-width:1120px; margin:0 auto; }
-    @media(min-width:720px){ .legal .inner{ grid-template-columns:1fr auto } }
-    .legal a{ color:#69c2ff }
 
     /* Centered card */
     main{ min-height: calc(100svh - 56px - 56px); display:grid; place-items:center; padding: clamp(14px,3vw,28px); }
-    .card{ width:100%; max-width:520px; background:#fff; border:1px solid var(--border);
-      border-radius: var(--radius); box-shadow: var(--shadow); overflow: visible; } /* allow arrow to hang out */
+    .card{
+      position: relative;      /* anchor for precise arrow placement */
+      width:100%; max-width:520px;
+      background:#fff; border:1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow);
+      overflow: visible;        /* allow arrow to hang out */
+    }
     .card__body{ padding: clamp(18px,3.4vw,28px); }
 
     .eyebrow{ display:inline-block; background:#00467F; color:#fff; padding:6px 10px; border-radius:999px;
@@ -96,7 +94,7 @@
     .progress-bar{ position:relative; height:10px; border-radius:999px; overflow:hidden; background:#edf2f7; border:1px solid #e6edf5; }
     .progress-fill{ position:absolute; inset:0 auto 0 0; width:0%; background: linear-gradient(90deg,#0A84FF,#7c3aed 60%,#14b8a6); border-right:1px solid rgba(255,255,255,.6); transition: width .25s ease; }
 
-    /* NEW: Arrow anchored to the Step 1 input */
+    /* Arrow anchored to the Step 1 input */
     .step[data-step="1"] label{ position:relative; } /* anchor */
     .input-arrow{
       position:absolute;
@@ -115,18 +113,9 @@
       50%  { transform: rotate(-22deg) scale(1.08); opacity:1 }
       100% { transform: rotate(-22deg) scale(0.96); opacity:.85 }
     }
-    /* Tablet */
-    @media (max-width: 640px){
-      .input-arrow{ left:-44px; top:32px; width:100px; }
-    }
-    /* Phones */
-    @media (max-width: 420px){
-      .input-arrow{ left:-30px; top:28px; width:86px; }
-    }
-    /* Very small phones */
-    @media (max-width: 360px){
-      .input-arrow{ left:-24px; top:26px; width:80px; }
-    }
+    @media (max-width: 640px){ .input-arrow{ left:-44px; top:32px; width:100px; } }
+    @media (max-width: 420px){ .input-arrow{ left:-30px; top:28px; width:86px; } }
+    @media (max-width: 360px){ .input-arrow{ left:-24px; top:26px; width:80px; } }
 
     /* Footer (full) */
     .footer{ background:#0b4a7a; color:#e7f1fb; margin-top:40px; }
@@ -140,7 +129,6 @@
     .footer__bottom p{ margin:6px 0 } .footer__bottom a{ color:#cfe0f3 }
 
     @media (max-width:640px){ .footer__logo{ height:46px } .footer__nav{ gap:22px } }
-
     [hidden]{ display:none !important; }
   </style>
 </head>
@@ -216,8 +204,8 @@
             <!-- 1: Address (ARROW LIVES HERE) -->
             <div class="step" data-step="1">
               <label for="address">Property address for appraisal
-                <!-- new arrow anchored to the input -->
-                <img class="input-arrow" src="assets/images/arrow.png" alt="">
+                <!-- precise-positioned arrow -->
+                <img id="hintArrow" class="input-arrow" src="assets/images/arrow.png" alt="">
                 <input id="address" type="text" name="address" placeholder="e.g., 10 Example St, Richmond"
                        autocomplete="street-address" inputmode="text" required>
               </label>
@@ -411,6 +399,44 @@
   })();
   </script>
 
+  <!-- Precise arrow placement (TIP aligned just outside input) -->
+  <script>
+    function placeArrowToInputTip() {
+      const arrow = document.getElementById('hintArrow');
+      const input = document.getElementById('address');
+      const card  = document.querySelector('.card');
+      if (!arrow || !input || !card) return;
+
+      const inputRect = input.getBoundingClientRect();
+      const cardRect  = card.getBoundingClientRect();
+
+      // Distance the arrow TIP should sit OUTSIDE the input's left edge
+      const outside = 8; // px
+
+      // Desired tip coordinates (relative to the card)
+      const targetX = (inputRect.left - cardRect.left) - outside;
+      const targetY = (inputRect.top  - cardRect.top) + inputRect.height * 0.55;
+
+      // Where is the "tip" inside the PNG? (fractions of image size)
+      const tipFracX = 0.14;
+      const tipFracY = 0.20;
+
+      const natW = arrow.naturalWidth  || arrow.width;
+      const natH = arrow.naturalHeight || arrow.height;
+      const dispW = arrow.getBoundingClientRect().width || natW;
+      const scale = natW ? dispW / natW : 1;
+      const dispH = natH * scale;
+
+      const offsetX = dispW * tipFracX;
+      const offsetY = dispH * tipFracY;
+      arrow.style.left = (targetX - offsetX) + 'px';
+      arrow.style.top  = (targetY - offsetY) + 'px';
+    }
+    window.addEventListener('load', placeArrowToInputTip);
+    window.addEventListener('resize', placeArrowToInputTip);
+    document.addEventListener('DOMContentLoaded', () => setTimeout(placeArrowToInputTip, 60));
+  </script>
+
   <!-- Google Places -->
   <script>
     function initAddressAutocomplete(){
@@ -425,6 +451,8 @@
       ac.addListener('place_changed', ()=>{
         const p = ac.getPlace();
         if (p && p.formatted_address) input.value = p.formatted_address;
+        // after autocomplete selection, layout may shift slightly
+        setTimeout(placeArrowToInputTip, 0);
       });
       input.addEventListener('keydown', (e)=>{
         if (e.key === 'Enter'){
