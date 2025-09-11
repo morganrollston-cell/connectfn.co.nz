@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <script>window.__variant="B";</script>
+  <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -14,6 +15,7 @@
   <title>Free Property Appraisal — First National Connect</title>
   <meta name="description" content="Free expert appraisal with insight into your home’s value, the current Nelson/Tasman market, and a strategy to maximise your sale price.">
 
+  <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon.PNG">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.PNG">
   <link rel="shortcut icon" href="assets/images/favicon.PNG">
@@ -21,49 +23,87 @@
   <meta name="msapplication-TileImage" content="assets/images/favicon.PNG">
 
   <style>
+    /* ===== Base / tokens ===== */
     *,*::before,*::after{box-sizing:border-box}
     html{-webkit-text-size-adjust:100%}
-    body{ margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      line-height:1.5; color:#0b1e37; background:#000; font-size: clamp(15px,1.6vw,17px); }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height:1.5; color:#0b1e37; background:#000; /* covered by bg */
+      font-size: clamp(15px,1.6vw,17px);
+    }
     a{color:#00467F;text-decoration:none}
-    :root{ --brand:#00467F; --accent:#0A84FF; --border:#e6edf5; --muted:#64748b;
-      --radius:16px; --shadow:0 18px 48px rgba(0,0,0,.28); }
+    :root{
+      --brand:#00467F; --accent:#0A84FF;
+      --border:#e6edf5; --muted:#64748b;
+      --radius:16px; --shadow:0 18px 48px rgba(0,0,0,.28);
+    }
 
-    .page-bg{ position:fixed; inset:0; z-index:-2;
-      background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.25)),
-                  url('assets/images/Header-image.jpg') center/cover no-repeat; }
+    /* ===== Full-bleed background image ===== */
+    .page-bg{
+      position:fixed; inset:0; z-index:-2;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.25)),
+        url('assets/images/Header-image.jpg') center/cover no-repeat;
+    }
 
-    .site-header{ position:sticky; top:0; z-index:10; background: rgba(255,255,255,.98);
-      border-bottom:1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,.06); }
-    .site-header__inner{ display:flex; justify-content:center; align-items:center; padding: 8px 16px; }
+    /* ===== Header ===== */
+    .site-header{
+      position:sticky; top:0; z-index:10;
+      background: rgba(255,255,255,.98);
+      border-bottom:1px solid var(--border);
+      box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    }
+    .site-header__inner{
+      display:flex; justify-content:center; align-items:center;
+      padding: 8px 16px;
+    }
     .site-header__logo img{ height: clamp(52px,6vw,80px); width:auto; display:block; }
 
+    /* ===== Footer ===== */
     .legal{ background:#0b1e37; color:#cfe0f3; border-top:1px solid rgba(255,255,255,.10); }
     .legal .inner{ display:grid; gap:10px; align-items:center; padding:14px 16px; max-width:1120px; margin:0 auto; }
     @media(min-width:720px){ .legal .inner{ grid-template-columns:1fr auto } }
     .legal a{ color:#69c2ff }
 
-    main{ min-height: calc(100svh - 56px - 56px); display:grid; place-items:center; padding: clamp(14px,3vw,28px); }
-    .card{ width:100%; max-width:520px; background:#fff; border:1px solid var(--border);
-      border-radius: var(--radius); box-shadow: var(--shadow); overflow:hidden; }
+    /* ===== Centered card ===== */
+    main{
+      min-height: calc(100svh - 56px - 56px);
+      display:grid; place-items:center; padding: clamp(14px,3vw,28px);
+    }
+    .card{
+      width: 100%; max-width: 520px;
+      background:#fff; border:1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow);
+      overflow:hidden;
+    }
     .card__body{ padding: clamp(18px,3.4vw,28px); }
 
-    .eyebrow{ display:inline-block; background:#00467F; color:#fff; padding:6px 10px; border-radius:999px;
-      font-weight:800; font-size:.85rem; letter-spacing:.2px; margin-bottom:10px; }
+    .eyebrow{
+      display:inline-block; background:#00467F; color:#fff;
+      padding:6px 10px; border-radius:999px; font-weight:800; font-size:.85rem;
+      letter-spacing:.2px; margin-bottom:10px;
+    }
     h1{ margin:.2rem 0 .35rem; font-size: clamp(22px,3.6vw,30px); line-height:1.15; color:#0b1e37; font-weight:900; }
     .lede{ margin:0 0 10px; color:#344861 }
     .bullets{ margin:8px 0 12px; padding-left:1.1rem; color:#223046 }
     .bullets li{ margin: .25rem 0 }
 
+    /* ===== Agent mini row ===== */
     .agent-mini{ margin: 10px 0 6px; }
     .agent-mini__title{ margin: 0 0 8px; font-weight:800; font-size:.95rem; color:#0b1e37; text-align:center; }
     .agent-mini__row{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .agent-mini__item{ display:grid; grid-template-columns:auto 1fr; align-items:center; gap:8px; min-width:0; }
     .agent-mini__item img{ width:42px; height:42px; border-radius:50%; object-fit:cover; box-shadow:0 2px 6px rgba(0,0,0,.08); }
     .agent-mini__meta{ display:grid; min-width:0; line-height:1.15; }
-    .agent-mini__name{ font-weight:800; font-size:.92rem; color:#0b1e37; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .agent-mini__name{
+      font-weight:800; font-size:.92rem; color:#0b1e37;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
     .agent-mini__role{ font-size:.75rem; color:#64748b; }
-    @media (max-width: 480px){ .agent-mini__name{ white-space: normal; overflow: visible; text-overflow: unset; } }
+    @media (max-width: 480px){
+      .agent-mini__name{ white-space: normal; overflow: visible; text-overflow: unset; }
+    }
 
     /* ===== Form ===== */
     form{ display:grid; gap:14px; margin-top:8px }
@@ -75,7 +115,9 @@
     .timeframe-pills input{ display:none }
     .timeframe-pills label{ border:1px solid #dbe3ef; border-radius:999px; cursor:pointer; font-weight:600; }
     .timeframe-pills label span{ display:block; padding:10px 14px; border-radius:999px; }
-    .timeframe-pills input:checked + span{ background:#0A84FF; color:#fff; border-color:#0A84FF; box-shadow:0 4px 12px rgba(10,132,255,.26); }
+    .timeframe-pills input:checked + span{
+      background:#0A84FF; color:#fff; border-color:#0A84FF; box-shadow:0 4px 12px rgba(10,132,255,.26);
+    }
 
     .btn{ display:inline-block; border:0; border-radius:12px; padding:14px 20px; font-weight:800; letter-spacing:.2px; cursor:pointer; min-height:48px; font-size:18px; }
     .btn.primary{ background:var(--accent); color:#fff; box-shadow:0 10px 28px rgba(10,132,255,.28) }
@@ -89,72 +131,64 @@
       margin-bottom:6px; text-align:center;
       position:relative; /* anchor the arrow */
     }
-    .progress-row{ display:grid; grid-template-columns:auto 1fr; align-items:center; gap:10px; }
+    .progress-row{
+      display:grid;
+      grid-template-columns:auto 1fr; /* label | bar */
+      align-items:center; gap:10px;
+    }
     .progress-label{ font-weight:800; color:#f5a300; white-space:nowrap; }
-    .progress-bar{ position:relative; height:10px; border-radius:999px; overflow:hidden; background:#edf2f7; border:1px solid #e6edf5; }
-    .progress-fill{ position:absolute; inset:0 auto 0 0; width:0%; background: linear-gradient(90deg, #0A84FF, #7c3aed 60%, #14b8a6);
-      border-right: 1px solid rgba(255,255,255,.6); transition: width .25s ease; }
 
-    /* ==== Breathing arrow (points toward first input) ==== */
-    .progress-arrow{
+    .progress-bar{
+      position:relative; height:10px; border-radius:999px; overflow:hidden;
+      background:#edf2f7; border:1px solid #e6edf5;
+    }
+    .progress-fill{
+      position:absolute; inset:0 auto 0 0;
+      width:0%; /* start empty on step 1 */
+      background: linear-gradient(90deg, #0A84FF, #7c3aed 60%, #14b8a6);
+      border-right: 1px solid rgba(255,255,255,.6);
+      transition: width .25s ease;
+    }
+
+    /* ===== Breathing arrow (SVG) ===== */
+    .arrow-hint{ position:relative; display:inline-block; }
+    .arrow-hint img{
       position:absolute;
-      left: calc(50% - 210px);  /* sits just to the left of the centered title */
-      top: -6px;
-      width: 44px; height:auto;
-      transform: rotate(18deg);
-      transform-origin: 10% 50%;
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,.18));
-      animation: breathe 1.6s ease-in-out infinite;
+      top:50%;
+      left:-40px;               /* to the left of the title */
+      width:28px; height:auto;  /* small & fast */
+      transform: translateY(-50%) rotate(-20deg);
+      animation: breathe 2s ease-in-out infinite;
+      opacity:.9;
       pointer-events:none;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,.18));
     }
     @keyframes breathe{
-      0%   { transform: rotate(18deg) translate(0,0) scale(0.96); opacity:.85 }
-      50%  { transform: rotate(18deg) translate(2px,-2px) scale(1.06); opacity:1 }
-      100% { transform: rotate(18deg) translate(0,0) scale(0.96); opacity:.85 }
+      0%,100%{ transform: translateY(-50%) scale(1) rotate(-20deg); opacity:.9; }
+      50%    { transform: translateY(-50%) scale(1.15) rotate(-20deg); opacity:1; }
     }
-    @media (max-width: 480px){
-      .progress-arrow{ left: calc(50% - 165px); top: -2px; width: 36px; }
-      .site-header__logo img { height: 72px; }
-    }
+
     @media (max-width:420px){
       .progress-row{ grid-template-columns:auto 1fr; gap:8px; }
+      .arrow-hint img{ left:-34px; width:24px; }
     }
-    @media (prefers-reduced-motion: reduce){
-      .progress-arrow{ animation: none }
-      .progress-fill{ transition:none }
+    @media (max-width: 480px){
+      .site-header__logo img { height: 72px; }
     }
 
-/* Arrow container */
-.arrow-hint {
-  position: relative;
-  display: inline-block;
-}
-
-/* Position the arrow image */
-.arrow-hint img {
-  position: absolute;
-  top: 50%;   /* vertically centered with the text */
-  left: -40px;  /* move it left out of the title */
-  width: 28px;  /* keep it small for fast load */
-  height: auto;
-  transform: translateY(-50%) rotate(-20deg); /* slight angle */
-  animation: breathe 2s infinite ease-in-out;
-  opacity: 0.9;
-}
-
-/* Breathing/pulsing effect */
-@keyframes breathe {
-  0%, 100% { transform: translateY(-50%) scale(1) rotate(-20deg); opacity: 0.9; }
-  50% { transform: translateY(-50%) scale(1.15) rotate(-20deg); opacity: 1; }
-}
+    /* Guarantee hidden attribute hides elements */
     [hidden]{ display:none !important; }
   </style>
 </head>
 <body>
+  <!-- BG image -->
   <div class="page-bg" aria-hidden="true"></div>
 
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ76GXDB" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- GTM (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ76GXDB"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
+  <!-- Header -->
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__logo" href="#">
@@ -166,6 +200,7 @@
   <main>
     <div class="card">
       <div class="card__body">
+        <!-- Headline + bullets -->
         <span class="eyebrow">Spring promo</span>
         <h1>Get your Free Property Appraisal & go in the draw to win up to $5,000</h1>
         <p class="lede">Fast, expert valuation of your Nelson/Tasman property with clear next steps to maximise your result.</p>
@@ -175,6 +210,7 @@
           <li>📊 Clear valuation + plan</li>
         </ul>
 
+        <!-- Agent mini (outside the form) -->
         <section class="agent-mini" aria-label="Your local Nelson/Tasman agents">
           <p class="agent-mini__title">Your local Nelson/Tasman agents</p>
           <div class="agent-mini__row">
@@ -196,23 +232,24 @@
         </section>
 
         <!-- Progress header -->
-       <div class="progress">
-  <div class="progress-title arrow-hint">
-    Complete the quick form below
-    <img src="/assets/images/Arrow.svg.svg" alt="Arrow hint">
-  </div>
-  <div class="progress-row">
-    <div class="progress-label"><span id="stepLabel">Step 1 of 5</span></div>
-    <div class="progress-bar"
-         role="progressbar"
-         aria-valuemin="0"
-         aria-valuemax="5"
-         aria-valuenow="0"
-         aria-label="Form progress">
-      <span class="progress-fill" style="width:0%"></span>
-    </div>
-  </div>
-</div>
+        <div class="progress">
+          <div class="progress-title arrow-hint">
+            Complete the quick form below
+            <!-- IMPORTANT: relative path, no leading slash -->
+            <img src="assets/images/Arrow.svg.svg" alt="Arrow hint" width="28" height="28">
+          </div>
+          <div class="progress-row">
+            <div class="progress-label"><span id="stepLabel">Step 1 of 5</span></div>
+            <div class="progress-bar"
+                 role="progressbar"
+                 aria-valuemin="0"
+                 aria-valuemax="5"
+                 aria-valuenow="0"
+                 aria-label="Form progress">
+              <span class="progress-fill" style="width:0%"></span>
+            </div>
+          </div>
+        </div>
 
         <!-- Form (5 steps) -->
         <form id="leadForm"
@@ -221,11 +258,13 @@
               data-netlify="true"
               netlify-honeypot="bot-field"
               novalidate>
-          <!-- Make Netlify capture under the Split Test form name -->
+          <!-- Ensure Netlify captures under Split Test form -->
           <input type="hidden" name="form-name" value="Leads Spring Promo (Split Test)">
 
+          <!-- Honeypot (hidden) -->
           <p style="display:none;"><label>Don’t fill this out: <input name="bot-field"></label></p>
 
+          <!-- analytics helpers -->
           <input type="hidden" name="variant" value="B">
           <input type="hidden" name="page_url" value="">
           <input type="hidden" name="submitted_at" value="">
@@ -234,6 +273,7 @@
           <input type="hidden" name="utm_campaign" value="">
 
           <div class="steps">
+            <!-- 1: Address -->
             <div class="step" data-step="1">
               <label for="address">Property address for appraisal
                 <input id="address" type="text" name="address"
@@ -242,6 +282,7 @@
               </label>
             </div>
 
+            <!-- 2: Name -->
             <div class="step" data-step="2" hidden>
               <label for="full_name">Your full name
                 <input id="full_name" type="text" name="full_name"
@@ -249,6 +290,7 @@
               </label>
             </div>
 
+            <!-- 3: Email -->
             <div class="step" data-step="3" hidden>
               <label for="email">Email for your free report
                 <input id="email" type="email" name="email"
@@ -256,6 +298,7 @@
               </label>
             </div>
 
+            <!-- 4: Phone -->
             <div class="step" data-step="4" hidden>
               <label for="phone">Best contact number
                 <input id="phone" type="tel" name="phone"
@@ -265,6 +308,7 @@
               </label>
             </div>
 
+            <!-- 5: Timeframe -->
             <div class="step" data-step="5" hidden>
               <label>When are you planning to sell?</label>
               <div class="timeframe-pills">
@@ -276,6 +320,7 @@
             </div>
           </div>
 
+          <!-- Only one button shows at a time -->
           <button type="button" class="btn primary" id="nextBtn">Continue</button>
           <button type="submit" class="btn primary" id="submitBtn" hidden>Submit</button>
 
@@ -285,6 +330,7 @@
     </div>
   </main>
 
+  <!-- Footer -->
   <footer class="legal">
     <div class="inner">
       <div>
@@ -297,6 +343,7 @@
     </div>
   </footer>
 
+  <!-- Stepper + Netlify submit + GTM push -->
   <script>
   (function(){
     function hydrateHiddenFields(form){
@@ -329,32 +376,37 @@
       const bar  = document.querySelector('.progress-bar');
       const fill = document.querySelector('.progress-fill');
 
-      let i = 0;
+      let i = 0; // current step index
 
       function showStep(n){
         i = Math.max(0, Math.min(n, steps.length-1));
         steps.forEach((s, idx)=> s.hidden = idx !== i);
 
+        // label shows current step number user is ON
         if (stepLabel) stepLabel.textContent = `Step ${i+1} of ${steps.length}`;
 
+        // Buttons
         const last = (i === steps.length-1);
         nextBtn.hidden   =  last;
         submitBtn.hidden = !last;
 
-        const pct = (i / steps.length) * 100; // start at 0% on step 1
+        // Progress bar shows COMPLETED steps (so step 1 => 0%)
+        const pct = (i / steps.length) * 100;
         if (fill) fill.style.width = pct + '%';
         if (bar){
           bar.setAttribute('aria-valuenow', String(i));
           bar.setAttribute('aria-valuetext', `Completed ${i} of ${steps.length}`);
         }
 
+        // focus first field in current step
         const inp = steps[i].querySelector('input,select,textarea,button');
         inp && inp.focus({preventScroll:true});
       }
 
       function canAdvance(){
         const cur = steps[i];
-        const bad = firstInvalid(cur) || [...cur.querySelectorAll('[required]')].find(el => !String(el.value||'').trim());
+        const bad = firstInvalid(cur) || [...cur.querySelectorAll('[required]')]
+          .find(el => !String(el.value||'').trim());
         if (bad){
           bad.focus(); form.reportValidity();
           cur.scrollIntoView({behavior:'smooth', block:'center'});
@@ -365,6 +417,7 @@
 
       nextBtn.addEventListener('click', ()=>{ if (canAdvance()) showStep(i+1); });
 
+      // prevent Enter from submitting early
       form.addEventListener('keydown', e=>{
         if (e.key === 'Enter' && e.target.type !== 'submit'){ e.preventDefault(); }
       });
@@ -372,6 +425,7 @@
       hydrateHiddenFields(form);
       showStep(0);
 
+      // submit handler (AJAX to Netlify)
       form.addEventListener('submit', async (e)=>{
         e.preventDefault();
         if (!form.checkValidity()){
@@ -392,6 +446,7 @@
           const res = await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: encoded });
           if (!res.ok) throw new Error('Netlify '+res.status);
 
+          // GTM event
           try{
             const full = (fd.get('full_name')||'').toString().trim();
             const [first_name, ...rest] = full.split(' ');
@@ -421,6 +476,7 @@
   })();
   </script>
 
+  <!-- Google Places (binds to #address) -->
   <script>
     function initAddressAutocomplete(){
       const options = {
