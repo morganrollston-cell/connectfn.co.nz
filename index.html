@@ -124,6 +124,29 @@
       .progress-fill{ transition:none }
     }
 
+/* Arrow container */
+.arrow-hint {
+  position: relative;
+  display: inline-block;
+}
+
+/* Position the arrow image */
+.arrow-hint img {
+  position: absolute;
+  top: 50%;   /* vertically centered with the text */
+  left: -40px;  /* move it left out of the title */
+  width: 28px;  /* keep it small for fast load */
+  height: auto;
+  transform: translateY(-50%) rotate(-20deg); /* slight angle */
+  animation: breathe 2s infinite ease-in-out;
+  opacity: 0.9;
+}
+
+/* Breathing/pulsing effect */
+@keyframes breathe {
+  0%, 100% { transform: translateY(-50%) scale(1) rotate(-20deg); opacity: 0.9; }
+  50% { transform: translateY(-50%) scale(1.15) rotate(-20deg); opacity: 1; }
+}
     [hidden]{ display:none !important; }
   </style>
 </head>
@@ -173,19 +196,23 @@
         </section>
 
         <!-- Progress header -->
-        <div class="progress">
-          <div class="progress-title">
-            Complete the quick form below
-            <!-- breathing arrow -->
-            <img class="progress-arrow" src="assets/images/Arrow.svg.svg" alt="" aria-hidden="true">
-          </div>
-          <div class="progress-row">
-            <div class="progress-label"><span id="stepLabel">Step 1 of 5</span></div>
-            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-label="Form progress">
-              <span class="progress-fill" style="width:0%"></span>
-            </div>
-          </div>
-        </div>
+       <div class="progress">
+  <div class="progress-title arrow-hint">
+    Complete the quick form below
+    <img src="assets/images/Arrow.svg.svg" alt="Arrow hint">
+  </div>
+  <div class="progress-row">
+    <div class="progress-label"><span id="stepLabel">Step 1 of 5</span></div>
+    <div class="progress-bar"
+         role="progressbar"
+         aria-valuemin="0"
+         aria-valuemax="5"
+         aria-valuenow="0"
+         aria-label="Form progress">
+      <span class="progress-fill" style="width:0%"></span>
+    </div>
+  </div>
+</div>
 
         <!-- Form (5 steps) -->
         <form id="leadForm"
