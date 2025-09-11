@@ -152,55 +152,55 @@
       transition: width .25s ease;
     }
 
-    /* --- Arrow hugging the left edge of the card --- */
-.progress { position: relative; } /* already present, just reaffirming */
+    /* === Arrow positioning (matches your red bracket) === */
+    .progress { position: relative; }
 
-.progress-arrow{
-  position:absolute;
-  z-index:3;
-  /* desktop: sits on the card’s left edge, just below the title */
-  left:-26px;          /* negative = outside the card slightly */
-  top:54px;            /* below the “Complete the quick form below” line */
-  width:100px;
-  height:auto;
-  transform: rotate(-22deg);
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,.18));
-  animation: breathe 1.6s ease-in-out infinite;
-  pointer-events:none;
-}
+    .progress-arrow{
+      position:absolute;
+      z-index:3;
+      /* Desktop: outside left edge, lower so it kisses the input label */
+      left:-98px;
+      top:46px;
+      width:118px;
+      height:auto;
+      transform: rotate(28deg);
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,.18));
+      animation: breathe 1.6s ease-in-out infinite;
+      pointer-events:none;
+    }
 
-@keyframes breathe{
-  0%   { transform: rotate(-22deg) scale(0.96); opacity:.85 }
-  50%  { transform: rotate(-22deg) scale(1.08); opacity:1 }
-  100% { transform: rotate(-22deg) scale(0.96); opacity:.85 }
-}
+    @keyframes breathe{
+      0%   { transform: rotate(28deg) scale(0.96); opacity:.85 }
+      50%  { transform: rotate(28deg) scale(1.08); opacity:1 }
+      100% { transform: rotate(28deg) scale(0.96); opacity:.85 }
+    }
 
-/* Tablet */
-@media (max-width: 640px){
-  .progress-arrow{
-    left:-14px;
-    top:50px;
-    width:86px;
-  }
-}
+    /* Tablet */
+    @media (max-width: 640px){
+      .progress-arrow{
+        left:-60px;
+        top:52px;
+        width:102px;
+      }
+    }
 
-/* Phones */
-@media (max-width: 420px){
-  .progress-arrow{
-    left:-10px;
-    top:46px;
-    width:74px;
-  }
-}
+    /* Phones */
+    @media (max-width: 420px){
+      .progress-arrow{
+        left:-22px;
+        top:66px;      /* key: lower on small screens */
+        width:88px;
+      }
+    }
 
-/* Very small phones */
-@media (max-width: 360px){
-  .progress-arrow{
-    left:-8px;
-    top:44px;
-    width:68px;
-  }
-}
+    /* Very small phones */
+    @media (max-width: 360px){
+      .progress-arrow{
+        left:-14px;
+        top:72px;
+        width:80px;
+      }
+    }
 
     /* ===== Footer (full) ===== */
     .footer{
@@ -300,23 +300,23 @@
           </div>
         </section>
 
-  <!-- Progress header + arrow -->
-<div class="progress">
-  <div class="progress-title">Complete the quick form below</div>
-  <!-- Arrow element anchored to the .progress box -->
-  <img class="progress-arrow" src="assets/images/arrow.png" alt="">
-  <div class="progress-row">
-    <div class="progress-label"><span id="stepLabel">Step 1 of 5</span></div>
-    <div class="progress-bar"
-         role="progressbar"
-         aria-valuemin="0"
-         aria-valuemax="5"
-         aria-valuenow="0"
-         aria-label="Form progress">
-      <span class="progress-fill" style="width:0%"></span>
-    </div>
-  </div>
-</div>
+        <!-- Progress header + arrow -->
+        <div class="progress">
+          <div class="progress-title">Complete the quick form below</div>
+          <!-- Arrow element anchored to the .progress box -->
+          <img class="progress-arrow" src="assets/images/arrow.png" alt="">
+          <div class="progress-row">
+            <div class="progress-label"><span id="stepLabel">Step 1 of 5</span></div>
+            <div class="progress-bar"
+                 role="progressbar"
+                 aria-valuemin="0"
+                 aria-valuemax="5"
+                 aria-valuenow="0"
+                 aria-label="Form progress">
+              <span class="progress-fill" style="width:0%"></span>
+            </div>
+          </div>
+        </div>
 
         <!-- Form (5 steps) -->
         <form id="leadForm"
