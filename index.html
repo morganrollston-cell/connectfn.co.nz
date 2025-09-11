@@ -198,6 +198,56 @@
   }
 }
 
+/* ===== Footer (full) ===== */
+.footer{
+  background:#0b4a7a;              /* rich blue like screenshot */
+  color:#e7f1fb;
+  margin-top:40px;
+}
+.footer a{ color:#e7f1fb; text-decoration:none }
+.footer a:hover{ text-decoration:underline }
+
+/* Top block */
+.footer__top{
+  max-width:1120px;
+  margin:0 auto;
+  padding:48px 16px 36px;
+  text-align:center;
+}
+.footer__logo{
+  height:44px; width:auto; display:block; margin:0 auto 22px;
+  /* If your SVG is blue on white, invert to white on blue: */
+  filter: brightness(0) invert(1);    /* remove this if you have a white logo file */
+}
+.footer__contact{
+  list-style:none; padding:0; margin:0 0 24px;
+  display:grid; gap:8px; justify-items:center;
+  font-size: clamp(16px, 1.8vw, 18px);
+}
+.footer__nav{
+  display:flex; gap:40px; justify-content:center; flex-wrap:wrap;
+  letter-spacing:.08em; font-weight:600;
+  margin-top:10px;
+}
+.footer__nav a{ text-transform:uppercase }
+
+/* Bottom legal strip */
+.footer__bottom{
+  background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.12));
+  border-top:1px solid rgba(255,255,255,.15);
+  text-align:center;
+  padding:18px 16px 26px;
+  font-size:14px; color:#cfe0f3;
+}
+.footer__bottom p{ margin:6px 0 }
+.footer__bottom a{ color:#cfe0f3 }
+
+/* Small screens */
+@media (max-width:640px){
+  .footer__logo{ height:38px }
+  .footer__nav{ gap:22px }
+}
+
     /* Guarantee hidden attribute hides elements */
     [hidden]{ display:none !important; }
   </style>
@@ -352,18 +402,32 @@
     </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="legal">
-    <div class="inner">
-      <div>
-        © 2025 First National Connect •
-        <a href="https://fnconnect.co.nz/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a> •
-        <a href="https://fnconnect.co.nz/disclaimer/" target="_blank" rel="noopener">Disclaimer</a> •
-        Licensed REAA 2008
-      </div>
-      <div>Website by <a href="#" rel="noopener">Rollston Scaling</a></div>
-    </div>
-  </footer>
+  <footer class="footer">
+  <div class="footer__top">
+    <img class="footer__logo" src="assets/images/Full-logo-blue.svg" alt="First National Connect">
+    <ul class="footer__contact">
+      <li><a href="tel:0273594558">027 359 4558</a></li>
+      <li><a href="mailto:penelope@fnconnect.co.nz">penelope@fnconnect.co.nz</a></li>
+      <li>Collingwood Street Nelson 7010</li>
+    </ul>
+
+    <nav class="footer__nav" aria-label="Footer">
+      <a href="/spring-campaign">SPRING CAMPAIGN INFO</a>
+      <a href="https://facebook.com/firstnationalconnect" target="_blank" rel="noopener">FACEBOOK</a>
+      <a href="https://instagram.com/firstnationalconnect" target="_blank" rel="noopener">INSTAGRAM</a>
+    </nav>
+  </div>
+
+  <div class="footer__bottom">
+    <p>Copyright © 2025. First National Connect Licensed REA 2008, All rights reserved.</p>
+    <p>Powered by Phoenix Software.</p>
+    <p>
+      <a href="/complaints-process">Complaints Process</a> |
+      <a href="/privacy-policy">Privacy Policy</a> |
+      <a href="/sitemap">Sitemap</a>
+    </p>
+  </div>
+</footer>
 
   <!-- Stepper + Netlify submit + GTM push -->
   <script>
