@@ -58,32 +58,26 @@
     .bullets{ margin:8px 0 12px; padding-left:1.1rem; color:#223046 }
     .bullets li{ margin:.25rem 0 }
 
-/* Bullet list card + tick icons */
-.bullets-card{
-  background:#f8fbff;
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:14px 16px;
+/* Bullet Points - Centered title + list (no box) */
+.bullets-wrap{
+  text-align:center;
   margin:12px 0 16px;
 }
-
-.bullets-card__title{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:999px;
-  border:1px solid #d6e9ff;
-  background:#eaf4ff;
+.bullets-title{
   font-weight:800;
-  font-size:.9rem;
+  font-size:.95rem;
   color:#0b1e37;
   margin-bottom:8px;
 }
 
+/* Ticked bullets, centered block but left-aligned lines */
 .bullets{
   list-style:none;
-  margin:8px 0 0;
+  margin:8px auto 0;
   padding:0;
   color:#223046;
+  display:inline-block;   /* lets us center the whole list */
+  text-align:left;        /* but keep each line left-aligned */
 }
 .bullets li{
   position:relative;
@@ -92,13 +86,13 @@
   line-height:1.4;
 }
 .bullets li::before{
-  content:"✓";                /* tick icon */
+  content:"✓";
   position:absolute;
   left:0;
   top:.05rem;
-  color:#16a34a;              /* green tick */
+  color:#16a34a;
   font-weight:900;
-  font-size:1.2rem;           /* size of the tick */
+  font-size:1.2rem;
   line-height:1;
 }
 
@@ -192,8 +186,8 @@
         <span class="eyebrow">Spring promo</span>
         <h1>Get your Free Property Appraisal & go in the draw to win up to $5,000</h1>
         <p class="lede">Fast, expert valuation of your Nelson/Tasman property with clear next steps to maximise your result.</p>
-       <div class="bullets-card">
-  <span class="bullets-card__title">Our Free Appraisal Includes</span>
+    <div class="bullets-wrap">
+  <div class="bullets-title">Our Free Appraisal Includes</div>
   <ul class="bullets">
     <li>60-second booking</li>
     <li>Local specialists</li>
