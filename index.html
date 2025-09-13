@@ -244,13 +244,13 @@
 
 /* Center the agents title with underline */
 .agent-mini__title {
-  margin: 0 auto 12px; 
+  margin: 0 auto 16px;           /* auto left/right centers the block */
   font-weight: 800;
   font-size: 1rem;
   color: #0b1e37;
   text-align: center;
   border-bottom: 3px solid var(--accent);
-  display: inline-block;
+  display: table;                /* makes the underline hug text but allows centering */
   padding-bottom: 4px;
 }
     [hidden]{ display:none !important; }
