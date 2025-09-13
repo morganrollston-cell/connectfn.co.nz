@@ -58,42 +58,50 @@
     .bullets{ margin:8px 0 12px; padding-left:1.1rem; color:#223046 }
     .bullets li{ margin:.25rem 0 }
 
-/* Bullet Points - Centered title + list (no box) */
-.bullets-wrap{
-  text-align:center;
-  margin:12px 0 16px;
-}
-.bullets-title{
-  font-weight:800;
-  font-size:.95rem;
-  color:#0b1e37;
-  margin-bottom:8px;
+/* Bullets wrapper with box */
+.bullets-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin: 14px 0 18px;
+  background: #f9fbfd;
+  text-align: center;
 }
 
-/* Ticked bullets, centered block but left-aligned lines */
-.bullets{
-  list-style:none;
-  margin:8px auto 0;
-  padding:0;
-  color:#223046;
-  display:inline-block;   /* lets us center the whole list */
-  text-align:left;        /* but keep each line left-aligned */
+.bullets-card__title {
+  display: block;
+  font-weight: 800;
+  font-size: .95rem;
+  color: #0b1e37;
+  margin-bottom: 10px;
 }
-.bullets li{
-  position:relative;
-  padding-left:1.6rem;
-  margin:.5rem 0;
-  line-height:1.4;
+
+/* Centered tick list */
+.bullets {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  display: inline-block;   /* center the list as a block */
+  text-align: left;        /* text stays aligned */
 }
-.bullets li::before{
-  content:"✓";
-  position:absolute;
-  left:0;
-  top:.05rem;
-  color:#16a34a;
-  font-weight:900;
-  font-size:1.2rem;
-  line-height:1;
+
+.bullets li {
+  position: relative;
+  padding-left: 1.6rem;
+  margin: .5rem 0;
+  line-height: 1.4;
+}
+
+.bullets li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #16a34a;    /* green ticks */
+  font-weight: 900;
+  font-size: 1.2rem;
+  line-height: 1;
 }
 
     /* Agent mini */
@@ -186,8 +194,8 @@
         <span class="eyebrow">Spring promo</span>
         <h1>Get your Free Property Appraisal & go in the draw to win up to $5,000</h1>
         <p class="lede">Fast, expert valuation of your Nelson/Tasman property with clear next steps to maximise your result.</p>
-    <div class="bullets-wrap">
-  <div class="bullets-title">Our Free Appraisal Includes</div>
+    <div class="bullets-card">
+  <span class="bullets-card__title">Our Free Appraisal Includes</span>
   <ul class="bullets">
     <li>60-second booking</li>
     <li>Local specialists</li>
