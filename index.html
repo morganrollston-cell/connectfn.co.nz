@@ -129,6 +129,43 @@
     .footer__bottom p{ margin:6px 0 } .footer__bottom a{ color:#cfe0f3 }
 
     @media (max-width:640px){ .footer__logo{ height:46px } .footer__nav{ gap:22px } }
+    
+    /* Fix bullet alignment and size */
+.bullets {
+  list-style: none;
+  margin: 12px 0 18px;
+  padding: 0;
+}
+.bullets li {
+  position: relative;
+  padding-left: 1.6rem;
+  margin: 0.6rem 0;
+  line-height: 1.4;
+}
+.bullets li::before {
+  content: "▸";  /* or "•" if you prefer round dots */
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);  /* vertical centering */
+  color: var(--accent);
+  font-weight: 900;
+  font-size: 1.3rem;  /* adjust bigger/smaller */
+  line-height: 1;
+}
+
+/* Center form step labels */
+.step label {
+  text-align: center;
+  font-weight: 700;
+  display: block;
+}
+
+/* Add more spacing around agent section */
+.agent-mini {
+  margin: 24px 0;  /* top and bottom spacing */
+}
+    
     [hidden]{ display:none !important; }
   </style>
 </head>
