@@ -221,32 +221,32 @@
 
 /* Pill box for form title */
 .progress-pill {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   background: rgba(10,132,255,0.1); /* light blue transparent */
   color: #0b1e37;
   font-weight: 800;
   font-size: 1rem;
   padding: 6px 14px;
   border-radius: 999px;
+  margin: 14px auto;
   text-align: center;
-  margin: 12px auto;
-  position: relative;
 }
 
-/* Downward arrows below the pill */
-.down-arrows {
-  margin-top: 6px;
-  font-size: 1.3rem;
-  color: var(--accent); /* matches theme blue */
-  text-align: center;
-  letter-spacing: 6px; /* spread arrows apart */
+/* Arrows inside the pill */
+.progress-pill .arrow {
+  font-size: 1.2rem;
+  color: var(--accent);
+  font-weight: 900;
+  line-height: 1;
 }
 
-/* Blue underline for agent section */
+/* Center the agents title with underline */
 .agent-mini__title {
-  margin: 0 0 8px;
+  margin: 0 auto 12px; 
   font-weight: 800;
-  font-size: .95rem;
+  font-size: 1rem;
   color: #0b1e37;
   text-align: center;
   border-bottom: 3px solid var(--accent);
@@ -307,8 +307,9 @@
        <!-- Progress (replace your existing .progress block with this) -->
 <section class="progress-stack">
   <div class="progress-pill">
+  <span class="arrow">↓</span>
   Complete the quick form below
-  <div class="down-arrows">↓ ↓</div>
+  <span class="arrow">↓</span>
 </div>
   <div class="bar-row">
     <div class="step" id="stepLabel">Step 1 of 5</div>
