@@ -165,6 +165,59 @@
 .agent-mini {
   margin: 24px 0;  /* top and bottom spacing */
 }
+
+/* Airy progress header */
+.progress-stack{
+  display:grid;
+  gap:12px;
+  margin: 18px 0 14px;
+}
+.progress-stack .form-title{
+  margin:0;
+  text-align:center;
+  font-size:1.15rem;
+  font-weight:900;
+  color:#0b1e37;
+}
+.bar-row{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  align-items:center;
+  gap:12px;
+}
+.bar-row .step{
+  font-weight:800;
+  color:#f5a300;
+  white-space:nowrap;
+}
+
+/* Slimmer, cleaner bar but keeps your .progress-bar class for JS */
+.progress-bar.slim{
+  height:6px;
+  border-radius:999px;
+  background:#eef3f8;
+  border:1px solid #e6edf5;
+  position:relative;
+  overflow:hidden;
+}
+.progress-bar.slim .progress-fill{
+  position:absolute; inset:0 auto 0 0;
+  width:0%;
+  background:#0A84FF;
+  border-right:1px solid rgba(255,255,255,.6);
+}
+
+/* Input label centered, field still full-width (keeps the flow) */
+.step label{
+  display:block;
+  text-align:center;
+}
+.step label input{
+  width:100%;
+  display:block;
+  margin-top:8px;
+  text-align:left;
+}
     
     [hidden]{ display:none !important; }
   </style>
@@ -217,15 +270,21 @@
           </div>
         </section>
 
-        <div class="progress">
-          <div class="progress-title">Complete the quick form below</div>
-          <div class="progress-row">
-            <div class="progress-label"><span id="stepLabel">Step 1 of 5</span></div>
-            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-label="Form progress">
-              <span class="progress-fill" style="width:0%"></span>
-            </div>
-          </div>
-        </div>
+       <!-- Progress (replace your existing .progress block with this) -->
+<section class="progress-stack">
+  <h3 class="form-title">Complete the quick form</h3>
+  <div class="bar-row">
+    <div class="step" id="stepLabel">Step 1 of 5</div>
+    <div class="progress-bar slim"
+         role="progressbar"
+         aria-valuemin="0"
+         aria-valuemax="5"
+         aria-valuenow="0"
+         aria-label="Form progress">
+      <span class="progress-fill" style="width:0%"></span>
+    </div>
+  </div>
+</section>
 
         <!-- Form (5 steps) -->
         <form id="leadForm" name="Leads Spring Promo (Split Test)" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
