@@ -185,7 +185,7 @@
   align-items:center;
   gap:12px;
 }
-.bar-row .step{
+.bar-row .step-label{
   font-weight:800;
   color:#f5a300;
   white-space:nowrap;
@@ -364,17 +364,18 @@
             </div>
           </div>
 
+<!-- progress bar sits between fields and buttons -->
 <div class="bar-row">
-    <div class="step" id="stepLabel">Step 1 of 5</div>
-    <div class="progress-bar slim"
-         role="progressbar"
-         aria-valuemin="0"
-         aria-valuemax="5"
-         aria-valuenow="0"
-         aria-label="Form progress">
-      <span class="progress-fill" style="width:0%"></span>
-    </div>
+  <div class="step-label" id="stepLabel">Step 1 of 5</div>
+  <div class="progress-bar slim"
+       role="progressbar"
+       aria-valuemin="0"
+       aria-valuemax="5"
+       aria-valuenow="0"
+       aria-label="Form progress">
+    <span class="progress-fill" style="width:0%"></span>
   </div>
+</div>
           <button type="button" class="btn primary" id="nextBtn">Continue</button>
           <button type="submit" class="btn primary" id="submitBtn" hidden>Submit</button>
 
@@ -481,7 +482,7 @@
   document.addEventListener('DOMContentLoaded', function(){
     const form = document.getElementById('leadForm');
     const holder = form.closest('.card');
-    const steps = Array.from(form.querySelectorAll('.step'));
+    const steps = Array.from(form.querySelectorAll('[data-step]'));
     const stepLabel = document.getElementById('stepLabel');
     const nextBtn = document.getElementById('nextBtn');
     const submitBtn = document.getElementById('submitBtn');
