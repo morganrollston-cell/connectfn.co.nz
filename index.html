@@ -58,27 +58,48 @@
     .bullets{ margin:8px 0 12px; padding-left:1.1rem; color:#223046 }
     .bullets li{ margin:.25rem 0 }
 
-/* Bulleted list with custom symbol */
+/* Bullet list card + tick icons */
+.bullets-card{
+  background:#f8fbff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px 16px;
+  margin:12px 0 16px;
+}
+
+.bullets-card__title{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid #d6e9ff;
+  background:#eaf4ff;
+  font-weight:800;
+  font-size:.9rem;
+  color:#0b1e37;
+  margin-bottom:8px;
+}
+
 .bullets{
-  list-style: none;
-  padding-left: 0;
-  margin: 8px 0 12px;
+  list-style:none;
+  margin:8px 0 0;
+  padding:0;
   color:#223046;
 }
 .bullets li{
-  position: relative;
-  padding-left: 1.25rem;     /* space for the symbol */
-  margin: .35rem 0;
+  position:relative;
+  padding-left:1.6rem;
+  margin:.5rem 0;
+  line-height:1.4;
 }
 .bullets li::before{
-  content: "▸";              /* change this symbol if you like */
-  position: absolute;
-  left: 0;
-  top: 0.1rem;
-  color: var(--accent);      /* matches your theme (#0A84FF) */
-  font-weight: 900;
-  line-height: 1;
-  font-size: 2.0rem; /* increase bullet point size. */
+  content:"✓";                /* tick icon */
+  position:absolute;
+  left:0;
+  top:.05rem;
+  color:#16a34a;              /* green tick */
+  font-weight:900;
+  font-size:1.2rem;           /* size of the tick */
+  line-height:1;
 }
 
     /* Agent mini */
@@ -129,30 +150,6 @@
     .footer__bottom p{ margin:6px 0 } .footer__bottom a{ color:#cfe0f3 }
 
     @media (max-width:100vw){ .footer__logo{ height:80px } .footer__nav{ gap:22px } }
-    
-    /* Fix bullet alignment and size */
-.bullets {
-  list-style: none;
-  margin: 12px 0 18px;
-  padding: 0;
-}
-.bullets li {
-  position: relative;
-  padding-left: 1.6rem;
-  margin: 0.6rem 0;
-  line-height: 1.4;
-}
-.bullets li::before {
-  content: "▸";  /* or "•" if you prefer round dots */
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);  /* vertical centering */
-  color: var(--accent);
-  font-weight: 900;
-  font-size: 1.3rem;  /* adjust bigger/smaller */
-  line-height: 1;
-}
 
 /* Center label text but keep input full width */
 .step label {
@@ -195,11 +192,14 @@
         <span class="eyebrow">Spring promo</span>
         <h1>Get your Free Property Appraisal & go in the draw to win up to $5,000</h1>
         <p class="lede">Fast, expert valuation of your Nelson/Tasman property with clear next steps to maximise your result.</p>
-        <ul class="bullets">
-          <li>60-second booking</li>
-          <li>Local specialists</li>
-          <li>Clear valuation + plan</li>
-        </ul>
+       <div class="bullets-card">
+  <span class="bullets-card__title">Our Free Appraisal Includes</span>
+  <ul class="bullets">
+    <li>60-second booking</li>
+    <li>Local specialists</li>
+    <li>Clear valuation + plan</li>
+  </ul>
+</div>
 
         <section class="agent-mini" aria-label="Your local Nelson/Tasman agents">
           <p class="agent-mini__title">Your local Nelson/Tasman agents</p>
