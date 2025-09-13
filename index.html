@@ -251,126 +251,175 @@
 
   <!-- Stepper + Netlify submit + GTM push -->
   <script>
-  (function(){
-    function hydrateHiddenFields(form){
-      const u = new URL(window.location.href);
-      form.querySelector('input[name="page_url"]').value     = u.origin + u.pathname;
-      form.querySelector('input[name="submitted_at"]').value = new Date().toISOString();
-      form.querySelector('input[name="utm_source"]').value   = u.searchParams.get('utm_source')   || '';
-      form.querySelector('input[name="utm_medium"]').value   = u.searchParams.get('utm_medium')   || '';
-      form.querySelector('input[name="utm_campaign"]').value = u.searchParams.get('utm_campaign') || '';
-    }
-    function thankYouHTML(firstName){
-      const first = (firstName||'Thanks').toString().trim().split(' ')[0];
-      return `
-        <div class="card__body" style="text-align:center">
-          <h3 style="margin:0 0 6px;color:#0b1e37;">${first}, we’ve got your request ✅</h3>
-          <p style="margin:0;color:#344861;">We’ll be in touch shortly to confirm a time that suits.</p>
-        </div>
-      `;
-    }
-    function firstInvalid(el){ return el.querySelector(':invalid'); }
+(function(){
+  function hydrateHiddenFields(form){
+    const u = new URL(window.location.href);
+    form.querySelector('input[name="page_url"]').value     = u.origin + u.pathname;
+    form.querySelector('input[name="submitted_at"]').value = new Date().toISOString();
+    form.querySelector('input[name="utm_source"]').value   = u.searchParams.get('utm_source')   || '';
+    form.querySelector('input[name="utm_medium"]').value   = u.searchParams.get('utm_medium')   || '';
+    form.querySelector('input[name="utm_campaign"]').value = u.searchParams.get('utm_campaign') || '';
+  }
 
-    document.addEventListener('DOMContentLoaded', function(){
-      const form = document.getElementById('leadForm');
-      const holder = form.closest('.card');
-      const steps = Array.from(form.querySelectorAll('.step'));
-      const stepLabel = document.getElementById('stepLabel');
-      const nextBtn = document.getElementById('nextBtn');
-      const submitBtn = document.getElementById('submitBtn');
+  function thankYouHTML(firstName){
+    const first = (firstName||'Thanks').toString().trim().split(' ')[0];
+    return `
+      <div class="card__body" style="text-align:center">
+        <h3 style="margin:0 0 6px;color:#0b1e37;">${first}, we’ve got your request ✅</h3>
+        <p style="margin:0;color:#344861;">We’ll be in touch shortly to confirm a time that suits.</p>
+      </div>
+    `;
+  }
 
-      const bar  = document.querySelector('.progress-bar');
-      const fill = document.querySelector('.progress-fill');
+  function firstInvalid(el){ return el.querySelector(':invalid'); }
 
-      let i = 0;
+  // --- GTM helpers ---
+  function pushLeadAttempt(){
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'lead_submit_attempt',
+      variant: window.__variant || 'B'
+    });
+    console.log('[GTM] lead_submit_attempt pushed');
+  }
 
-      function showStep(n){
-        i = Math.max(0, Math.min(n, steps.length-1));
-        steps.forEach((s, idx)=> s.hidden = idx !== i);
-
-        if (stepLabel) stepLabel.textContent = `Step ${i+1} of ${steps.length}`;
-
-        const last = (i === steps.length-1);
-        nextBtn.hidden   =  last;
-        submitBtn.hidden = !last;
-
-        const pct = (i / steps.length) * 100; // start at 0% on step 1
-        if (fill) fill.style.width = pct + '%';
-        if (bar){
-          bar.setAttribute('aria-valuenow', String(i));
-          bar.setAttribute('aria-valuetext', `Completed ${i} of ${steps.length}`);
-        }
-
-        const inp = steps[i].querySelector('input,select,textarea,button');
-        inp && inp.focus({preventScroll:true});
-      }
-
-      function canAdvance(){
-        const cur = steps[i];
-        const bad = firstInvalid(cur) || [...cur.querySelectorAll('[required]')]
-          .find(el => !String(el.value||'').trim());
-        if (bad){
-          bad.focus(); form.reportValidity();
-          cur.scrollIntoView({behavior:'smooth', block:'center'});
-          return false;
-        }
-        return true;
-      }
-
-      nextBtn.addEventListener('click', ()=>{ if (canAdvance()) showStep(i+1); });
-      form.addEventListener('keydown', e=>{ if (e.key === 'Enter' && e.target.type !== 'submit'){ e.preventDefault(); } });
-
-      hydrateHiddenFields(form);
-      showStep(0);
-
-      form.addEventListener('submit', async (e)=>{
-        e.preventDefault();
-        if (!form.checkValidity()){
-          const bad = firstInvalid(form); bad?.focus(); form.reportValidity();
-          return;
-        }
-        const orig = submitBtn.textContent;
-        submitBtn.disabled = true;
-        submitBtn.textContent = submitBtn.dataset.loadingText || 'Submitting…';
-
-        try{
-          const fd = new FormData(form);
-          if (!fd.get('form-name')) fd.set('form-name', form.getAttribute('name') || 'Leads Spring Promo (Split Test)');
-
-          const obj = {}; fd.forEach((v,k)=>obj[k]=v);
-          const encoded = Object.keys(obj).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(obj[k])).join('&');
-
-          const res = await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: encoded });
-          if (!res.ok) throw new Error('Netlify '+res.status);
-
-          try{
-            const full = (fd.get('full_name')||'').toString().trim();
-            const [first_name, ...rest] = full.split(' ');
-            const last_name = rest.join(' ') || '';
-            window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({
-              event:'lead_submit_success',
-              variant: window.__variant || 'B',
-              form_name: form.getAttribute('name') || 'Leads Spring Promo (Split Test)',
-              enhanced_conversion_data:{
-                email:(fd.get('email')||'').toString().trim().toLowerCase(),
-                phone_number:(fd.get('phone')||'').toString().trim(),
-                first_name,last_name,
-                home_address:{street:(fd.get('address')||'').toString(), country:'NZ'}
-              }
-            });
-          }catch(e){ console.warn('GTM push failed', e); }
-
-          holder.innerHTML = thankYouHTML(fd.get('full_name'));
-        }catch(err){
-          alert('Sorry, something went wrong. Please try again.');
-          console.error(err);
-          submitBtn.disabled = false; submitBtn.textContent = orig;
+  function pushLeadSuccess(fd){
+    try{
+      const full = (fd.get('full_name')||'').toString().trim();
+      const [first_name, ...rest] = full.split(' ');
+      const last_name = rest.join(' ') || '';
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event:'lead_submit_success',
+        variant: window.__variant || 'B',
+        form_name: 'Leads Spring Promo (Split Test)',
+        enhanced_conversion_data:{
+          email:(fd.get('email')||'').toString().trim().toLowerCase(),
+          phone_number:(fd.get('phone')||'').toString().trim(),
+          first_name,last_name,
+          home_address:{street:(fd.get('address')||'').toString(), country:'NZ'}
         }
       });
+      console.log('[GTM] lead_submit_success pushed', {
+        email:(fd.get('email')||'').toString().trim().toLowerCase()
+      });
+    }catch(e){
+      console.warn('[GTM] success push failed', e);
+    }
+  }
+
+  function pushLeadError(err){
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event:'lead_submit_error',
+      variant: window.__variant || 'B',
+      error_message: (err && err.message) ? err.message : String(err)
     });
-  })();
-  </script>
+    console.warn('[GTM] lead_submit_error pushed', err);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    const form = document.getElementById('leadForm');
+    const holder = form.closest('.card');
+    const steps = Array.from(form.querySelectorAll('.step'));
+    const stepLabel = document.getElementById('stepLabel');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+
+    const bar  = document.querySelector('.progress-bar');
+    const fill = document.querySelector('.progress-fill');
+
+    let i = 0; // current step
+
+    function showStep(n){
+      i = Math.max(0, Math.min(n, steps.length-1));
+      steps.forEach((s, idx)=> s.hidden = idx !== i);
+      if (stepLabel) stepLabel.textContent = `Step ${i+1} of ${steps.length}`;
+      const last = (i === steps.length-1);
+      nextBtn.hidden   =  last;
+      submitBtn.hidden = !last;
+
+      const pct = (i / steps.length) * 100;
+      if (fill) fill.style.width = pct + '%';
+      if (bar){
+        bar.setAttribute('aria-valuenow', String(i));
+        bar.setAttribute('aria-valuetext', `Completed ${i} of ${steps.length}`);
+      }
+      const inp = steps[i].querySelector('input,select,textarea,button');
+      inp && inp.focus({preventScroll:true});
+    }
+
+    function canAdvance(){
+      const cur = steps[i];
+      const bad = firstInvalid(cur) || [...cur.querySelectorAll('[required]')]
+        .find(el => !String(el.value||'').trim());
+      if (bad){
+        bad.focus(); form.reportValidity();
+        cur.scrollIntoView({behavior:'smooth', block:'center'});
+        return false;
+      }
+      return true;
+    }
+
+    nextBtn.addEventListener('click', ()=>{ if (canAdvance()) showStep(i+1); });
+
+    form.addEventListener('keydown', e=>{
+      if (e.key === 'Enter' && e.target.type !== 'submit'){ e.preventDefault(); }
+    });
+
+    hydrateHiddenFields(form);
+    showStep(0);
+
+    // --- Submit handler with GTM pushes ---
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      if (!form.checkValidity()){
+        const bad = firstInvalid(form); bad?.focus(); form.reportValidity();
+        return;
+      }
+
+      pushLeadAttempt(); // fire attempt immediately
+
+      const orig = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = submitBtn.dataset.loadingText || 'Submitting…';
+
+      try{
+        const fd = new FormData(form);
+        if (!fd.get('form-name')) {
+          fd.set('form-name', form.getAttribute('name') || 'Leads Spring Promo (Split Test)');
+        }
+
+        // Build x-www-form-urlencoded body (Netlify)
+        const obj = {}; fd.forEach((v,k)=>obj[k]=v);
+        const encoded = Object.keys(obj).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(obj[k])).join('&');
+
+        const res = await fetch('/', {
+          method:'POST',
+          headers:{'Content-Type':'application/x-www-form-urlencoded'},
+          body: encoded
+        });
+
+        if (!res.ok) throw new Error('Netlify ' + res.status);
+
+        // Success (network)
+        pushLeadSuccess(fd);
+
+        // Safety: if anything breaks after this, still record conversion
+        holder.innerHTML = thankYouHTML(fd.get('full_name'));
+        // Push again after the UI swap (idempotent in GA4)
+        pushLeadSuccess(fd);
+
+      }catch(err){
+        pushLeadError(err);
+        alert('Sorry, something went wrong. Please try again.');
+        console.error(err);
+        submitBtn.disabled = false; submitBtn.textContent = orig;
+      }
+    });
+  });
+})();
+</script>
 
   <!-- Google Places -->
   <script>
