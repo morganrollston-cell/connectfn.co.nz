@@ -58,38 +58,33 @@
     .bullets{ margin:8px 0 12px; padding-left:1.1rem; color:#223046 }
     .bullets li{ margin:.25rem 0 }
 
-/* Bullets wrapper with box */
-.bullets-card {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px 16px;
-  margin: 14px 0 18px;
-  background: #f9fbfd;
+/* Title pill */
+.bullets-title {
+  display: inline-block;
+  background: rgba(10,132,255,0.08); /* light transparent blue */
+  color: #0b1e37;
+  font-weight: 800;
+  font-size: .95rem;
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 10px;
   text-align: center;
 }
 
-.bullets-card__title {
-  display: block;
-  font-weight: 800;
-  font-size: .95rem;
-  color: #0b1e37;
-  margin-bottom: 10px;
-}
-
-/* Centered tick list */
+/* Bullet list with ticks */
 .bullets {
   list-style: none;
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
-  display: inline-block;   /* center the list as a block */
-  text-align: left;        /* text stays aligned */
+  text-align: center;   /* center the list block */
 }
 
 .bullets li {
   position: relative;
   padding-left: 1.6rem;
   margin: .5rem 0;
-  line-height: 1.4;
+  text-align: left;     /* text itself left-aligned */
+  display: inline-block; /* keeps list centered under title */
 }
 
 .bullets li::before {
@@ -98,10 +93,9 @@
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  color: #16a34a;    /* green ticks */
+  color: #16a34a; /* green tick */
   font-weight: 900;
   font-size: 1.2rem;
-  line-height: 1;
 }
 
     /* Agent mini */
@@ -194,8 +188,8 @@
         <span class="eyebrow">Spring promo</span>
         <h1>Get your Free Property Appraisal & go in the draw to win up to $5,000</h1>
         <p class="lede">Fast, expert valuation of your Nelson/Tasman property with clear next steps to maximise your result.</p>
-    <div class="bullets-card">
-  <span class="bullets-card__title">Our Free Appraisal Includes</span>
+    <div class="bullets-block" style="text-align:center">
+  <span class="bullets-title">Our Free Appraisal Includes</span>
   <ul class="bullets">
     <li>60-second booking</li>
     <li>Local specialists</li>
