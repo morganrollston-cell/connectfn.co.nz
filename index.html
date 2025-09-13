@@ -294,6 +294,38 @@
   border-color: #0A84FF;
   box-shadow: 0 4px 12px rgba(10,132,255,.26);
 }
+
+/* Hide the default radio circle completely */
+.timeframe-pills input[type="radio"] {
+  display: none;   /* removes the default circle */
+}
+
+/* Make the pill the clickable target */
+.timeframe-pills label {
+  cursor: pointer;
+  border-radius: 999px;
+  font-weight: 600;
+  overflow: hidden;
+}
+
+.timeframe-pills label span {
+  display: block;
+  padding: 12px 20px;
+  border-radius: 999px;
+  border: 1px solid #dbe3ef;
+  background: #fff;
+  transition: all 0.2s ease;
+  min-width: 110px;       /* keeps pills consistent */
+  text-align: center;
+}
+
+/* Selected pill */
+.timeframe-pills input[type="radio"]:checked + span {
+  background: #0A84FF;
+  color: #fff;
+  border-color: #0A84FF;
+  box-shadow: 0 4px 10px rgba(10,132,255,.25);
+}
     [hidden]{ display:none !important; }
   </style>
 </head>
