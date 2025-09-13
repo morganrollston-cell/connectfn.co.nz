@@ -58,6 +58,28 @@
     .bullets{ margin:8px 0 12px; padding-left:1.1rem; color:#223046 }
     .bullets li{ margin:.25rem 0 }
 
+/* Bulleted list with custom symbol */
+.bullets{
+  list-style: none;
+  padding-left: 0;
+  margin: 8px 0 12px;
+  color:#223046;
+}
+.bullets li{
+  position: relative;
+  padding-left: 1.25rem;     /* space for the symbol */
+  margin: .35rem 0;
+}
+.bullets li::before{
+  content: "▸";              /* change this symbol if you like */
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  color: var(--accent);      /* matches your theme (#0A84FF) */
+  font-weight: 900;
+  line-height: 1;
+}
+
     /* Agent mini */
     .agent-mini{ margin:10px 0 6px; }
     .agent-mini__title{ margin:0 0 8px; font-weight:800; font-size:.95rem; color:#0b1e37; text-align:center; }
@@ -129,9 +151,9 @@
         <h1>Get your Free Property Appraisal & go in the draw to win up to $5,000</h1>
         <p class="lede">Fast, expert valuation of your Nelson/Tasman property with clear next steps to maximise your result.</p>
         <ul class="bullets">
-          <li>✅ 60-second booking</li>
-          <li>🏡 Local specialists</li>
-          <li>📊 Clear valuation + plan</li>
+          <li>60-second booking</li>
+          <li>Local specialists</li>
+          <li>Clear valuation + plan</li>
         </ul>
 
         <section class="agent-mini" aria-label="Your local Nelson/Tasman agents">
