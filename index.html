@@ -154,11 +154,18 @@
   line-height: 1;
 }
 
-/* Center form step labels */
+/* Center label text but keep input full width */
 .step label {
   text-align: center;
   font-weight: 700;
   display: block;
+}
+
+.step label input {
+  display: block;
+  width: 100%;
+  margin-top: 6px;   /* small gap between label text and input */
+  text-align: left;  /* make sure typed text stays left aligned */
 }
 
 /* Add more spacing around agent section */
