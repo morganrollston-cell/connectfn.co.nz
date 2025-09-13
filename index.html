@@ -191,18 +191,27 @@
   white-space:nowrap;
 }
 
-/* Slimmer, cleaner bar but keeps your .progress-bar class for JS */
+.bar-row{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  align-items:center;
+  gap:12px;
+  margin: 8px 0;                 /* space above/below the bar */
+}
+
 .progress-bar.slim{
-  height:6px;
+  width:100%;                     /* ensures it stretches full width */
+  height:10px;                    /* a bit taller so it’s visible */
   border-radius:999px;
-  background:#eef3f8;
-  border:1px solid #e6edf5;
+  background:#e7eef6;             /* slightly darker track */
+  border:1px solid #dbe3ef;
   position:relative;
   overflow:hidden;
 }
+
 .progress-bar.slim .progress-fill{
   position:absolute; inset:0 auto 0 0;
-  width:0%;
+  width:0%;                       /* JS will update this */
   background:#0A84FF;
   border-right:1px solid rgba(255,255,255,.6);
 }
