@@ -355,161 +355,154 @@
     </div>
   </footer>
 
-  <!-- Stepper + Netlify submit (GTM removed; form name preserved as "kim allred leads") -->
-  <script>
-  (function(){
-    function hydrateHiddenFields(form){
-      const u = new URL(window.location.href);
-      const pageUrlField = form.querySelector('input[name="page_url"]');
-      const subAt = form.querySelector('input[name="submitted_at"]');
-      const utmSource = form.querySelector('input[name="utm_source"]');
-      const utmMedium = form.querySelector('input[name="utm_medium"]');
-      const utmCampaign = form.querySelector('input[name="utm_campaign"]');
-      if(pageUrlField) pageUrlField.value = u.origin + u.pathname;
-      if(subAt) subAt.value = new Date().toISOString();
-      if(utmSource) utmSource.value = u.searchParams.get('utm_source') || '';
-      if(utmMedium) utmMedium.value = u.searchParams.get('utm_medium') || '';
-      if(utmCampaign) utmCampaign.value = u.searchParams.get('utm_campaign') || '';
+<!-- Stepper + Netlify submit (GTM removed; form name preserved as "kim allred leads") -->
+<script>
+(function(){
+  function hydrateHiddenFields(form){
+    const u = new URL(window.location.href);
+    const pageUrlField = form.querySelector('input[name="page_url"]');
+    const subAt = form.querySelector('input[name="submitted_at"]');
+    const utmSource = form.querySelector('input[name="utm_source"]');
+    const utmMedium = form.querySelector('input[name="utm_medium"]');
+    const utmCampaign = form.querySelector('input[name="utm_campaign"]');
+    if(pageUrlField) pageUrlField.value = u.origin + u.pathname;
+    if(subAt) subAt.value = new Date().toISOString();
+    if(utmSource) utmSource.value = u.searchParams.get('utm_source') || '';
+    if(utmMedium) utmMedium.value = u.searchParams.get('utm_medium') || '';
+    if(utmCampaign) utmCampaign.value = u.searchParams.get('utm_campaign') || '';
+  }
+
+  function thankYouHTML(firstName){
+    const first = (firstName||'Thanks').toString().trim().split(' ')[0];
+    return `
+      <div class="card__body" style="text-align:center">
+        <h3 style="margin:0 0 6px;color:#0b1e37;">${first}, we’ve got your request ✅</h3>
+        <p style="margin:0;color:#344861;">We’ll be in touch shortly to confirm a time that suits.</p>
+      </div>
+    `;
+  }
+
+  function firstInvalid(el){ return el.querySelector(':invalid'); }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    const form = document.getElementById('lead-form');
+    if(!form) return;
+    const holder = form.closest('.card');
+    const steps = Array.from(form.querySelectorAll('[data-step]'));
+    const stepLabel = document.getElementById('stepLabel');
+    const nextBtn = document.getElementById('nextBtn');
+    const backBtn = document.getElementById('backBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const bar  = document.querySelector('.progress-bar');
+    const fill = document.querySelector('.progress-fill');
+
+    let i = 0; // current step
+
+    function showStep(n){
+      i = Math.max(0, Math.min(n, steps.length-1));
+      steps.forEach((s, idx)=> s.hidden = idx !== i);
+      if (stepLabel) stepLabel.textContent = `Step ${i+1} of ${steps.length}`;
+      const last = (i === steps.length-1);
+      nextBtn.hidden   =  last;
+      submitBtn.hidden = !last;
+      backBtn.hidden   = (i === 0);
+
+      const pct = (i / steps.length) * 100;
+      if (fill) fill.style.width = pct + '%';
+      if (bar){
+        bar.setAttribute('aria-valuenow', String(i));
+        bar.setAttribute('aria-valuetext', `Completed ${i} of ${steps.length}`);
+      }
+      const inp = steps[i].querySelector('input,select,textarea,button');
+      inp && inp.focus({preventScroll:true});
     }
 
-    function thankYouHTML(firstName){
-      const first = (firstName||'Thanks').toString().trim().split(' ')[0];
-      return `
-        <div class="card__body" style="text-align:center">
-          <h3 style="margin:0 0 6px;color:#0b1e37;">${first}, we’ve got your request ✅</h3>
-          <p style="margin:0;color:#344861;">We’ll be in touch shortly to confirm a time that suits.</p>
-        </div>
-      `;
+    function canAdvance(){
+      const cur = steps[i];
+      const bad = firstInvalid(cur) || [...cur.querySelectorAll('[required]')]
+        .find(el => !String(el.value||'').trim());
+      if (bad){
+        bad.focus(); form.reportValidity();
+        cur.scrollIntoView({behavior:'smooth', block:'center'});
+        return false;
+      }
+      return true;
     }
 
-    function firstInvalid(el){ return el.querySelector(':invalid'); }
+    nextBtn.addEventListener('click', ()=>{ if (canAdvance()) showStep(i+1); });
+    backBtn.addEventListener('click', ()=>{ showStep(i-1); });
 
-    document.addEventListener('DOMContentLoaded', function(){
-      const form = document.getElementById('lead-form');
-      if(!form) return;
-      const holder = form.closest('.card');
-      const steps = Array.from(form.querySelectorAll('[data-step]'));
-      const stepLabel = document.getElementById('stepLabel');
-      const nextBtn = document.getElementById('nextBtn');
-      const backBtn = document.getElementById('backBtn');
-      const submitBtn = document.getElementById('submitBtn');
-      const bar  = document.querySelector('.progress-bar');
-      const fill = document.querySelector('.progress-fill');
+    form.addEventListener('keydown', e=>{
+      if (e.key === 'Enter' && e.target.type !== 'submit'){ e.preventDefault(); }
+    });
 
-      let i = 0; // current step
+    hydrateHiddenFields(form);
+    showStep(0);
 
-      function showStep(n){
-        i = Math.max(0, Math.min(n, steps.length-1));
-        steps.forEach((s, idx)=> s.hidden = idx !== i);
-        if (stepLabel) stepLabel.textContent = `Step ${i+1} of ${steps.length}`;
-        const last = (i === steps.length-1);
-        nextBtn.hidden   =  last;
-        submitBtn.hidden = !last;
-        backBtn.hidden   = (i === 0);
-
-        const pct = (i / steps.length) * 100;
-        if (fill) fill.style.width = pct + '%';
-        if (bar){
-          bar.setAttribute('aria-valuenow', String(i));
-          bar.setAttribute('aria-valuetext', `Completed ${i} of ${steps.length}`);
-        }
-        const inp = steps[i].querySelector('input,select,textarea,button');
-        inp && inp.focus({preventScroll:true});
+    // --- Submit handler that posts to Netlify (keeps the same behaviour of posting to /) ---
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      if (!form.checkValidity()){
+        const bad = firstInvalid(form); bad?.focus(); form.reportValidity();
+        return;
       }
 
-      function canAdvance(){
-        const cur = steps[i];
-        // check for built-in validity + empty-values for required
-        const bad = firstInvalid(cur) || [...cur.querySelectorAll('[required]')]
-          .find(el => !String(el.value||'').trim());
-        if (bad){
-          bad.focus(); form.reportValidity();
-          cur.scrollIntoView({behavior:'smooth', block:'center'});
-          return false;
-        }
-        return true;
-      }
+      const origText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting…';
 
-      nextBtn.addEventListener('click', ()=>{ if (canAdvance()) showStep(i+1); });
-      backBtn.addEventListener('click', ()=>{ showStep(i-1); });
-
-      form.addEventListener('keydown', e=>{
-        if (e.key === 'Enter' && e.target.type !== 'submit'){ e.preventDefault(); }
-      });
-
-      hydrateHiddenFields(form);
-      showStep(0);
-
-      // --- Submit handler that posts to Netlify (keeps the same behaviour of posting to /) ---
-      form.addEventListener('submit', async (e)=>{
-        e.preventDefault();
-        if (!form.checkValidity()){
-          const bad = firstInvalid(form); bad?.focus(); form.reportValidity();
-          return;
+      try{
+        const fd = new FormData(form);
+        if (!fd.get('form-name')) {
+          fd.set('form-name', form.getAttribute('name') || 'kim allred leads');
         }
 
-        // simple UX lock
-        const origText = submitBtn.textContent;
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Submitting…';
+        const obj = {}; fd.forEach((v,k)=>obj[k]=v);
+        const encoded = Object.keys(obj).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(obj[k])).join('&');
 
-        try{
-          const fd = new FormData(form);
-          // Ensure Netlify gets the correct form-name value
-          if (!fd.get('form-name')) {
-            fd.set('form-name', form.getAttribute('name') || 'kim allred leads');
-          }
-
-          // Build x-www-form-urlencoded body (Netlify prefers this)
-          const obj = {}; fd.forEach((v,k)=>obj[k]=v);
-          const encoded = Object.keys(obj).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(obj[k])).join('&');
-
-          const res = await fetch('/', {
-            method:'POST',
-            headers:{'Content-Type':'application/x-www-form-urlencoded'},
-            body: encoded
-          });
-
-          if (!res.ok) throw new Error('Netlify ' + res.status);
+        const res = await fetch('/', {
+          method:'POST',
+          headers:{'Content-Type':'application/x-www-form-urlencoded'},
+          body: encoded
+        });
 
         if (!res.ok) throw new Error('Netlify ' + res.status);
 
-// ---- Tracking: lead form success ----
-try {
-  // Push to dataLayer (for GTM/GA4)
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event: 'lead-form-submission-kimallred',
-    form_name: 'kim allred leads',
-    page_url: (form.querySelector('input[name="page_url"]') || {}).value || location.href
-  });
+        // ---- Tracking: lead form success ----
+        try {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'lead-form-submission-kimallred',
+            form_name: 'kim allred leads',
+            page_url: (form.querySelector('input[name="page_url"]') || {}).value || location.href
+          });
 
-  // Send a gtag event (optional but recommended)
-  if (typeof gtag === 'function') {
-    gtag('event', 'lead-form-submission-kimallred', {
-      event_category: 'lead',
-      event_label: 'kim allred leads'
-      // If you set up a Google Ads conversion, uncomment and set your label:
-      // ,send_to: 'AW-17556971103/XXXXXXXXXXX'
-    });
-  }
+          if (typeof gtag === 'function') {
+            gtag('event', 'lead-form-submission-kimallred', {
+              event_category: 'lead',
+              event_label: 'kim allred leads'
+              // ,send_to: 'AW-17556971103/XXXXXXXXXXX'
+            });
+          }
 
-  // Also emit a DOM event you can listen for if needed
-  window.dispatchEvent(new CustomEvent('lead-form-submission-kimallred', {
-    detail: { formName: 'kim allred leads' }
-  }));
-} catch (e) {
-  // tracking errors shouldn't block UX
-  console.warn('Lead tracking failed', e);
-}
-
-// Success: replace UI
-holder.innerHTML = thankYouHTML(fd.get('full_name'));
+          window.dispatchEvent(new CustomEvent('lead-form-submission-kimallred', {
+            detail: { formName: 'kim allred leads' }
+          }));
+        } catch (e) {
+          console.warn('Lead tracking failed', e);
         }
-      });
+
+        // Success: replace UI
+        holder.innerHTML = thankYouHTML(fd.get('full_name'));
+      }catch(err){
+        alert('Sorry, something went wrong. Please try again.');
+        console.error(err);
+        submitBtn.disabled = false; submitBtn.textContent = origText;
+      }
     });
-  })();
-  </script>
+  });
+})();
+</script>
 
   <!-- Google Places (kept — remove if you want) -->
   <script>
