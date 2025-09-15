@@ -258,7 +258,6 @@
           <p style="display:none;"><label>Don’t fill this out: <input name="bot-field" /></label></p>
 
           <!-- Optional tracking hidden fields (preserved from new design) -->
-          <input type="hidden" name="variant" value="B">
           <input type="hidden" name="page_url" value="">
           <input type="hidden" name="submitted_at" value="">
           <input type="hidden" name="utm_source" value="">
@@ -473,12 +472,39 @@
 
           if (!res.ok) throw new Error('Netlify ' + res.status);
 
-          // Success: replace UI
-          holder.innerHTML = thankYouHTML(fd.get('full_name'));
-        }catch(err){
-          alert('Sorry, something went wrong. Please try again.');
-          console.error(err);
-          submitBtn.disabled = false; submitBtn.textContent = origText;
+        if (!res.ok) throw new Error('Netlify ' + res.status);
+
+// ---- Tracking: lead form success ----
+try {
+  // Push to dataLayer (for GTM/GA4)
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'lead-form-submission-kimallred',
+    form_name: 'kim allred leads',
+    page_url: (form.querySelector('input[name="page_url"]') || {}).value || location.href
+  });
+
+  // Send a gtag event (optional but recommended)
+  if (typeof gtag === 'function') {
+    gtag('event', 'lead-form-submission-kimallred', {
+      event_category: 'lead',
+      event_label: 'kim allred leads'
+      // If you set up a Google Ads conversion, uncomment and set your label:
+      // ,send_to: 'AW-17556971103/XXXXXXXXXXX'
+    });
+  }
+
+  // Also emit a DOM event you can listen for if needed
+  window.dispatchEvent(new CustomEvent('lead-form-submission-kimallred', {
+    detail: { formName: 'kim allred leads' }
+  }));
+} catch (e) {
+  // tracking errors shouldn't block UX
+  console.warn('Lead tracking failed', e);
+}
+
+// Success: replace UI
+holder.innerHTML = thankYouHTML(fd.get('full_name'));
         }
       });
     });
