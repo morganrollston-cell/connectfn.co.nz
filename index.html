@@ -636,9 +636,6 @@
 
         if (!res.ok) throw new Error('Netlify ' + res.status);
 
-        // Success (network)
-        pushLeadSuccess(fd);
-
         // Safety: if anything breaks after this, still record conversion
         holder.innerHTML = thankYouHTML(fd.get('full_name'));
         // Push again after the UI swap (idempotent in GA4)
