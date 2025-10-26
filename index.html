@@ -326,6 +326,15 @@
   border-color: #0A84FF;
   box-shadow: 0 4px 10px rgba(10,132,255,.25);
 }
+
+.footer__logo {
+  display: block;
+  margin: 0 auto 30px;
+  width: clamp(160px, 40vw, 320px); /* scales smoothly across devices */
+  height: auto;                     /* keeps aspect ratio */
+  max-width: 100%;                  /* never exceeds screen width */
+  filter: brightness(0) invert(1);
+}
     [hidden]{ display:none !important; }
   </style>
 </head>
