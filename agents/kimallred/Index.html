@@ -197,6 +197,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 .agent-mini {
   text-align: center;
 }
+
+.footer__logo {
+  display: block;
+  margin: 0 auto 30px;
+  width: clamp(220px, 55vw, 420px); /* bigger minimum and maximum */
+  height: auto;
+  max-width: 100%;                  /* still prevents overflow */
+  filter: brightness(0) invert(1);
+}
     [hidden]{ display:none !important; }
   </style>
 </head>
